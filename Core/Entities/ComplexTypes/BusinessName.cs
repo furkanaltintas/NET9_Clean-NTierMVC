@@ -1,8 +1,7 @@
-﻿namespace Core.Entities.ComplexTypes
+﻿namespace Core.Entities.ComplexTypes;
+
+public enum BusinessName
 {
-    public enum BusinessName
-    {
-        Service,
-        Manager
-    }
+    Service,
+    Manager
 }

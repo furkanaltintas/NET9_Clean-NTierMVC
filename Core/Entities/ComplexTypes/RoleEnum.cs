@@ -1,8 +1,6 @@
-﻿namespace Core.Entities.ComplexTypes
+﻿namespace Core.Entities.ComplexTypes;
+
+public enum RoleEnum
 {
-    public enum RoleEnum
-    {
-        Admin,
-        Employee
-    }
+    Admin
 }

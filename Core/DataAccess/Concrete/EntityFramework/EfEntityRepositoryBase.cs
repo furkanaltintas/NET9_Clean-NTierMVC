@@ -20,6 +20,14 @@ public class EfEntityRepositoryBase<TEntity> : IEntityRepository<TEntity>
 
     public async Task AddRangeAsync(IList<TEntity> entities) => await Table.AddRangeAsync(entities);
 
+    public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>>? predicate = null)
+    {
+        var query = Table.AsNoTracking();
+
+        if(predicate is not null) query = query.Where(predicate);
+        return await query.AnyAsync();
+    }
+
     public async Task<int> CountAsync(Expression<Func<TEntity, bool>>? predicate = null)
     {
         var query = Table.AsNoTracking();
@@ -66,6 +74,16 @@ public class EfEntityRepositoryBase<TEntity> : IEntityRepository<TEntity>
         if (include is not null) queryable = include(queryable);
 
         return await queryable.FirstOrDefaultAsync(predicate);
+    }
+
+    public async Task<TEntity> GetAsync(Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null, bool enableTracking = false)
+    {
+        IQueryable<TEntity> queryable = Table;
+
+        if (!enableTracking) queryable = queryable.AsNoTracking();
+        if (include is not null) queryable = include(queryable);
+
+        return await queryable.FirstOrDefaultAsync();
     }
 
     public async Task HardDeleteAsync(TEntity entity) => await Task.Run(() => Table.Remove(entity));
