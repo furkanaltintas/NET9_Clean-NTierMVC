@@ -1,12 +1,19 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Business.Abstract.Base;
+using Microsoft.AspNetCore.Mvc;
+using Presentation.Controllers.Base;
 
-namespace Presentation.Controllers
+namespace Presentation.Controllers;
+
+public class HomeController : ControllerManager
 {
-    public class HomeController : Controller
+    public HomeController(IServiceManager manager) : base(manager)
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+    }
+
+    public async Task<IActionResult> Index()
+    {
+        var result = await _manager.AboutService.GetAboutAsync();
+        var test = _manager.AboutService.Test();
+        return View(result.Data);
     }
 }

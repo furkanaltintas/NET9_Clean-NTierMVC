@@ -23,12 +23,15 @@ public interface IEntityRepository<TEntity> where TEntity : class, IEntity, new(
         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
         bool enableTracking = false);
 
+    Task<TEntity> GetAsync(Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null, bool enableTracking = false);
+
     IQueryable<TEntity> Find(
         Expression<Func<TEntity, bool>> predicate, bool enableTracking = false);
 
     Task<int> CountAsync(
         Expression<Func<TEntity, bool>>? predicate = null);
 
+    Task<bool> AnyAsync(Expression<Func<TEntity, bool>>? predicate = null);
 
     Task AddAsync(TEntity entity);
 
@@ -37,5 +40,6 @@ public interface IEntityRepository<TEntity> where TEntity : class, IEntity, new(
     Task<TEntity> UpdateAsync(TEntity entity);
 
     Task HardDeleteAsync(TEntity entity);
+
     Task HardDeleteRangeAsync(IList<TEntity> entities);
 }

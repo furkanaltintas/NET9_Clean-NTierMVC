@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DataAccess.Concrete.EntityFramework.Configurations;
 
-public class PortfolioConfiguration : IEntityTypeConfiguration<Portfolio>
+public class PortfolioConfiguration : IEntityTypeConfiguration<Entities.Concrete.Portfolio>
 {
-    public void Configure(EntityTypeBuilder<Portfolio> builder)
+    public void Configure(EntityTypeBuilder<Entities.Concrete.Portfolio> builder)
     {
         throw new NotImplementedException();
     }

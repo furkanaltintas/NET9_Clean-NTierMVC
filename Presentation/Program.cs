@@ -1,14 +1,29 @@
+using Business.DependencyResolvers.Microsoft;
+using Core.DependencyResolvers;
+using Core.Extensions;
+using Core.Utilities.IoC;
+using Presentation.Constraints;
 using Presentation.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(options =>
+{
+    options.Conventions.Add(new LowercaseControllerRouteConstraint());
+});
 
 builder.Services.ConfigureDatabase(builder.Configuration);
+builder.Services.AddCustomDependencies();
 
 
+builder.Services.AddDependencyResolvers(new ICoreModule[]
+{
+    new CoreModule()
+});
 
+
+builder.Host.ConfigureAutofac();
 
 var env = builder.Environment;
 builder.Configuration
@@ -31,7 +46,10 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 
+
+app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.MapStaticAssets();
 
