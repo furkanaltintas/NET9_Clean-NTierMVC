@@ -4,7 +4,7 @@
     {
         public Entity()
         {
-            Id = default;
+            Id = default!;
         }
 
         public Entity(TId id)
