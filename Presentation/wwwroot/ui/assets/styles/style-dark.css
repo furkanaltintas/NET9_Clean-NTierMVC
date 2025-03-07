@@ -1,0 +1,559 @@
+/* ------------------------------------------------
+ Author: ArtStyles (Art)
+ 
+ Template Name: vCard
+ version: 1.0.2
+------------------------------------------------ */
+/* ------------------------------------------------
+
+ - General Styles
+   - Input Text
+   - Checkbox
+   - Select
+   - Dropdown
+   
+ - Typography
+ - Preloader
+ 
+ - Shared
+   - Box
+   - Avatars
+   - Social
+   - Badges
+   - Tooltips
+   
+ - Sidebar
+   - Contact list
+   
+ - Cases
+
+ - Testimonials
+   - Carousel pagination
+   
+ - Clients
+ - Timeline
+ - Progress
+ 
+ - Portfolio
+   - Filter
+    
+ - News
+ 
+ - Single post
+   - Comments
+   - Comment form
+   - Emoji
+   - niceScroll
+   - Social auth
+
+ - Other
+   - Bact to top
+   - Medium Zoom
+  
+------------------------------------------------ */
+@import url("https://fonts.googleapis.com/css?family=Archivo:400,400i,500,500i,600,600i,700,700i&amp;display=swap");
+@import url("https://fonts.googleapis.com/css?family=Merriweather:400,900&amp;display=swap");
+/* -----------------------------------------------------------------
+    - General Styles
+----------------------------------------------------------------- */
+body {
+  background-color: #272333;
+  color: #DEDDE0;
+}
+
+.input, .textarea, select,
+.custom-select {
+  background-color: #2C283A;
+  border: 1px solid #2C283A;
+  color: #fff;
+}
+
+.input:focus, .textarea:focus, select:focus,
+.custom-select:focus {
+  background-color: #272333;
+  border: 1px solid #0D86FF;
+  color: #fff;
+}
+
+.input--white {
+  background-color: #2C283A;
+}
+.input--white:focus {
+  background-color: #2C283A;
+}
+
+.textarea--white {
+  background-color: #2C283A;
+}
+.textarea--white:focus {
+  background-color: #2C283A;
+}
+
+.form-group .font-icon {
+  color: rgba(222, 221, 224, 0.5);
+}
+
+.form-control::-webkit-input-placeholder {
+  color: rgba(222, 221, 224, 0.5);
+}
+
+.form-control::-moz-placeholder {
+  color: rgba(222, 221, 224, 0.5);
+}
+
+.form-control:-ms-input-placeholder {
+  color: rgba(222, 221, 224, 0.5);
+}
+
+.form-control::-ms-input-placeholder {
+  color: rgba(222, 221, 224, 0.5);
+}
+
+.form-control::placeholder {
+  color: rgba(222, 221, 224, 0.5);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-text-fill-color: #2C283A !important;
+}
+
+.custom-control-input:focus ~ .custom-control-label::before {
+  box-shadow: 0 0 0 0.125rem rgba(13, 134, 255, 0.25);
+}
+.custom-control-input:focus:not(:checked) ~ .custom-control-label::before {
+  border-color: #0D86FF;
+}
+.custom-control-input:not(:disabled):active ~ .custom-control-label::before {
+  border-color: #8697A8;
+}
+.custom-control-input:checked ~ .custom-control-label::before {
+  border-color: #0D86FF;
+  background-color: #0D86FF;
+}
+
+.custom-control-label::before {
+  border: 1px solid #8697A8;
+}
+
+select,
+.custom-select {
+  background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23fff' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right 0.1rem center/10px 16px;
+}
+select option,
+.custom-select option {
+  color: #fff;
+}
+
+.dropdown-menu {
+  background-color: #302C40;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+  color: #DEDDE0;
+}
+.dropdown-menu::before {
+  border-bottom: 0.4rem solid #302C40;
+}
+.dropdown.dropup .dropdown-menu::before {
+  border-top: 0.4rem solid #302C40;
+}
+
+.progress {
+  background-color: #302C40;
+}
+.progress-bar {
+  background-color: #0D86FF;
+}
+
+.badge--blue {
+  background-color: #0D86FF;
+}
+
+.badge--dark {
+  background-color: #272333;
+}
+
+.tooltip-inner {
+  background-color: #302C40;
+  box-shadow: 0px 16px 48px rgba(0, 0, 0, 0.25), 0px 2px 32px rgba(0, 0, 0, 0.5);
+}
+
+.bs-tooltip-top .arrow::before,
+.bs-tooltip-auto[x-placement^="top"] .arrow::before {
+  border-top-color: #302C40;
+}
+
+.bs-tooltip-right .arrow::before,
+.bs-tooltip-auto[x-placement^="right"] .arrow::before {
+  border-right-color: #302C40;
+}
+
+.bs-tooltip-left .arrow::before,
+.bs-tooltip-auto[x-placement^="left"] .arrow::before {
+  border-left-color: #302C40;
+}
+
+.bs-tooltip-bottom .arrow::before,
+.bs-tooltip-auto[x-placement^="bottom"] .arrow::before {
+  border-bottom-color: #302C40;
+}
+
+.btn {
+  background-color: #0D86FF;
+  box-shadow: 0 0.5rem 1rem rgba(13, 134, 255, 0.15), 0 0.125rem 0.25rem rgba(13, 134, 255, 0.15);
+}
+.btn:focus {
+  box-shadow: 0 1.5rem 2.5rem rgba(13, 134, 255, 0.1), 0 0.5rem 1rem rgba(13, 134, 255, 0.1);
+}
+.btn::before {
+  content: '';
+  box-shadow: 0 0.25rem 2rem rgba(13, 134, 255, 0.25), 0 0.25rem 1rem rgba(13, 134, 255, 0.25);
+}
+
+/* -----------------------------------------------------------------
+    - Typography
+----------------------------------------------------------------- */
+.title {
+  color: #F1F2F4;
+}
+.title--tone {
+  color: #0D86FF;
+}
+.title__separate::before {
+  background-color: #0D86FF;
+}
+
+.color--light {
+  color: rgba(241, 242, 244, 0.5);
+}
+
+.block-quote::before {
+  background-image: url(https://art-template.ru/vcard1/assets/icons/dark/icon-quote.svg);
+}
+.block-quote__author::before {
+  background-color: #F0F0F6;
+}
+
+a {
+  color: #0D86FF;
+}
+a:hover {
+  color: #0D86FF;
+}
+
+::-moz-selection {
+  background: transparent;
+  color: #0D86FF;
+}
+
+::selection {
+  background: transparent;
+  color: #0D86FF;
+}
+
+/* -----------------------------------------------------------------
+    - Preloader
+----------------------------------------------------------------- */
+.preloader {
+  background-color: #272333;
+}
+.preloader__progress span {
+  background: #0D86FF;
+}
+
+.circle-pulse__1 {
+  background-color: #0D86FF;
+}
+
+.circle-pulse__2 {
+  background-color: rgba(13, 134, 255, 0.7);
+}
+
+/* -----------------------------------------------------------------
+    - Sidebar
+----------------------------------------------------------------- */
+.contacts-block {
+  margin-bottom: 1rem;
+}
+.contacts-block__item a {
+  color: #DEDDE0;
+}
+.contacts-block__item a:hover {
+  color: #0D86FF;
+}
+
+/* -----------------------------------------------------------------
+    - Sections
+----------------------------------------------------------------- */
+.box {
+  background-color: #302C40;
+}
+.box__second {
+  background-color: #2C283A;
+}
+
+.box-inner {
+  background-color: transparent;
+  padding-top: .7rem;
+}
+.box-inner::before, .box-inner::after {
+  background-color: transparent;
+}
+
+.shadow {
+  box-shadow: 0px 40px 50px rgba(32, 29, 42, 0.75) !important;
+}
+.shadow::before {
+  box-shadow: 0px 40px 50px rgba(32, 29, 42, 0.75);
+}
+
+.avatar--180 {
+  filter: drop-shadow(0px 24px 24px rgba(32, 29, 42, 0.7));
+}
+.avatar--80 {
+  filter: drop-shadow(0px 8px 24px rgba(32, 29, 42, 0.75)) drop-shadow(0px 4px 4px rgba(32, 29, 42, 0.75));
+}
+.avatar--60 {
+  filter: drop-shadow(0px 8px 24px rgba(32, 29, 42, 0.75)) drop-shadow(0px 4px 4px rgba(32, 29, 42, 0.75));
+}
+
+.social__link {
+  color: #fff;
+}
+
+/* -----------------------------------------------------------------
+    - Navbar
+----------------------------------------------------------------- */
+.circle-menu {
+  background-color: #0D86FF;
+}
+@media only screen and (max-width: 580px) {
+  .open-menu .circle-menu {
+    box-shadow: 0 0 0 0.0625rem rgba(13, 134, 255, 0.5);
+  }
+}
+
+@media only screen and (max-width: 580px) {
+  .hamburger.is-active .line {
+    background-color: #0D86FF;
+  }
+}
+
+.nav {
+  background: #0D86FF;
+  box-shadow: 0 1.5rem 2.5rem rgba(13, 134, 255, 0.05), 0 0.5rem 1rem rgba(13, 134, 255, 0.05);
+}
+@media only screen and (max-width: 580px) {
+  .nav {
+    color: #fff;
+    background-color: #302C40;
+  }
+}
+@media only screen and (max-width: 580px) {
+  .nav__item a {
+    color: rgba(255, 255, 255, 0.5);
+  }
+  .nav__item a:hover {
+    color: white;
+  }
+}
+@media only screen and (max-width: 580px) {
+  .nav__item a.active {
+    color: #fff;
+  }
+}
+
+/* -----------------------------------------------------------------
+    - Cases
+----------------------------------------------------------------- */
+.case-item__caption {
+  color: #DEDDE0;
+}
+
+/* -----------------------------------------------------------------
+    - Testimonials
+----------------------------------------------------------------- */
+.review-item {
+  background-color: #2C283A;
+  background-image: url(https://art-template.ru/vcard1/assets/icons/dark/icon-quote.svg);
+}
+.review-item__caption {
+  color: #DEDDE0;
+}
+
+.swiper-pagination-bullet {
+  background: #272333;
+}
+.swiper-pagination-bullet__item::before {
+  background-color: #0D86FF;
+  box-shadow: 0 0 0 0.1875rem rgba(13, 134, 255, 0.25);
+}
+.swiper-pagination-bullet-active {
+  background: #0D86FF;
+}
+
+/* -----------------------------------------------------------------
+    - Timeline
+----------------------------------------------------------------- */
+.timeline__item {
+  border-left: 1px solid rgba(255, 255, 255, 0.15);
+}
+.timeline__item::before {
+  content: '';
+  background-color: #0D86FF;
+  box-shadow: 0 0 0 0.1875rem rgba(13, 134, 255, 0.25);
+}
+.timeline__period {
+  color: rgba(222, 221, 224, 0.5);
+}
+
+/* -----------------------------------------------------------------
+    - Portfolio
+----------------------------------------------------------------- */
+.gallery-grid__category {
+  color: rgba(222, 221, 224, 0.5);
+}
+
+@media only screen and (min-width: 769px) {
+  .filter__link {
+    color: rgba(222, 221, 224, 0.5);
+  }
+  .filter__item.active a {
+    color: #0D86FF;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .select {
+    background-color: #272333;
+    color: #DEDDE0;
+  }
+  .select ul {
+    background-color: #302C40;
+    box-shadow: 0 10px 60px rgba(0, 0, 0, 0.25);
+  }
+  .select ul li {
+    color: #DEDDE0;
+  }
+  .select ul li:hover {
+    background-color: #0d86ff;
+  }
+  .select ul li a {
+    color: #DEDDE0;
+  }
+}
+/* -----------------------------------------------------------------
+    - News
+----------------------------------------------------------------- */
+.news-item {
+  background-color: #2C283A;
+  box-shadow: none;
+}
+.news-item:hover {
+  box-shadow: none;
+}
+.news-item__date {
+  background-color: #2C283A;
+  color: #DEDDE0;
+}
+.news-item p {
+  color: #DEDDE0;
+}
+
+/* -----------------------------------------------------------------
+    - Single post
+----------------------------------------------------------------- */
+.header-post__date {
+  color: rgba(222, 221, 224, 0.7);
+}
+
+.caption-post p {
+  color: #DEDDE0;
+}
+
+.gallery-post__caption {
+  color: rgba(222, 221, 224, 0.7);
+}
+.gallery-post__caption a {
+  color: #dedde0;
+}
+
+.footer-post::before {
+  background-color: rgba(255, 255, 255, 0.6);
+}
+.footer-post__share {
+  color: #fff;
+}
+
+.comment-box__inner {
+  background-color: #2C283A;
+}
+.comment-box__body {
+  color: #DEDDE0;
+}
+.comment-box__details {
+  color: #fff;
+}
+.comment-box__details-date {
+  color: rgba(222, 221, 224, 0.3);
+}
+.comment-box__footer {
+  color: rgba(222, 221, 224, 0.5);
+}
+.comment-box__footer li:hover {
+  color: #0D86FF;
+}
+
+.comment-form .icon-smile {
+  color: rgba(222, 221, 224, 0.5);
+}
+.comment-form .icon-smile:hover {
+  color: #DEDDE0;
+}
+
+.scroll-line {
+  background: #0D86FF;
+}
+
+.emoji-wrap .emoji:hover {
+  box-shadow: 0 0 0px 2px rgba(255, 255, 255, 0.2);
+}
+
+.nicescroll-cursors {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  border-color: transparent !important;
+}
+
+.social-auth .font-icon {
+  background-color: #0D86FF;
+}
+.social-auth .icon-facebook {
+  background-color: #3B5998;
+}
+.social-auth .icon-twitter {
+  background-color: #55ACEE;
+}
+.social-auth .icon-dribbble {
+  background-color: #F26798;
+}
+.social-auth .icon-behance {
+  background-color: #4176FA;
+}
+
+/* -----------------------------------------------------------------
+    - Other
+----------------------------------------------------------------- */
+.mapboxgl-popup-content {
+  color: #44566C;
+}
+
+.back-to-top {
+  border-top: 1px solid #fff;
+  border-left: 1px solid #fff;
+}
+
+.medium-zoom-overlay {
+  background: #272333 !important;
+}
+
+/*# sourceMappingURL=style-dark.css.map */
