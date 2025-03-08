@@ -1,6 +1,8 @@
-﻿namespace Entities.Dtos.AboutDtos;
+﻿using Core.Entities.Abstract;
 
-public class GetAboutDto
+namespace Entities.Dtos;
+
+public class GetAboutDto : IDto
 {
     public string Description { get; set; }
 }
