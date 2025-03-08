@@ -14,7 +14,6 @@ public class HomeController : ControllerManager
     public async Task<IActionResult> Index()
     {
         var result = await _manager.AboutService.GetAboutAsync();
-        var test = _manager.AboutService.Test();
         return View(result.Data);
     }
 }

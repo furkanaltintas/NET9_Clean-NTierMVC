@@ -11,6 +11,4 @@ public interface IAboutService
     Task<IResult> DeleteAboutAsync(int id);
     Task<IResult> AddAboutAsync(CreateAboutDto createAboutDto);
     Task<IResult> UpdateAboutAsync(UpdateAboutDto updateAboutDto);
-
-    string Test();
 }

@@ -73,11 +73,6 @@ namespace Business.Concrete
             return new DataResult<GetAboutDto>(ResultStatus.Success, aboutDto);
         }
 
-        public string Test()
-        {
-            var test = Repository.GetRepository<About, AboutRepository>().Test();
-            return test;
-        }
 
         public async Task<IResult> UpdateAboutAsync(UpdateAboutDto updateAboutDto)
         {
