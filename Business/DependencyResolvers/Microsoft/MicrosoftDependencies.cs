@@ -7,6 +7,6 @@ public static class MicrosoftDependencies
 {
     public static void AddCustomDependencies(this IServiceCollection services)
     {
-        services.AddAutoMapper(typeof(AboutProfile));
+        services.AddAutoMapper(typeof(AutoMappingProfile).Assembly);
     }
 }

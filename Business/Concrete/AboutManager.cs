@@ -10,11 +10,11 @@ using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework.Repositories;
-using Entities.Dtos.AboutDtos;
+using Entities.Concrete;
+using Entities.Dtos;
 using Portfolio.Core.Utilities.Results.Abstract;
 using Portfolio.Core.Utilities.Results.ComplexTypes;
 using Portfolio.Core.Utilities.Results.Concrete;
-using PortfolioApp.Entities.Concrete;
 
 namespace Business.Concrete
 {
@@ -38,7 +38,8 @@ namespace Business.Concrete
 
             var about = Mapper.Map<About>(createAboutDto);
             await Repository.GetRepository<About>().AddAsync(about);
-            await Repository.SaveChangesAsync();
+            await Repository.SaveAsync();
+            return new Result(ResultStatus.Success, Messages.Added);
         }
 
         public async Task<IResult> DeleteAboutAsync(int id)
@@ -50,7 +51,7 @@ namespace Business.Concrete
 
             var about = await Repository.GetRepository<About>().GetAsync(a => a.Id == id);
             await Repository.GetRepository<About>().HardDeleteAsync(about);
-            await Repository.SaveChangesAsync();
+            await Repository.SaveAsync();
             return new Result(ResultStatus.Success, Messages.Deleted);
 
         }
@@ -82,7 +83,7 @@ namespace Business.Concrete
         {
             var about = Mapper.Map<About>(updateAboutDto);
             await Repository.GetRepository<About>().UpdateAsync(about);
-            await Repository.SaveChangesAsync();
+            await Repository.SaveAsync();
             return new Result(ResultStatus.Success, Messages.Updated);
         }
     }

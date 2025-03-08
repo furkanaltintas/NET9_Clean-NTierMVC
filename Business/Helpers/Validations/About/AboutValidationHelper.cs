@@ -1,10 +1,9 @@
 ﻿using Business.Constants;
 using DataAccess.Abstract;
+using Entities.Concrete;
 using Portfolio.Core.Utilities.Results.Abstract;
 using Portfolio.Core.Utilities.Results.ComplexTypes;
 using Portfolio.Core.Utilities.Results.Concrete;
-using PortfolioApp.Entities.Concrete;
-using System.Threading.Tasks;
 
 namespace Business.Helpers.Validations;
 
