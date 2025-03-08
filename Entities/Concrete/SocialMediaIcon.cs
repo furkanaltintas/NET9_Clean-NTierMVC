@@ -7,7 +7,7 @@ public class SocialMediaIcon : BaseEntity, IEntity
 {
     public SocialMediaIcon()
     {
-        
+
     }
 
     public SocialMediaIcon(string name, string icon, string link)

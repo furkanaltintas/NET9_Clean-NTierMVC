@@ -7,7 +7,7 @@ public class Education : BaseEntity, IEntity
 {
     public Education()
     {
-        
+
     }
 
     public string Title { get; set; }

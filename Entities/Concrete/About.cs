@@ -1,13 +1,13 @@
 ﻿using Core.Entities.Abstract;
 using Core.Entities.Concrete;
 
-namespace PortfolioApp.Entities.Concrete;
+namespace Entities.Concrete;
 
 public class About : BaseEntity, IEntity
 {
     public About()
     {
-        
+
     }
 
     public About(string description)

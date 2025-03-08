@@ -7,7 +7,7 @@ public class Contact : BaseEntity, IEntity
 {
     public Contact()
     {
-        
+
     }
 
     public Contact(string fullName, string email, string message)

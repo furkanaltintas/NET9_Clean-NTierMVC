@@ -8,7 +8,7 @@ public class Service : BaseEntity, IEntity
 {
     public Service()
     {
-        
+
     }
 
     public Service(string name, string description, string icon)

@@ -7,7 +7,7 @@ public class WebSiteInfo : BaseEntity, IEntity
 {
     public WebSiteInfo()
     {
-        
+
     }
 
     public WebSiteInfo(string title, string menuTitle, string seoDescription, string seoTags, string seoAuthor)

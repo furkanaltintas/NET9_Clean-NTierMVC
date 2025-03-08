@@ -7,7 +7,7 @@ public class Portfolio : BaseEntity, IEntity
 {
     public Portfolio()
     {
-        
+
     }
 
     public Portfolio(string title, string subTitle, string image)

@@ -7,7 +7,7 @@ public class Blog : BaseEntity, IEntity
 {
     public Blog()
     {
-        
+
     }
 
     public string Title { get; set; }

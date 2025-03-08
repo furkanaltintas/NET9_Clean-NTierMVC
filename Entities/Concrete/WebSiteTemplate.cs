@@ -7,7 +7,7 @@ public class WebSiteTemplate : BaseEntity, IEntity
 {
     public WebSiteTemplate()
     {
-        
+
     }
 
     public WebSiteTemplate(string background, string sidebarColor, string contentColor, string menuColor, string footerTitle, string cvButtonColor)

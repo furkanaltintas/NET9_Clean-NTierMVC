@@ -7,7 +7,7 @@ public class Skill : BaseEntity, IEntity
 {
     public Skill()
     {
-        
+
     }
 
     public Skill(string name, int point)

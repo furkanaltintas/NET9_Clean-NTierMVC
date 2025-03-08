@@ -7,7 +7,7 @@ public class User : BaseEntity, IEntity
 {
     public User()
     {
-        
+
     }
 
     public User(string email, string password)
