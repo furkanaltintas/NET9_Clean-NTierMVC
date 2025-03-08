@@ -4,6 +4,7 @@ using Presentation.Controllers.Base;
 
 namespace Presentation.Controllers;
 
+[Route("")]
 public class HomeController : ControllerManager
 {
     public HomeController(IServiceManager manager) : base(manager)

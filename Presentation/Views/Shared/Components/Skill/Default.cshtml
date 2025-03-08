@@ -1,0 +1,49 @@
+﻿@model List<GetAllSkillDto>
+
+@{
+    int indexEven = 0;
+    int indexOdd = 0;
+}
+
+<div class="box-inner box-inner--rounded">
+    <h2 class="title title--h3">Yetenekler</h2>
+    <div class="row">
+        <div class="col-12 col-lg-6">
+            <div class="box box__second">
+                <!-- Progress -->
+                @foreach (var skill in Model)
+                {
+                    if (indexOdd % 2 == 0)
+                    {
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="@skill.Point" aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-text"><span>@skill.Name</span><span>@skill.Point%</span></div>
+                            </div>
+                            <div class="progress-text"><span>@skill.Name</span></div>
+                        </div>
+                    }
+                    indexOdd++;
+                }
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-6 mt-4 mt-lg-0">
+            <div class="box box__second">
+                <!-- Progress -->
+                @foreach (var skill in Model)
+                {
+                    if (indexEven % 2 != 0)
+                    {
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="@skill.Point" aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-text"><span>@skill.Name</span><span>@skill.Point%</span></div>
+                            </div>
+                            <div class="progress-text"><span>@skill.Name</span></div>
+                        </div>
+                    }
+                    indexEven++;
+                }
+            </div>
+        </div>
+    </div>
+</div>

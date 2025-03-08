@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Presentation.Controllers
+namespace Presentation.Controllers;
+
+[Route("iletisim")]
+public class ContactController : Controller
 {
-    public class ContactController : Controller
+    public IActionResult Index()
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        return View();
     }
 }

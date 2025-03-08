@@ -1,12 +1,19 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Business.Abstract.Base;
+using Microsoft.AspNetCore.Mvc;
+using Presentation.Controllers.Base;
 
-namespace Presentation.Controllers
+namespace Presentation.Controllers;
+
+[Route("portfoy")]
+public class PortfolioController : ControllerManager
 {
-    public class PortfolioController : Controller
+    public PortfolioController(IServiceManager manager) : base(manager)
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+    }
+
+    public async Task<IActionResult> Index()
+    {
+        var result = await _manager.PortfolioService.GetAllAsync();
+        return View(result.Data);
     }
 }

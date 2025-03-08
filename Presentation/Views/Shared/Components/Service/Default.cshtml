@@ -1,0 +1,21 @@
+﻿@model List<GetAllServiceDto>
+
+<!-- What -->
+<div class="box-inner pb-0">
+	<h2 class="title title--h3">Ne Yapıyorum</h2>
+	<div class="row">
+		@foreach(var service in Model)
+		{
+			<!-- Case Item -->
+			<div class="col-12 col-lg-6">
+				<div class="case-item box box__second">
+					<img class="case-item__icon" src="https://art-template.ru/vcard1/assets/icons/dark/icon-design.svg" alt="" />
+					<div>
+						<h3 class="title title--h5">@service.Name</h3>
+						<p class="case-item__caption">@service.Description</p>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+</div>

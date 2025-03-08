@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Presentation.Controllers
+namespace Presentation.Controllers;
+
+[Route("ozgecmis")]
+public class ResumeController : Controller
 {
-    public class ResumeController : Controller
+    public IActionResult Index()
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        return View();
     }
 }

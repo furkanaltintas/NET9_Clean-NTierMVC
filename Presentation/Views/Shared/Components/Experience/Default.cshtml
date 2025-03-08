@@ -1,0 +1,16 @@
+﻿@model List<GetAllExperienceDto>
+
+<div class="col-12 col-lg-6">
+	<h2 class="title title--h3"><img class="title-icon" src="https://art-template.ru/vcard1/assets/icons/dark/icon-experience.svg" alt="" /> Experience</h2>
+	<div class="timeline">
+		<!-- Item -->
+		@foreach(var experience in Model)
+		{
+			<article class="timeline__item">
+				<h5 class="title title--h5 timeline__title">@experience.Title</h5>
+				<span class="timeline__period">@experience.StartDate.Year — @experience.EndDate.Year</span>
+				<p class="timeline__description">@experience.Description</p>
+			</article>
+		}
+	</div>
+</div>
