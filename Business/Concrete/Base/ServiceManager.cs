@@ -23,4 +23,6 @@ public class ServiceManager : IServiceManager
     public IBlogService BlogService => _serviceProvider.GetService<IBlogService>();
 
     public IServiceService ServiceService => _serviceProvider.GetService<IServiceService>();
+
+    public IContactService ContactService => _serviceProvider.GetService<IContactService>();
 }

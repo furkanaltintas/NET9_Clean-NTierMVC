@@ -9,4 +9,5 @@ public interface IServiceManager
     IPortfolioService PortfolioService { get; }
     IBlogService BlogService { get; }
     IServiceService ServiceService { get; }
+    IContactService ContactService { get; }
 }
