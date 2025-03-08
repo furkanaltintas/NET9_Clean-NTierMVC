@@ -1,7 +1,6 @@
 ﻿using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using PortfolioApp.Entities.Concrete;
 
 namespace DataAccess.Concrete.EntityFramework.Contexts;
 
@@ -9,7 +8,7 @@ public class ApplicationDbContext : DbContext
 {
     public ApplicationDbContext()
     {
-        
+
     }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }

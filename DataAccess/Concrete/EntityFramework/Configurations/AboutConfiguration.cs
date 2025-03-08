@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Entities.Concrete;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PortfolioApp.Entities.Concrete;
 
 namespace DataAccess.Concrete.EntityFramework.Configurations;
 

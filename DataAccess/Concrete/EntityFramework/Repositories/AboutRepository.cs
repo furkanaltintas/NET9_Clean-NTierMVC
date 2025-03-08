@@ -1,8 +1,7 @@
-﻿using Core.DataAccess.Abstract;
-using Core.DataAccess.Concrete.EntityFramework;
+﻿using Core.DataAccess.Concrete.EntityFramework;
 using DataAccess.Abstract;
+using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
-using PortfolioApp.Entities.Concrete;
 
 namespace DataAccess.Concrete.EntityFramework.Repositories
 {

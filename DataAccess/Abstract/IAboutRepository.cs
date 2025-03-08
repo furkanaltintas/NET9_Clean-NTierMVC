@@ -1,5 +1,5 @@
 ﻿using Core.DataAccess.Abstract;
-using PortfolioApp.Entities.Concrete;
+using Entities.Concrete;
 
 namespace DataAccess.Abstract
 {
