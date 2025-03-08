@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Controllers.Base;
 using Presentation.Extensions;
-using System.Threading.Tasks;
 
 namespace Presentation.Controllers;
 
@@ -13,7 +12,6 @@ public class BlogController : ControllerManager
     {
     }
 
-    [Route("")]
     public async Task<IActionResult> Index()
     {
         var result = await _manager.BlogService.GetAllAsync();
@@ -23,8 +21,7 @@ public class BlogController : ControllerManager
     [Route("detay")]
     public async Task<IActionResult> Detail(string slug)
     {
-        var result = await _manager.BlogService.GetAsync(slug);
-        
-        return this.ResponseView(result, null, null);
+        var result = await _manager.BlogService.GetAsync(slug);    
+        return this.ResponseView(result);
     }
 }

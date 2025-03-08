@@ -1,35 +1,37 @@
-﻿						<!-- About -->
+﻿@model CreateContactDto
+
+<!-- Contact -->
 <div class="pb-2">
-	<h1 class="title title--h1 first-title title__separate">Contact</h1>
+	<h1 class="title title--h1 first-title title__separate">İletişim</h1>
 </div>
 
 <!-- Contact -->
-<div class="map" id="map"></div>
-<h2 class="title title--h3">Contact Form</h2>
+@* <div class="map" id="map"></div> *@
+<h2 class="title title--h3">İletişim Formu</h2>
 
-<form id="contact-form" class="contact-form" data-toggle="validator">
+<form asp-action="Send" method="post" class="contact-form">
 	<div class="row">
 		<div class="form-group col-12 col-md-6">
 			<i class="font-icon icon-user"></i>
-			<input type="text" class="input input__icon form-control" id="nameContact" name="nameContact" placeholder="Full name" required="required" autocomplete="on" oninvalid="setCustomValidity('Fill in the field')" onkeyup="setCustomValidity('')">
+			<input asp-for="FullName" type="text" class="input input__icon form-control" placeholder="Adınız ve Soyadınız" autocomplete="on" onkeyup="setCustomValidity('')">
 			<div class="help-block with-errors"></div>
 		</div>
 		<div class="form-group col-12 col-md-6">
 			<i class="font-icon icon-envelope"></i>
-			<input type="email" class="input input__icon form-control" id="emailContact" name="emailContact" placeholder="Email address" required="required" autocomplete="on" oninvalid="setCustomValidity('Email is incorrect')" onkeyup="setCustomValidity('')">
+			<input asp-for="Email" type="email" class="input input__icon form-control" placeholder="Mail Adresiniz" autocomplete="on" onkeyup="setCustomValidity('')">
 			<div class="help-block with-errors"></div>
 		</div>
 		<div class="form-group col-12 col-md-12">
-			<textarea class="textarea form-control" id="messageContact" name="messageContact" placeholder="Your Message" rows="4" required="required" oninvalid="setCustomValidity('Fill in the field')" onkeyup="setCustomValidity('')"></textarea>
+			<textarea asp-for="Message" class="textarea form-control" placeholder="Mesajınız" rows="4" onkeyup="setCustomValidity('')"></textarea>
 			<div class="help-block with-errors"></div>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-12 col-md-6 order-2 order-md-1 text-center text-md-left">
-			<div id="validator-contact" class="hidden"></div>
+			<div class="hidden"></div>
 		</div>
 		<div class="col-12 col-md-6 order-1 order-md-2 text-right">
-			<button type="submit" class="btn"><i class="font-icon icon-send"></i> Send Message</button>
+			<button type="submit" class="btn"><i class="font-icon icon-send"></i> Mesajı Gönder</button>
 		</div>
 	</div>
 </form>

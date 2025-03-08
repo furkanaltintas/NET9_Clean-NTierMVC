@@ -58,11 +58,11 @@ public static class ControllerExtensions
         this Controller controller,
         IResult result,
         IToastNotification toastNotification,
-        string actionName,
+        string actionName = null,
         string? controllerName = null)
     {
         ShowNotification(toastNotification, result);
-        return controller.RedirectToAction(actionName, controllerName);
+        return controller.RedirectToAction(actionName ?? nameof(Index), controllerName);
     }
 
 
@@ -74,11 +74,8 @@ public static class ControllerExtensions
     public static IActionResult ResponseView<T>(
         this Controller controller,
         IDataResult<T> result,
-        IToastNotification toastNotification,
         string? actionName = null)
     {
-        //ShowNotification(toastNotification, result);
-
         return result.ResultStatus == ResultStatus.Success
             ? controller.View(result.Data)
             : controller.RedirectToAction(actionName ?? nameof(Index));
