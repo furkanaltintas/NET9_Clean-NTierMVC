@@ -1,8 +1,14 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Autofac.Extras.DynamicProxy;
+using Business.Abstract;
+using Business.Concrete;
 using Business.DependencyResolvers.Autofac;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Validation;
 using DataAccess.Concrete.EntityFramework.Contexts;
 using Microsoft.EntityFrameworkCore;
+using NToastNotify;
 
 namespace Presentation.Extensions;
 
@@ -18,6 +24,19 @@ public static class ServiceExtensions
             options.LowercaseUrls = true;
         });
 
+        services
+            .AddControllersWithViews()
+            .AddNToastNotifyToastr(new()
+            {
+                PositionClass = ToastPositions.TopRight,
+                TimeOut = 5000,
+                ProgressBar = true,
+                CloseButton = true,
+            })
+            .AddRazorRuntimeCompilation();
+
+        services.AddSession();
+
         return services;
     }
 
@@ -27,6 +46,17 @@ public static class ServiceExtensions
         {
             builder.RegisterModule(new AutofacBusinessModule());
         }));
+
+        //host.ConfigureContainer<ContainerBuilder>(container =>
+        //{
+        //    container.RegisterType<ValidationAspect>();
+        //    container.RegisterType<CacheAspect>();
+
+        //    container.RegisterAssemblyTypes(typeof(BlogManager).Assembly)
+        //    .AsImplementedInterfaces()
+        //    .EnableInterfaceInterceptors()
+        //    .InterceptedBy(typeof(ValidationAspect));
+        //});
 
         return host;
     }
