@@ -24,7 +24,7 @@ public class EfEntityRepositoryBase<TEntity> : IEntityRepository<TEntity>
     {
         var query = Table.AsNoTracking();
 
-        if(predicate is not null) query = query.Where(predicate);
+        if (predicate is not null) query = query.Where(predicate);
         return await query.AnyAsync();
     }
 
