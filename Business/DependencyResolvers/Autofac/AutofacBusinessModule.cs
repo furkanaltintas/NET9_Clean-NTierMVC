@@ -6,6 +6,8 @@ using Castle.DynamicProxy;
 using Core.Utilities.Interceptors;
 using DataAccess.Abstract;
 using DataAccess.Concrete;
+using System.Reflection;
+using Module = Autofac.Module;
 
 namespace Business.DependencyResolvers.Autofac
 {
@@ -17,7 +19,7 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<Repository>().As<IRepository>();
             builder.RegisterType<ServiceManager>().As<IServiceManager>();
 
-            var assembly = System.Reflection.Assembly.GetExecutingAssembly(); // Mevcut assembly'e ulaştık  (Business)
+            Assembly assembly = Assembly.GetExecutingAssembly(); // Mevcut assembly'e ulaştık  (Business)
 
 
             builder.RegisterAssemblyTypes(assembly) // Bu assemblyde ki bütüp tipleri kayıt et

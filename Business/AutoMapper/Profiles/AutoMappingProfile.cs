@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Entities.Concrete;
+using System.Reflection;
 
 namespace Business.AutoMapper.Profiles;
 
@@ -7,23 +8,23 @@ public class AutoMappingProfile : Profile
 {
     public AutoMappingProfile()
     {
-        var assembly = typeof(About).Assembly;
+        Assembly assembly = typeof(About).Assembly;
 
-        var entityNamespace = "Entities.Concrete";
-        var dtoNamespace = "Entities.Dtos";
+        string entityNamespace = "Entities.Concrete";
+        string dtoNamespace = "Entities.Dtos";
 
-        var entityTypes = assembly.GetTypes()
+        List<Type> entityTypes = assembly.GetTypes()
             .Where(t => t.Namespace != null && t.Namespace.StartsWith(entityNamespace))
             .ToList();
 
-        var dtoTypes = assembly.GetTypes()
+        List<Type> dtoTypes = assembly.GetTypes()
             .Where(t => t.Namespace != null && t.Namespace.StartsWith(dtoNamespace))
             .ToList();
 
         foreach (var entityType in entityTypes)
         {
             // Entity adını içeren tüm DTO'ları bul (örneğin: About -> GetAboutDto, CreateAboutDto, UpdateAboutDto)
-            var matchingDtos = dtoTypes
+            List<Type> matchingDtos = dtoTypes
                 .Where(dto => dto.Name.Contains(entityType.Name)) // "About" geçen tüm DTO'ları bul
                 .ToList();
 

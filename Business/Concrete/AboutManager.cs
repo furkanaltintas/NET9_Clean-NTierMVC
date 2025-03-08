@@ -29,14 +29,14 @@ namespace Business.Concrete
         [CacheRemoveAspect("IAboutService.Get")]
         public async Task<IResult> AddAboutAsync(CreateAboutDto createAboutDto)
         {
-            var result = BusinessRules.Run(
+            Result result = BusinessRules.Run(
                 await ValidationHelper.AboutValidationHelper.CheckIfAboutExists());
 
             if (result != null)
                 return result;
 
 
-            var about = Mapper.Map<About>(createAboutDto);
+            About about = Mapper.Map<About>(createAboutDto);
             await Repository.GetRepository<About>().AddAsync(about);
             await Repository.SaveAsync();
             return new Result(ResultStatus.Success, Messages.Added);
@@ -44,12 +44,12 @@ namespace Business.Concrete
 
         public async Task<IResult> DeleteAboutAsync(int id)
         {
-            var result = await Repository.GetRepository<About>().AnyAsync(a => a.Id == id);
+            bool result = await Repository.GetRepository<About>().AnyAsync(a => a.Id == id);
 
             if (!result)
                 return new Result(ResultStatus.Error, "Böyle bir hakkımda sayfası bulunamadı", null);
 
-            var about = await Repository.GetRepository<About>().GetAsync(a => a.Id == id);
+            About about = await Repository.GetRepository<About>().GetAsync(a => a.Id == id);
             await Repository.GetRepository<About>().HardDeleteAsync(about);
             await Repository.SaveAsync();
             return new Result(ResultStatus.Success, Messages.Deleted);
@@ -61,14 +61,14 @@ namespace Business.Concrete
         [PerformanceAspect(5)]
         public async Task<IDataResult<GetAboutDto>> GetAboutAsync()
         {
-            var result = BusinessRules.Run<GetAboutDto>(
+            DataResult<GetAboutDto> result = BusinessRules.Run<GetAboutDto>(
                await ValidationHelper.AboutValidationHelper.CheckIfAboutExists());
 
             if (result != null)
                 return result;
 
-            var about = await Repository.GetRepository<About>().GetAsync();
-            var aboutDto = Mapper.Map<GetAboutDto>(about);
+            About about = await Repository.GetRepository<About>().GetAsync();
+            GetAboutDto aboutDto = Mapper.Map<GetAboutDto>(about);
 
             return new DataResult<GetAboutDto>(ResultStatus.Success, aboutDto);
         }
@@ -81,7 +81,7 @@ namespace Business.Concrete
 
         public async Task<IResult> UpdateAboutAsync(UpdateAboutDto updateAboutDto)
         {
-            var about = Mapper.Map<About>(updateAboutDto);
+            About about = Mapper.Map<About>(updateAboutDto);
             await Repository.GetRepository<About>().UpdateAsync(about);
             await Repository.SaveAsync();
             return new Result(ResultStatus.Success, Messages.Updated);

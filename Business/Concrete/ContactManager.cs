@@ -24,7 +24,7 @@ public class ContactManager : BaseManager, IContactService
     {
         if(createContactDto != null)
         {
-            var contact = Mapper.Map<Contact>(createContactDto);
+            Contact contact = Mapper.Map<Contact>(createContactDto);
             await Repository.GetRepository<Contact>().AddAsync(contact);
             await Repository.SaveAsync();
             return new Result(ResultStatus.Success, "Mesajınız iletilmiştir");

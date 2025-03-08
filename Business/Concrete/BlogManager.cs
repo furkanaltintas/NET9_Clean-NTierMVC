@@ -21,21 +21,21 @@ public class BlogManager : BaseManager, IBlogService
     [CacheAspect]
     public async Task<IDataResult<IList<GetAllBlogDto>>> GetAllAsync()
     {
-        var blogs = await Repository.GetRepository<Blog>().GetAllAsync(orderBy: e => e.OrderByDescending(e => e.PublishDate));
+        IList<Blog> blogs = await Repository.GetRepository<Blog>().GetAllAsync(orderBy: e => e.OrderByDescending(e => e.PublishDate));
 
-        var getAllBlogDtos = Mapper.Map<IList<GetAllBlogDto>>(blogs);
+        IList<GetAllBlogDto> getAllBlogDtos = Mapper.Map<IList<GetAllBlogDto>>(blogs);
         return new DataResult<IList<GetAllBlogDto>>(ResultStatus.Success, getAllBlogDtos);
     }
 
     [CacheAspect]
     public async Task<IDataResult<GetBlogDto>> GetAsync(string slug)
     {
-        var blog = await Repository.GetRepository<Blog>().GetAsync(b =>b.Slug == slug);
+        Blog blog = await Repository.GetRepository<Blog>().GetAsync(b => b.Slug == slug);
 
         if(blog == null)
             return new DataResult<GetBlogDto>(ResultStatus.Error, "Böyle bir blog bulunamadı");
 
-        var getBlogDto = Mapper.Map<GetBlogDto>(blog);
+        GetBlogDto getBlogDto = Mapper.Map<GetBlogDto>(blog);
         return new DataResult<GetBlogDto>(ResultStatus.Success, getBlogDto);
     }
 }

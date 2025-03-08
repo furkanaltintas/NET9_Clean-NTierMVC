@@ -20,9 +20,9 @@ public class PortfolioManager : BaseManager, IPortfolioService
     [CacheAspect]
     public async Task<IDataResult<IList<GetAllPortfolioDto>>> GetAllAsync()
     {
-        var portfolios = await Repository.GetRepository<Entities.Concrete.Portfolio>().GetAllAsync();
+        IList<Entities.Concrete.Portfolio> portfolios = await Repository.GetRepository<Entities.Concrete.Portfolio>().GetAllAsync();
 
-        var getAllPortfolioDtos = Mapper.Map<IList<GetAllPortfolioDto>>(portfolios);
+        IList<GetAllPortfolioDto> getAllPortfolioDtos = Mapper.Map<IList<GetAllPortfolioDto>>(portfolios);
         return new DataResult<IList<GetAllPortfolioDto>>(ResultStatus.Success, getAllPortfolioDtos);
     }
 }

@@ -20,7 +20,7 @@ public class SecuredOperation : MethodInterception
 
     protected override void OnBefore(IInvocation invocation)
     {
-        var roleClaims = _httpContextAccessor.HttpContext.User.ClaimRoles(); // Kullanıcının rolleri
+        List<string> roleClaims = _httpContextAccessor.HttpContext.User.ClaimRoles(); // Kullanıcının rolleri
 
         foreach (var role in _roles) // Methodların rolleri
         {

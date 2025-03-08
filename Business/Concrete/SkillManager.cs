@@ -21,9 +21,9 @@ public class SkillManager : BaseManager, ISkillService
     [CacheAspect]
     public async Task<IDataResult<IList<GetAllSkillDto>>> GetAllAsync()
     {
-        var skills = await Repository.GetRepository<Skill>().GetAllAsync();
+        IList<Skill> skills = await Repository.GetRepository<Skill>().GetAllAsync();
 
-        var getAllSkillDtos = Mapper.Map<IList<GetAllSkillDto>>(skills);
+        IList<GetAllSkillDto> getAllSkillDtos = Mapper.Map<IList<GetAllSkillDto>>(skills);
         return new DataResult<IList<GetAllSkillDto>>(ResultStatus.Success, getAllSkillDtos);
     }
 }

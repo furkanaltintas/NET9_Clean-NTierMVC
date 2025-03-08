@@ -21,9 +21,9 @@ public class ExperienceManager : BaseManager, IExperienceService
     [CacheAspect]
     public async Task<IDataResult<IList<GetAllExperienceDto>>> GetAllAsync()
     {
-        var experiences = await Repository.GetRepository<Experience>().GetAllAsync(orderBy: e => e.OrderByDescending(e => e.StartDate));
+        IList<Experience> experiences = await Repository.GetRepository<Experience>().GetAllAsync(orderBy: e => e.OrderByDescending(e => e.StartDate));
 
-        var getAllExperienceDtos = Mapper.Map<IList<GetAllExperienceDto>>(experiences);
+        IList<GetAllExperienceDto> getAllExperienceDtos = Mapper.Map<IList<GetAllExperienceDto>>(experiences);
         return new DataResult<IList<GetAllExperienceDto>>(ResultStatus.Success, getAllExperienceDtos);
     }
 }

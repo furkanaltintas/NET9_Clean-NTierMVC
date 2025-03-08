@@ -22,9 +22,9 @@ public class EducationManager : BaseManager, IEducationService
     [CacheAspect]
     public async Task<IDataResult<IList<GetAllEducationDto>>> GetAllAsync()
     {
-        var educations = await Repository.GetRepository<Education>().GetAllAsync(orderBy: e => e.OrderByDescending(e => e.StartDate));
+        IList<Education> educations = await Repository.GetRepository<Education>().GetAllAsync(orderBy: e => e.OrderByDescending(e => e.StartDate));
 
-        var getAllEducationDtos = Mapper.Map<IList<GetAllEducationDto>>(educations);
+        IList<GetAllEducationDto> getAllEducationDtos = Mapper.Map<IList<GetAllEducationDto>>(educations);
         return new DataResult<IList<GetAllEducationDto>>(ResultStatus.Success, getAllEducationDtos);
     }
 }

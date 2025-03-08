@@ -21,8 +21,8 @@ namespace Business.Concrete
         [CacheAspect]
         public async Task<IDataResult<IList<GetAllServiceDto>>> GetAllAsync()
         {
-            var services = await Repository.GetRepository<Service>().GetAllAsync();
-            var getAllServiceDtos = Mapper.Map<IList<GetAllServiceDto>>(services);
+            IList<Service> services = await Repository.GetRepository<Service>().GetAllAsync();
+            IList<GetAllServiceDto> getAllServiceDtos = Mapper.Map<IList<GetAllServiceDto>>(services);
             return new DataResult<IList<GetAllServiceDto>>(ResultStatus.Success, getAllServiceDtos);
         }
     }
