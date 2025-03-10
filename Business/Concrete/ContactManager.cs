@@ -19,6 +19,19 @@ public class ContactManager : BaseManager, IContactService
     {
     }
 
+
+    public Task<IResult> DeleteContactAsync(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+
+    public Task<IDataResult<GetContactDto>> GetAboutAsync()
+    {
+        throw new NotImplementedException();
+    }
+
+
     [ValidationAspect(typeof(ContactValidator), Priority = 1)]
     public async Task<IResult> SendAsync(CreateContactDto createContactDto)
     {
