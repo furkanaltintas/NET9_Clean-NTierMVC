@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Business.Abstract;
 using Business.Concrete.Base;
+using Business.Constants;
 using Business.Helpers.Validations;
+using Core.Aspects.Autofac.Caching;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.Dtos;
@@ -17,10 +19,75 @@ public class SocialMediaManager : BaseManager, ISocialMediaService
     {
     }
 
+
+    [CacheRemoveAspect("ISocialMediaService.Get")]
+    public async Task<IResult> AddSocialMediaAsync(CreateSocialMediaIconDto createSocialMediaIconDto)
+    {
+        SocialMediaIcon socialMediaIcon = Mapper.Map<SocialMediaIcon>(createSocialMediaIconDto);
+        await Repository.GetRepository<SocialMediaIcon>().AddAsync(socialMediaIcon);
+        return new Result(ResultStatus.Success, Messages.Added);
+    }
+
+
+    [CacheRemoveAspect("ISocialMediaService.Get")]
+    public async Task<IResult> DeleteSocialMediaAsync(int id)
+    {
+        SocialMediaIcon socialMediaIcon = await Repository.GetRepository<SocialMediaIcon>().GetAsync(e => e.Id == id);
+
+        if (socialMediaIcon == null)
+            return new Result(ResultStatus.Error, "Sistemde böyle bir sosyal medya hesabı bilgisi bulunmamaktadır.");
+
+        await Repository.GetRepository<SocialMediaIcon>().HardDeleteAsync(socialMediaIcon);
+        await Repository.SaveAsync();
+        return new Result(ResultStatus.Success, "Sosyal medya hesabı bilgisi sistemden başarıyla silinmiştir");
+    }
+
+
+    [CacheAspect]
     public async Task<IDataResult<IList<GetAllSocialMediaIconDto>>> GetAllAsync()
     {
         IList<SocialMediaIcon> socialMedias = await Repository.GetRepository<SocialMediaIcon>().GetAllAsync();
         List<GetAllSocialMediaIconDto> getAllSocialMediaDtos = Mapper.Map<List<GetAllSocialMediaIconDto>>(socialMedias);
         return new DataResult<List<GetAllSocialMediaIconDto>>(ResultStatus.Success, getAllSocialMediaDtos);
+    }
+
+
+    [CacheAspect]
+    public async Task<IDataResult<GetSocialMediaIconDto>> GetSocialMediaAsync(int id)
+    {
+        SocialMediaIcon socialMediaIcon = await Repository.GetRepository<SocialMediaIcon>().GetAsync(e => e.Id == id);
+
+        if (socialMediaIcon == null)
+            return new DataResult<GetSocialMediaIconDto>(ResultStatus.Error, "Sistemde böyle bir sosyal medya hesabı bilgisi bulunmamaktadır.");
+
+        GetSocialMediaIconDto getSocialMediaIconDto = Mapper.Map<GetSocialMediaIconDto>(socialMediaIcon);
+        return new DataResult<GetSocialMediaIconDto>(ResultStatus.Success, getSocialMediaIconDto);
+    }
+
+
+    [CacheAspect]
+    public async Task<IDataResult<UpdateServiceDto>> GetUpdateSocialMediaAsync(int id)
+    {
+        SocialMediaIcon socialMediaIcon = await Repository.GetRepository<SocialMediaIcon>().GetAsync(e => e.Id == id);
+
+        if (socialMediaIcon == null)
+            return new DataResult<UpdateServiceDto>(ResultStatus.Error, "Sistemde böyle bir sosyal medya hesabı bilgisi bulunmamaktadır.");
+
+        UpdateServiceDto updateServiceDto = Mapper.Map<UpdateServiceDto>(socialMediaIcon);
+        return new DataResult<UpdateServiceDto>(ResultStatus.Success, updateServiceDto);
+    }
+
+
+    [CacheRemoveAspect("ISocialMediaService.Get")]
+    public async Task<IResult> UpdateSocialMediaAsync(UpdateSocialMediaIconDto updateSocialMediaIconDto)
+    {
+        if (updateSocialMediaIconDto == null)
+            return new Result(ResultStatus.Error, "Sistemde böyle bir sosyal medya hesabı bilgisi bulunmamaktadır.");
+
+        SocialMediaIcon socialMediaIcon = await Repository.GetRepository<SocialMediaIcon>().GetAsync(e => e.Id == updateSocialMediaIconDto.Id);
+        Mapper.Map<SocialMediaIcon, UpdateSocialMediaIconDto>(socialMediaIcon);
+        await Repository.GetRepository<SocialMediaIcon>().UpdateAsync(socialMediaIcon);
+        await Repository.SaveAsync();
+        return new Result(ResultStatus.Success, Messages.Updated);
     }
 }
