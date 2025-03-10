@@ -79,6 +79,7 @@ public class BlogManager : BaseManager, IBlogService
         return new DataResult<GetBlogDto>(ResultStatus.Success, getBlogDto);
     }
 
+
     public async Task<IDataResult<GetBlogDto>> GetAsync(int id)
     {
         Blog blog = await Repository.GetRepository<Blog>().GetAsync(b => b.Id == id);
@@ -89,6 +90,19 @@ public class BlogManager : BaseManager, IBlogService
         GetBlogDto getBlogDto = Mapper.Map<GetBlogDto>(blog);
         return new DataResult<GetBlogDto>(ResultStatus.Success, getBlogDto);
     }
+
+
+    public async Task<IDataResult<UpdateBlogDto>> GetUpdateBlogAsync(int id)
+    {
+        Blog blog = await Repository.GetRepository<Blog>().GetAsync(b => b.Id == id);
+
+        if (blog == null)
+            return new DataResult<UpdateBlogDto>(ResultStatus.Error, "Böyle bir blog bulunamadı");
+
+        UpdateBlogDto updateBlogDto = Mapper.Map<UpdateBlogDto>(blog);
+        return new DataResult<UpdateBlogDto>(ResultStatus.Success, updateBlogDto);
+    }
+
 
     public async Task<IResult> UpdateAsync(UpdateBlogDto updateBlogDto)
     {

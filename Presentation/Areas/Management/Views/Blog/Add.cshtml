@@ -4,11 +4,11 @@
         <div class="section-wrapper">
             <form asp-action="Add" method="post">
                 <div class="form-group">
-                    <label asp-for="Title" class="form-label">Title</label>
+                    <label asp-for="Title" class="form-label"></label>
                     <input asp-for="Title" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label asp-for="Content" class="form-label">Content</label>
+                    <label asp-for="Content" class="form-label"></label>
                     <textarea asp-for="Content" class="form-control" rows="10"></textarea>
                 </div>
                 <div class="form-group">
@@ -24,7 +24,7 @@
                     <label asp-for="IsPublish" class="form-label ckbox">Should it be published?</label>
                     <input asp-for="IsPublish" type="checkbox" checked="false">
                 </div>
-                <button type="submit" class="btn btn-outline-success">Blog Ekle</button>
+                <button type="submit" class="btn btn-outline-success">Create Blog</button>
             </form>
         </div>
 </div>
