@@ -1,0 +1,32 @@
+﻿@model List<SkillViewModel>
+
+<div class="slim-mainpanel">
+    <div class="section-wrapper">
+        <div class="table-wrapper">
+            <table id="datatable1" class="table display responsive nowrap">
+                <thead>
+                    <tr>
+                        <th class="wd-15p">Name</th>
+                        <th class="wd-15p">Point</th>
+                        <th class="wd-15p">Transactions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var skill in Model)
+                    {
+                        <tr>
+                            <td>@skill.Name</td>
+                            <td>@skill.Point</td>
+                            <td>
+                                <a asp-action="Detail" asp-route-blogId="@skill.Id" class="btn btn-outline-warning btn-icon"><div><i class="fa fa-info"></i></div></a>
+                                <a asp-action="Update" asp-route-blogId="@skill.Id" class="btn btn-outline-primary btn-icon"><div><i class="fa fa-refresh"></i></div></a>
+                                <a asp-action="Delete" asp-route-blogId="@skill.Id" class="btn btn-outline-danger btn-icon"><div><i class="fa fa-trash"></i></div></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <a asp-action="Add" class="btn btn-outline-success">Skill Add</a>
+        </div>
+    </div>
+</div>
