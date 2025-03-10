@@ -1,0 +1,11 @@
+﻿@model SocialMediaSidebarViewModel
+
+<!-- Social -->
+<div class="social">
+    @foreach (var socialMediaIcon in Model.SocialMediaIconDtos)
+    {
+        <a class="social__link" href="@socialMediaIcon.Link">
+            <i class="font-icon icon-@socialMediaIcon.Icon"></i>
+        </a>
+    }
+</div>
