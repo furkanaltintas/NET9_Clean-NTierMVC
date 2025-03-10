@@ -20,4 +20,36 @@ public class PortfolioController : BaseController
         var result = await _serviceManager.PortfolioService.GetAllAsync();
         return this.ResponseViewModel<GetAllPortfolioDto, PortfolioViewModel>(result);
     }
+
+    public IActionResult Add() => View();
+
+
+    [HttpPost]
+    public async Task<IActionResult> Add(CreatePortfolioDto createPortfolioDto)
+    {
+        var result = await _serviceManager.PortfolioService.AddPortfolioAsync(createPortfolioDto);
+        return this.ResponseRedirectAction(result, _toastNotification);
+    }
+
+
+    public async Task<IActionResult> Update(int id)
+    {
+        var result = await _serviceManager.PortfolioService.GetUpdatePortfolioAsync(id);
+        return this.ResponseView(result);
+    }
+
+
+    [HttpPost]
+    public async Task<IActionResult> Update(UpdatePortfolioDto updatePortfolioDto)
+    {
+        var result = await _serviceManager.PortfolioService.UpdatePortfolioAsync(updatePortfolioDto);
+        return this.ResponseRedirectAction(result, _toastNotification);
+    }
+
+
+    public async Task<IActionResult> Delete(int id)
+    {
+        var result = await _serviceManager.PortfolioService.DeletePortfolioAsync(id);
+        return this.ResponseRedirectAction(result, _toastNotification);
+    }
 }
