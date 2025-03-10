@@ -1,0 +1,42 @@
+﻿@model List<ExperienceViewModel>
+
+<div class="slim-mainpanel">
+    <div class="section-wrapper">
+        <div class="table-wrapper">
+            <table id="datatable1" class="table display responsive nowrap">
+                <thead>
+                    <tr>
+                        <th class="wd-15p">Title</th>
+                        <th class="wd-15p">Company</th>
+                        <th class="wd-15p">Description</th>
+                        <th class="wd-15p">Location</th>
+                        <th class="wd-15p">TypeOfEmployment</th>
+                        <th class="wd-15p">Start Date</th>
+                        <th class="wd-15p">End Date</th>
+                        <th class="wd-15p">Transactions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var experience in Model)
+                    {
+                        <tr>
+                            <td>@experience.Title</td>
+                            <td>@experience.Company</td>
+                            <td>@experience.Description</td>
+                            <td>@experience.Location</td>
+                            <td>@experience.TypeOfEmployment</td>
+                            <td>@experience.StartDate</td>
+                            <td>@experience.EndDate</td>
+                            <td>
+                                <a asp-action="Detail" asp-route-blogId="@experience.Id" class="btn btn-outline-warning btn-icon"><div><i class="fa fa-info"></i></div></a>
+                                <a asp-action="Update" asp-route-blogId="@experience.Id" class="btn btn-outline-primary btn-icon"><div><i class="fa fa-refresh"></i></div></a>
+                                <a asp-action="Delete" asp-route-blogId="@experience.Id" class="btn btn-outline-danger btn-icon"><div><i class="fa fa-trash"></i></div></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <a asp-action="Add" class="btn btn-outline-success">Experience Add</a>
+        </div>
+    </div>
+</div>
