@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Core.Entities.Abstract;
+using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 using Portfolio.Core.Utilities.Results.Abstract;
 using Portfolio.Core.Utilities.Results.ComplexTypes;
+using Portfolio.Core.Utilities.Results.Concrete;
+using Presentation.Areas.Management.ViewModels;
 using Presentation.Helpers;
 using IResult = Portfolio.Core.Utilities.Results.Abstract.IResult;
 
@@ -79,6 +82,29 @@ public static class ControllerExtensions
         return result.ResultStatus == ResultStatus.Success
             ? controller.View(result.Data)
             : controller.RedirectToAction(actionName ?? nameof(Index));
+    }
+
+
+    /// <summary>
+    /// IList<TDto> -> TViewModel
+    /// </summary>
+    public static IActionResult ResponseViewModel<TDto, TViewModel>(this Controller controller, IDataResult<IList<TDto>> result)
+        where TDto : IDto
+        where TViewModel : IViewModel
+    {
+        var viewModels = result.Data.Select(dto => (TViewModel)Activator.CreateInstance(typeof(TViewModel), dto)).ToList();
+        return controller.View(viewModels);
+    }
+
+    /// <summary>
+    /// <TDto> -> TViewModel
+    /// </summary>
+    public static IActionResult ResponseViewModel<TDto, TViewModel>(this Controller controller, IDataResult<TDto> result)
+    where TDto : IDto
+    where TViewModel : IViewModel
+    {
+        var viewModels = (TViewModel)Activator.CreateInstance(typeof(TViewModel), result.Data);
+        return controller.View(viewModels);
     }
 
 

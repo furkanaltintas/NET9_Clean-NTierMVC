@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
 	var controller = ViewContext.RouteData.Values["controller"].ToString();
 }
 
@@ -77,11 +76,11 @@
 						</div>
 						<div class="inner-menu js-menu">
 							<ul class="nav">
-								<li class="nav__item"><a class="@(controller == "home" ? "active" : string.Empty)" asp-controller="Home">About</a></li>
-								<li class="nav__item"><a class="@(controller == "resume" ? "active" : string.Empty)" asp-controller="Resume">Resume</a></li>
-								<li class="nav__item"><a class="@(controller == "portfolio" ? "active" : string.Empty)" asp-controller="Portfolio">Portfolio</a></li>
-								<li class="nav__item"><a class="@(controller == "blog" ? "active" : string.Empty)" asp-controller="Blog">Blog</a></li>
-								<li class="nav__item"><a class="@(controller == "contact" ? "active" : string.Empty)" asp-controller="Contact">Contact</a></li>
+								<li class="nav__item"><a class="@(controller == "home" ? "active" : string.Empty)" asp-controller="Home" asp-action="Index">About</a></li>
+								<li class="nav__item"><a class="@(controller == "resume" ? "active" : string.Empty)" asp-controller="Resume" asp-action="Index">Resume</a></li>
+								<li class="nav__item"><a class="@(controller == "portfolio" ? "active" : string.Empty)" asp-controller="Portfolio" asp-action="Index">Portfolio</a></li>
+								<li class="nav__item"><a class="@(controller == "blog" ? "active" : string.Empty)" asp-controller="Blog" asp-action="Index">Blog</a></li>
+								<li class="nav__item"><a class="@(controller == "contact" ? "active" : string.Empty)" asp-controller="Contact" asp-action="Index">Contact</a></li>
 							</ul>
 						</div>
 

@@ -21,7 +21,7 @@ public class BlogController : ControllerManager
     [Route("detay")]
     public async Task<IActionResult> Detail(string slug)
     {
-        var result = await _manager.BlogService.GetAsync(slug);    
+        var result = await _manager.BlogService.GetAsync(slug);
         return this.ResponseView(result);
     }
 }

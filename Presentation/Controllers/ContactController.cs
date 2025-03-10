@@ -1,12 +1,10 @@
 ﻿using Business.Abstract.Base;
-using Entities.Concrete;
 using Entities.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 using Presentation.Controllers.Base;
 using Presentation.Extensions;
 using Presentation.Helpers;
-using System.Threading.Tasks;
 
 namespace Presentation.Controllers;
 
@@ -22,7 +20,8 @@ public class ContactController : ControllerManager
 
     public IActionResult Index() => View(new CreateContactDto());
 
-    [HttpPost]
+
+    [HttpPost("detail")]
     public async Task<IActionResult> Send(CreateContactDto createContactDto)
     {
         var result = await _manager.ContactService.SendAsync(createContactDto);
