@@ -19,4 +19,37 @@ public class ExperienceController : BaseController
         var result = await _serviceManager.ExperienceService.GetAllAsync();
         return this.ResponseViewModel<GetAllExperienceDto, ExperienceViewModel>(result);
     }
+
+
+    public IActionResult Add() => View();
+
+
+    [HttpPost]
+    public async Task<IActionResult> Add(CreateExperienceDto createExperienceDto)
+    {
+        var result = await _serviceManager.ExperienceService.AddExperienceAsync(createExperienceDto);
+        return this.ResponseRedirectAction(result, _toastNotification);
+    }
+
+
+    public async Task<IActionResult> Update(int id)
+    {
+        var result = await _serviceManager.ExperienceService.GetUpdateExperienceAsync(id);
+        return this.ResponseView(result);
+    }
+
+
+    [HttpPost]
+    public async Task<IActionResult> Update(UpdateExperienceDto updateExperienceDto)
+    {
+        var result = await _serviceManager.ExperienceService.UpdateExperienceAsync(updateExperienceDto);
+        return this.ResponseRedirectAction(result, _toastNotification);
+    }
+
+
+    public async Task<IActionResult> Delete(int id)
+    {
+        var result = await _serviceManager.ExperienceService.DeleteExperienceAsync(id);
+        return this.ResponseRedirectAction(result, _toastNotification);
+    }
 }

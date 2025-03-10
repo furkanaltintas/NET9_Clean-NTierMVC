@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Business.Abstract;
 using Business.Concrete.Base;
+using Business.Constants;
 using Business.Helpers.Validations;
 using Core.Aspects.Autofac.Caching;
 using DataAccess.Abstract;
@@ -18,6 +19,30 @@ public class ExperienceManager : BaseManager, IExperienceService
     {
     }
 
+    //[ValidationAspect(typeof(AboutValidator), Priority = 1)]
+    [CacheRemoveAspect("IExperienceService.Get")]
+    public async Task<IResult> AddExperienceAsync(CreateExperienceDto createExperienceDto)
+    {
+        Experience experience = Mapper.Map<Experience>(createExperienceDto);
+        await Repository.GetRepository<Experience>().AddAsync(experience);
+        return new Result(ResultStatus.Success, Messages.Added);
+    }
+
+
+    [CacheRemoveAspect("IExperienceService.Get")]
+    public async Task<IResult> DeleteExperienceAsync(int id)
+    {
+        Experience experience = await Repository.GetRepository<Experience>().GetAsync(e => e.Id == id);
+
+        if (experience == null)
+            return new Result(ResultStatus.Error, "Sistemde böyle bir deneyim bilgisi bulunmamaktadır.");
+
+        await Repository.GetRepository<Experience>().HardDeleteAsync(experience);
+        await Repository.SaveAsync();
+        return new Result(ResultStatus.Success, "Deneyim bilgisi sistemden başarıyla silinmiştir");
+    }
+
+
     [CacheAspect]
     public async Task<IDataResult<IList<GetAllExperienceDto>>> GetAllAsync()
     {
@@ -25,5 +50,45 @@ public class ExperienceManager : BaseManager, IExperienceService
 
         IList<GetAllExperienceDto> getAllExperienceDtos = Mapper.Map<IList<GetAllExperienceDto>>(experiences);
         return new DataResult<IList<GetAllExperienceDto>>(ResultStatus.Success, getAllExperienceDtos);
+    }
+
+
+    [CacheAspect]
+    public async Task<IDataResult<GetExperienceDto>> GetExperienceAsync(int id)
+    {
+        Experience experience = await Repository.GetRepository<Experience>().GetAsync(e => e.Id == id);
+
+        if (experience == null)
+            return new DataResult<GetExperienceDto>(ResultStatus.Error, "Sistemde böyle bir deneyim bilgisi bulunmamaktadır.");
+
+        GetExperienceDto getExperienceDto = Mapper.Map<GetExperienceDto>(experience);
+        return new DataResult<GetExperienceDto>(ResultStatus.Success, getExperienceDto);
+    }
+
+
+    [CacheAspect]
+    public async Task<IDataResult<UpdateExperienceDto>> GetUpdateExperienceAsync(int id)
+    {
+        Experience experience = await Repository.GetRepository<Experience>().GetAsync(e => e.Id == id);
+
+        if (experience == null)
+            return new DataResult<UpdateExperienceDto>(ResultStatus.Error, "Sistemde böyle bir deneyim bilgisi bulunmamaktadır.");
+
+        UpdateExperienceDto updateExperienceDto = Mapper.Map<UpdateExperienceDto>(experience);
+        return new DataResult<UpdateExperienceDto>(ResultStatus.Success, updateExperienceDto);
+    }
+
+
+    [CacheRemoveAspect("IExperienceService.Get")]
+    public async Task<IResult> UpdateExperienceAsync(UpdateExperienceDto updateExperienceDto)
+    {
+        if (updateExperienceDto == null)
+            return new Result(ResultStatus.Error, "Sistemde böyle bir deneyim bilgisi bulunmamaktadır.");
+
+        Experience experience = await Repository.GetRepository<Experience>().GetAsync(e => e.Id == updateExperienceDto.Id);
+        Mapper.Map<Experience, UpdateExperienceDto>(experience);
+        await Repository.GetRepository<Experience>().UpdateAsync(experience);
+        await Repository.SaveAsync();
+        return new Result(ResultStatus.Success, Messages.Updated);
     }
 }
