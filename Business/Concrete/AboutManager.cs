@@ -9,7 +9,6 @@ using Core.Aspects.Autofac.Performance;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business;
 using DataAccess.Abstract;
-using DataAccess.Concrete.EntityFramework.Repositories;
 using Entities.Concrete;
 using Entities.Dtos;
 using Portfolio.Core.Utilities.Results.Abstract;

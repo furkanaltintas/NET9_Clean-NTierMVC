@@ -10,4 +10,5 @@ public interface IServiceManager
     IBlogService BlogService { get; }
     IServiceService ServiceService { get; }
     IContactService ContactService { get; }
+    IUserService UserService { get; }
 }

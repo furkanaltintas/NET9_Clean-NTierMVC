@@ -22,7 +22,7 @@ public class ContactManager : BaseManager, IContactService
     [ValidationAspect(typeof(ContactValidator), Priority = 1)]
     public async Task<IResult> SendAsync(CreateContactDto createContactDto)
     {
-        if(createContactDto != null)
+        if (createContactDto != null)
         {
             Contact contact = Mapper.Map<Contact>(createContactDto);
             await Repository.GetRepository<Contact>().AddAsync(contact);
