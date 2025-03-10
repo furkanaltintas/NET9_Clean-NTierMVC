@@ -4,6 +4,7 @@ namespace Entities.Dtos;
 
 public class GetAllBlogDto : IDto
 {
+    public int Id { get; set; }
     public string Title { get; set; }
     public string Slug { get; set; }
     public string Content { get; set; }
