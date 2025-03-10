@@ -27,4 +27,6 @@ public class ServiceManager : IServiceManager
     public IContactService ContactService => _serviceProvider.GetService<IContactService>();
 
     public IUserService UserService => _serviceProvider.GetService<IUserService>();
+
+    public ISocialMediaService SocialMediaService => _serviceProvider.GetService<ISocialMediaService>();
 }

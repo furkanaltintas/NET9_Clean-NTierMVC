@@ -41,6 +41,8 @@ namespace Business.Concrete
             return new Result(ResultStatus.Success, Messages.Added);
         }
 
+
+        [CacheRemoveAspect("IAboutService.Get")]
         public async Task<IResult> DeleteAboutAsync(int id)
         {
             bool result = await Repository.GetRepository<About>().AnyAsync(a => a.Id == id);
@@ -57,7 +59,6 @@ namespace Business.Concrete
 
 
         [CacheAspect(10)]
-        [PerformanceAspect(5)]
         public async Task<IDataResult<GetAboutDto>> GetAboutAsync()
         {
             DataResult<GetAboutDto> result = BusinessRules.Run<GetAboutDto>(
@@ -73,6 +74,7 @@ namespace Business.Concrete
         }
 
 
+        [CacheRemoveAspect("IAboutService.Get")]
         public async Task<IResult> UpdateAboutAsync(UpdateAboutDto updateAboutDto)
         {
             About about = Mapper.Map<About>(updateAboutDto);
