@@ -5,7 +5,7 @@ using NToastNotify;
 namespace Presentation.Areas.Management.Controllers.Base;
 
 [Area("Management")]
-[Route("management/[controller]")]
+[Route("management/[controller]/[action]")]
 public class BaseController : Controller
 {
     protected readonly IServiceManager _serviceManager;

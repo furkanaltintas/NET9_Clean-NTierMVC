@@ -11,6 +11,7 @@
     <Folder Include="Areas\Management\Models\" />
     <Folder Include="Models\" />
     <Folder Include="wwwroot\app\img\" />
+    <Folder Include="wwwroot\app\lib\datatables\png\" />
     <Folder Include="wwwroot\app\lib\echarts\extension\" />
     <Folder Include="wwwroot\app\lib\summernote\lang\" />
     <Folder Include="wwwroot\ui\assets\img\" />

@@ -2,17 +2,13 @@ using Business.DependencyResolvers.Microsoft;
 using Core.DependencyResolvers;
 using Core.Extensions;
 using Core.Utilities.IoC;
+using NToastNotify;
 using Presentation.Constraints;
 using Presentation.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews(options =>
-{
-    options.Conventions.Add(new LowercaseControllerRouteConstraint());
-}).AddRazorRuntimeCompilation();
-
 builder.Services.ConfigureDatabase(builder.Configuration);
 builder.Services.AddCustomDependencies();
 
@@ -32,7 +28,28 @@ builder.Configuration
     .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
 
 
+
+builder.Services.AddControllersWithViews(options =>
+{
+    options.Conventions.Add(new LowercaseControllerRouteConstraint());
+}) 
+    .AddNToastNotifyToastr(new()
+    {
+        PositionClass = ToastPositions.TopRight,
+        TimeOut = 5000,
+        ProgressBar = true,
+        CloseButton = true
+    })
+    .AddRazorRuntimeCompilation();
+
+
+
+
+
+
+
 var app = builder.Build();
+app.UseNToastNotify();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

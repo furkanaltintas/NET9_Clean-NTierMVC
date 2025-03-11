@@ -19,17 +19,6 @@ public static class ServiceExtensions
             options.LowercaseUrls = true;
         });
 
-        services
-            .AddControllersWithViews()
-            .AddNToastNotifyToastr(new()
-            {
-                PositionClass = ToastPositions.TopRight,
-                TimeOut = 5000,
-                ProgressBar = true,
-                CloseButton = true,
-            })
-            .AddRazorRuntimeCompilation();
-
         services.AddSession();
 
         return services;

@@ -20,6 +20,6 @@ public class AboutValidationHelper : IAboutValidationHelper
     {
         return await _repository.GetRepository<About>().AnyAsync()
             ? new Result(ResultStatus.Success)
-            : new Result(ResultStatus.Error, Messages.NameAlreadyExists);
+            : new Result(ResultStatus.Error, "Sistemde hakkımda kısmı bulunmamaktadır.");
     }
 }

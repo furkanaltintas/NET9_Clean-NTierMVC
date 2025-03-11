@@ -19,7 +19,8 @@ public static class DashboardBreadcrumbHelper
             {
                 { "Add", "Kaydetme" },
                 { "Update", "Güncelleme" },
-                { "Delete", "Silme" }
+                { "Delete", "Silme" },
+                { "Detail", "Detay" }
             };
 
         return breadcrumbs.TryGetValue(action, out string title) ? title : "Bilinmeyen Sayfa";
