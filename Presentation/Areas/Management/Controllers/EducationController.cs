@@ -31,9 +31,9 @@ public class EducationController : BaseController
     }
 
 
-    public async Task<IActionResult> Update(int id)
+    public async Task<IActionResult> Update(int educationId)
     {
-        var result = await _serviceManager.EducationService.GetUpdateEducationAsync(id);
+        var result = await _serviceManager.EducationService.GetUpdateEducationAsync(educationId);
         return this.ResponseView(result);
     }
 
@@ -46,9 +46,9 @@ public class EducationController : BaseController
     }
 
 
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> Delete(int educationId)
     {
-        var result = await _serviceManager.EducationService.DeleteEducationAsync(id);
+        var result = await _serviceManager.EducationService.DeleteEducationAsync(educationId);
         return this.ResponseRedirectAction(result, _toastNotification);
     }
 }

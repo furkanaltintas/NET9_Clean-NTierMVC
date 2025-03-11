@@ -25,6 +25,7 @@ public class EducationManager : BaseManager, IEducationService
     {
         Education education = Mapper.Map<Education>(createEducationDto);
         await Repository.GetRepository<Education>().AddAsync(education);
+        await Repository.SaveAsync();
         return new Result(ResultStatus.Success, Messages.Added);
     }
 
@@ -52,7 +53,7 @@ public class EducationManager : BaseManager, IEducationService
         return new DataResult<IList<GetAllEducationDto>>(ResultStatus.Success, getAllEducationDtos);
     }
 
-    [CacheAspect]
+
     public async Task<IDataResult<GetEducationDto>> GetEducationAsync(int id)
     {
         Education education = await Repository.GetRepository<Education>().GetAsync(e => e.Id == id);
@@ -65,7 +66,6 @@ public class EducationManager : BaseManager, IEducationService
     }
 
 
-    [CacheAspect]
     public async Task<IDataResult<UpdateEducationDto>> GetUpdateEducationAsync(int id)
     {
         Education education = await Repository.GetRepository<Education>().GetAsync(e => e.Id == id);
@@ -85,7 +85,7 @@ public class EducationManager : BaseManager, IEducationService
             return new Result(ResultStatus.Error, "Sistemde böyle bir eğitim bilgisi bulunmamaktadır.");
 
         Education education = await Repository.GetRepository<Education>().GetAsync(e => e.Id == updateEducationDto.Id);
-        Mapper.Map<Education, UpdateEducationDto>(education);
+        Mapper.Map(updateEducationDto, education);
         await Repository.GetRepository<Education>().UpdateAsync(education);
         await Repository.SaveAsync();
         return new Result(ResultStatus.Success, Messages.Updated);
