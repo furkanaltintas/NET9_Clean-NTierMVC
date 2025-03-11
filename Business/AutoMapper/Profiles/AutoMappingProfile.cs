@@ -29,7 +29,9 @@ public class AutoMappingProfile : Profile
                 .ToList();
 
             foreach (var dtoType in matchingDtos)
-                CreateMap(dtoType, entityType).ReverseMap(); // DTO <-> Entity otomatik eşleme
+                CreateMap(dtoType, entityType)
+                    .ReverseMap()
+                    .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null)); // DTO <-> Entity otomatik eşleme
         }
     }
 }
