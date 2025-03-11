@@ -57,7 +57,6 @@ namespace Business.Concrete
         }
 
 
-        [CacheAspect]
         public async Task<IDataResult<GetServiceDto>> GetServiceAsync(int id)
         {
             Service service = await Repository.GetRepository<Service>().GetAsync(s => s.Id == id);
@@ -70,7 +69,6 @@ namespace Business.Concrete
         }
 
 
-        [CacheAspect]
         public async Task<IDataResult<UpdateServiceDto>> GetUpdateServiceAsync(int id)
         {
             Service service = await Repository.GetRepository<Service>().GetAsync(s => s.Id == id);
@@ -94,8 +92,9 @@ namespace Business.Concrete
             if (service == null)
                 return new DataResult<GetServiceDto>(ResultStatus.Error, "Sistemde böyle bir servis bulunmamaktadır.");
 
-            Mapper.Map(service, updateServiceDto);
+            Mapper.Map(updateServiceDto, service);
             await Repository.GetRepository<Service>().UpdateAsync(service);
+            await Repository.SaveAsync();
             return new Result(ResultStatus.Success, Messages.Updated);
         }
     }

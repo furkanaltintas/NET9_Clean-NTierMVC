@@ -22,6 +22,13 @@ public class ServiceController : BaseController
     }
 
 
+    public async Task<IActionResult> Detail(int serviceId)
+    {
+        var result = await _serviceManager.ServiceService.GetServiceAsync(serviceId);
+        return this.ResponseView(result);
+    }
+
+
     public IActionResult Add() => View();
 
 
@@ -33,9 +40,9 @@ public class ServiceController : BaseController
     }
 
 
-    public async Task<IActionResult> Update(int id)
+    public async Task<IActionResult> Update(int serviceId)
     {
-        var result = await _serviceManager.ServiceService.GetUpdateServiceAsync(id);
+        var result = await _serviceManager.ServiceService.GetUpdateServiceAsync(serviceId);
         return this.ResponseView(result);
     }
 
@@ -48,9 +55,9 @@ public class ServiceController : BaseController
     }
 
 
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> Delete(int serviceId)
     {
-        var result = await _serviceManager.ServiceService.DeleteServiceAsync(id);
+        var result = await _serviceManager.ServiceService.DeleteServiceAsync(serviceId);
         return this.ResponseRedirectAction(result, _toastNotification);
     }
 }
