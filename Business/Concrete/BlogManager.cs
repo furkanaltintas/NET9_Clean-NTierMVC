@@ -31,7 +31,7 @@ public class BlogManager : BaseManager, IBlogService
             return new Result(ResultStatus.Error, "Geçersiz blog verisi");
 
         Blog blog = Mapper.Map<Blog>(createBlogDto);
-        blog.Slug = SlugHelper.GenerateSlug(blog.Slug);
+        blog.Slug = SlugHelper.GenerateSlug(blog.Title);
         blog.Image = "default";
 
         await Repository.GetRepository<Blog>().AddAsync(blog);
@@ -60,15 +60,14 @@ public class BlogManager : BaseManager, IBlogService
     [CacheAspect]
     public async Task<IDataResult<IList<GetAllBlogDto>>> GetAllAsync()
     {
-        IList<Blog> blogs = await Repository.GetRepository<Blog>().GetAllAsync(orderBy: e => e.OrderByDescending(e => e.PublishDate));
+        IList<Blog> blogs = await Repository.GetRepository<Blog>().GetAllAsync(b => b.IsPublish, orderBy: e => e.OrderByDescending(e => e.PublishDate));
 
         IList<GetAllBlogDto> getAllBlogDtos = Mapper.Map<IList<GetAllBlogDto>>(blogs);
         return new DataResult<IList<GetAllBlogDto>>(ResultStatus.Success, getAllBlogDtos);
     }
 
 
-    [CacheAspect]
-    public async Task<IDataResult<GetBlogDto>> GetAsync(string slug)
+    public async Task<IDataResult<GetBlogDto>> GetSlugAsync(string slug)
     {
         Blog blog = await Repository.GetRepository<Blog>().GetAsync(b => b.Slug == slug);
 
@@ -104,6 +103,7 @@ public class BlogManager : BaseManager, IBlogService
     }
 
 
+    [CacheRemoveAspect("IBlogService.Get")]
     public async Task<IResult> UpdateAsync(UpdateBlogDto updateBlogDto)
     {
         var blog = await Repository.GetRepository<Blog>().GetAsync(b => b.Id == updateBlogDto.Id);
@@ -111,7 +111,9 @@ public class BlogManager : BaseManager, IBlogService
         if (blog == null)
             return new Result(ResultStatus.Error, "Böyle bir blog sistemde bulunmamaktadır.");
 
-        Mapper.Map<Blog, UpdateBlogDto>(blog);
+        Mapper.Map(updateBlogDto, blog); // Sadece dolu olan alanlar güncellemeye girecek
+        blog.Slug = SlugHelper.GenerateSlug(blog.Title);
+        blog.Image = "default";
         await Repository.GetRepository<Blog>().UpdateAsync(blog);
         await Repository.SaveAsync();
         return new Result(ResultStatus.Success, Messages.Deleted);

@@ -1,0 +1,14 @@
+﻿@model GetBlogDto
+
+<div class="section-wrapper">
+    <label class="section-title">Url: @Model.Slug</label>
+    <p class="mg-b-20 mg-sm-b-40">Publish Date: @Model.PublishDate.ToString("dd/MM/yyyy")</p>
+
+    <div class="media media-demo">
+        <img src="https://static-00.iconduck.com/assets.00/avatar-default-symbolic-icon-1920x2048-qj0yfpqi.png" class="d-flex mg-r-40 wd-150" alt="Image">
+        <div class="media-body mg-t-20 mg-sm-t-0">
+            <h5 class="tx-gray-300 mg-b-20">@Model.Title</h5>
+            <p>@Model.Content</p>
+        </div><!-- media-body -->
+    </div><!-- media -->
+</div>

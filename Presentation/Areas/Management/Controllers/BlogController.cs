@@ -27,6 +27,12 @@ public class BlogController : BaseController
     }
 
 
+    public async Task<IActionResult> Detail(int blogId)
+    {
+        var result = await _serviceManager.BlogService.GetAsync(blogId);
+        return this.ResponseView(result);
+    }
+
     public IActionResult Add() => View();
 
 
@@ -40,7 +46,7 @@ public class BlogController : BaseController
 
     public async Task<IActionResult> Update(int blogId)
     {
-        var result = await _serviceManager.BlogService.GetAsync(blogId);
+        var result = await _serviceManager.BlogService.GetUpdateBlogAsync(blogId);
         return this.ResponseView(result);
     }
 
@@ -53,9 +59,9 @@ public class BlogController : BaseController
     }
 
 
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> Delete(int blogId)
     {
-        var result = await _serviceManager.BlogService.DeleteAsync(id);
+        var result = await _serviceManager.BlogService.DeleteAsync(blogId);
         return this.ResponseRedirectAction(result, _toastNotification);
     }
 }
