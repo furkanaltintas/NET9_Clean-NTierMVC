@@ -25,6 +25,7 @@ public class ExperienceManager : BaseManager, IExperienceService
     {
         Experience experience = Mapper.Map<Experience>(createExperienceDto);
         await Repository.GetRepository<Experience>().AddAsync(experience);
+        await Repository.SaveAsync();
         return new Result(ResultStatus.Success, Messages.Added);
     }
 
@@ -53,7 +54,6 @@ public class ExperienceManager : BaseManager, IExperienceService
     }
 
 
-    [CacheAspect]
     public async Task<IDataResult<GetExperienceDto>> GetExperienceAsync(int id)
     {
         Experience experience = await Repository.GetRepository<Experience>().GetAsync(e => e.Id == id);
@@ -66,7 +66,6 @@ public class ExperienceManager : BaseManager, IExperienceService
     }
 
 
-    [CacheAspect]
     public async Task<IDataResult<UpdateExperienceDto>> GetUpdateExperienceAsync(int id)
     {
         Experience experience = await Repository.GetRepository<Experience>().GetAsync(e => e.Id == id);
@@ -86,7 +85,7 @@ public class ExperienceManager : BaseManager, IExperienceService
             return new Result(ResultStatus.Error, "Sistemde böyle bir deneyim bilgisi bulunmamaktadır.");
 
         Experience experience = await Repository.GetRepository<Experience>().GetAsync(e => e.Id == updateExperienceDto.Id);
-        Mapper.Map<Experience, UpdateExperienceDto>(experience);
+        Mapper.Map(updateExperienceDto, experience);
         await Repository.GetRepository<Experience>().UpdateAsync(experience);
         await Repository.SaveAsync();
         return new Result(ResultStatus.Success, Messages.Updated);

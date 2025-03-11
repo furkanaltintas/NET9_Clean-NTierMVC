@@ -32,9 +32,9 @@ public class ExperienceController : BaseController
     }
 
 
-    public async Task<IActionResult> Update(int id)
+    public async Task<IActionResult> Update(int experienceId)
     {
-        var result = await _serviceManager.ExperienceService.GetUpdateExperienceAsync(id);
+        var result = await _serviceManager.ExperienceService.GetUpdateExperienceAsync(experienceId);
         return this.ResponseView(result);
     }
 
@@ -47,9 +47,9 @@ public class ExperienceController : BaseController
     }
 
 
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> Delete(int experienceId)
     {
-        var result = await _serviceManager.ExperienceService.DeleteExperienceAsync(id);
+        var result = await _serviceManager.ExperienceService.DeleteExperienceAsync(experienceId);
         return this.ResponseRedirectAction(result, _toastNotification);
     }
 }
