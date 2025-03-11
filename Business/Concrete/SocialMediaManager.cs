@@ -25,6 +25,7 @@ public class SocialMediaManager : BaseManager, ISocialMediaService
     {
         SocialMediaIcon socialMediaIcon = Mapper.Map<SocialMediaIcon>(createSocialMediaIconDto);
         await Repository.GetRepository<SocialMediaIcon>().AddAsync(socialMediaIcon);
+        await Repository.SaveAsync();
         return new Result(ResultStatus.Success, Messages.Added);
     }
 
@@ -52,7 +53,6 @@ public class SocialMediaManager : BaseManager, ISocialMediaService
     }
 
 
-    [CacheAspect]
     public async Task<IDataResult<GetSocialMediaIconDto>> GetSocialMediaAsync(int id)
     {
         SocialMediaIcon socialMediaIcon = await Repository.GetRepository<SocialMediaIcon>().GetAsync(e => e.Id == id);
@@ -65,16 +65,15 @@ public class SocialMediaManager : BaseManager, ISocialMediaService
     }
 
 
-    [CacheAspect]
-    public async Task<IDataResult<UpdateServiceDto>> GetUpdateSocialMediaAsync(int id)
+    public async Task<IDataResult<UpdateSocialMediaIconDto>> GetUpdateSocialMediaAsync(int id)
     {
         SocialMediaIcon socialMediaIcon = await Repository.GetRepository<SocialMediaIcon>().GetAsync(e => e.Id == id);
 
         if (socialMediaIcon == null)
-            return new DataResult<UpdateServiceDto>(ResultStatus.Error, "Sistemde böyle bir sosyal medya hesabı bilgisi bulunmamaktadır.");
+            return new DataResult<UpdateSocialMediaIconDto>(ResultStatus.Error, "Sistemde böyle bir sosyal medya hesabı bilgisi bulunmamaktadır.");
 
-        UpdateServiceDto updateServiceDto = Mapper.Map<UpdateServiceDto>(socialMediaIcon);
-        return new DataResult<UpdateServiceDto>(ResultStatus.Success, updateServiceDto);
+        UpdateSocialMediaIconDto updateSocialMediaIconDto = Mapper.Map<UpdateSocialMediaIconDto>(socialMediaIcon);
+        return new DataResult<UpdateSocialMediaIconDto>(ResultStatus.Success, updateSocialMediaIconDto);
     }
 
 
@@ -85,7 +84,7 @@ public class SocialMediaManager : BaseManager, ISocialMediaService
             return new Result(ResultStatus.Error, "Sistemde böyle bir sosyal medya hesabı bilgisi bulunmamaktadır.");
 
         SocialMediaIcon socialMediaIcon = await Repository.GetRepository<SocialMediaIcon>().GetAsync(e => e.Id == updateSocialMediaIconDto.Id);
-        Mapper.Map<SocialMediaIcon, UpdateSocialMediaIconDto>(socialMediaIcon);
+        Mapper.Map(updateSocialMediaIconDto, socialMediaIcon); ;
         await Repository.GetRepository<SocialMediaIcon>().UpdateAsync(socialMediaIcon);
         await Repository.SaveAsync();
         return new Result(ResultStatus.Success, Messages.Updated);

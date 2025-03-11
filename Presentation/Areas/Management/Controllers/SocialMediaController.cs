@@ -34,9 +34,9 @@ public class SocialMediaController : BaseController
     }
 
 
-    public async Task<IActionResult> Update(int id)
+    public async Task<IActionResult> Update(int socialMediaId)
     {
-        var result = await _serviceManager.SocialMediaService.GetUpdateSocialMediaAsync(id);
+        var result = await _serviceManager.SocialMediaService.GetUpdateSocialMediaAsync(socialMediaId);
         return this.ResponseView(result);
     }
 
@@ -49,9 +49,9 @@ public class SocialMediaController : BaseController
     }
 
 
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> Delete(int socialMediaId)
     {
-        var result = await _serviceManager.SocialMediaService.DeleteSocialMediaAsync(id);
+        var result = await _serviceManager.SocialMediaService.DeleteSocialMediaAsync(socialMediaId);
         return this.ResponseRedirectAction(result, _toastNotification);
     }
 }
