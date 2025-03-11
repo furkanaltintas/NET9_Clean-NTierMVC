@@ -25,6 +25,7 @@ public class SkillManager : BaseManager, ISkillService
     {
         Skill skill = Mapper.Map<Skill>(createSkillDto);
         await Repository.GetRepository<Skill>().AddAsync(skill);
+        await Repository.SaveAsync();
         return new Result(ResultStatus.Success, Messages.Added);
     }
 
@@ -53,7 +54,6 @@ public class SkillManager : BaseManager, ISkillService
     }
 
 
-    [CacheAspect]
     public async Task<IDataResult<GetSkillDto>> GetSkillAsync(int id)
     {
         Skill skill = await Repository.GetRepository<Skill>().GetAsync(e => e.Id == id);
@@ -67,17 +67,16 @@ public class SkillManager : BaseManager, ISkillService
     }
 
 
-    [CacheAspect]
-    public async Task<IDataResult<UpdateServiceDto>> GetUpdateSkillAsync(int id)
+    public async Task<IDataResult<UpdateSkillDto>> GetUpdateSkillAsync(int id)
     {
         Skill skill = await Repository.GetRepository<Skill>().GetAsync(e => e.Id == id);
 
         if (skill == null)
-            return new DataResult<UpdateServiceDto>(ResultStatus.Error, "Sistemde böyle bir yetenek bilgisi bulunmamaktadır.");
+            return new DataResult<UpdateSkillDto>(ResultStatus.Error, "Sistemde böyle bir yetenek bilgisi bulunmamaktadır.");
 
 
-        UpdateServiceDto updateServiceDto = Mapper.Map<UpdateServiceDto>(skill);
-        return new DataResult<UpdateServiceDto>(ResultStatus.Success, updateServiceDto);
+        UpdateSkillDto updateSkillDto = Mapper.Map<UpdateSkillDto>(skill);
+        return new DataResult<UpdateSkillDto>(ResultStatus.Success, updateSkillDto);
     }
 
 
@@ -88,7 +87,7 @@ public class SkillManager : BaseManager, ISkillService
             return new Result(ResultStatus.Error, "Sistemde böyle bir yetenek bilgisi bulunmamaktadır.");
 
         Skill skill = await Repository.GetRepository<Skill>().GetAsync(e => e.Id == updateSkillDto.Id);
-        Mapper.Map<Skill, UpdateSkillDto>(skill);
+        Mapper.Map(updateSkillDto, skill);
         await Repository.GetRepository<Skill>().UpdateAsync(skill);
         await Repository.SaveAsync();
         return new Result(ResultStatus.Success, Messages.Updated);

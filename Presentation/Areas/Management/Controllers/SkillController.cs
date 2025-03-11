@@ -1,4 +1,5 @@
 ﻿using Business.Abstract.Base;
+using Entities.Concrete;
 using Entities.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
@@ -32,9 +33,9 @@ public class SkillController : BaseController
     }
 
 
-    public async Task<IActionResult> Update(int id)
+    public async Task<IActionResult> Update(int skillId)
     {
-        var result = await _serviceManager.SkillService.GetUpdateSkillAsync(id);
+        var result = await _serviceManager.SkillService.GetUpdateSkillAsync(skillId);
         return this.ResponseView(result);
     }
 
@@ -47,9 +48,9 @@ public class SkillController : BaseController
     }
 
 
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> Delete(int skillId)
     {
-        var result = await _serviceManager.SkillService.DeleteSkillAsync(id);
+        var result = await _serviceManager.SkillService.DeleteSkillAsync(skillId);
         return this.ResponseRedirectAction(result, _toastNotification);
     }
 }

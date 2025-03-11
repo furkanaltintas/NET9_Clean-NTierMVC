@@ -3,6 +3,7 @@
 <div class="slim-mainpanel">
     <div class="section-wrapper">
         <form asp-action="Add" method="post">
+            <input asp-for="Id" type="hidden" />
             <div class="form-group">
                 <label asp-for="Name" class="form-label"></label>
                 <input asp-for="Name" class="form-control">
