@@ -1,10 +1,10 @@
-﻿using Core.Entities.Abstract;
+﻿using Core.Entities.Concrete;
 using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
 
 namespace Core.DataAccess.Abstract;
 
-public interface IEntityRepository<TEntity> where TEntity : class, IEntity, new()
+public interface IEntityRepository<TEntity> where TEntity : BaseEntity, new()
 {
     Task<IList<TEntity>> GetAllAsync(
         Expression<Func<TEntity, bool>>? predicate = null,

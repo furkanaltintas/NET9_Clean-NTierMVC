@@ -1,5 +1,5 @@
 ﻿using Core.DataAccess.Abstract;
-using Core.Entities.Abstract;
+using Core.Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 namespace Core.DataAccess.Concrete.EntityFramework;
 
 public class EfEntityRepositoryBase<TEntity> : IEntityRepository<TEntity>
-    where TEntity : class, IEntity, new()
+    where TEntity : BaseEntity, new()
 {
     private readonly DbContext _context;
 
@@ -86,13 +86,30 @@ public class EfEntityRepositoryBase<TEntity> : IEntityRepository<TEntity>
         return await queryable.FirstOrDefaultAsync();
     }
 
-    public async Task HardDeleteAsync(TEntity entity) => await Task.Run(() => Table.Remove(entity));
+    public async Task HardDeleteAsync(TEntity entity)
+    {
+        var local = Table.Local.FirstOrDefault(t => t.Id == entity.Id);
+        if (local != null)
+            Table.Entry(local).State = EntityState.Detached; // Önce eski entity takibini bırak
+
+        Table.Remove(entity);
+
+        //await Task.Run(() => Table.Remove(entity));
+    }
 
     public async Task HardDeleteRangeAsync(IList<TEntity> entities) => await Task.Run(() => Table.RemoveRange(entities));
 
     public async Task<TEntity> UpdateAsync(TEntity entity)
     {
-        await Task.Run(() => Table.Update(entity));
+        var local = Table.Local.FirstOrDefault(t => t.Id == entity.Id);
+        if (local != null)
+            Table.Entry(local).State = EntityState.Detached; // Önce eski entity takibini bırak
+
+        Table.Attach(entity);
+        Table.Entry(entity).State = EntityState.Modified;
         return entity;
+
+        //await Task.Run(() => Table.Update(entity));
+        //return entity;
     }
 }
