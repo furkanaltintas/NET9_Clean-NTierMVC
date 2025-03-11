@@ -24,6 +24,7 @@ public class PortfolioManager : BaseManager, IPortfolioService
     {
         Entities.Concrete.Portfolio portfolio = Mapper.Map<Entities.Concrete.Portfolio>(createPortfolioDto);
         await Repository.GetRepository<Entities.Concrete.Portfolio>().AddAsync(portfolio);
+        await Repository.SaveAsync();
         return new Result(ResultStatus.Success, Messages.Added);
     }
 
@@ -52,7 +53,6 @@ public class PortfolioManager : BaseManager, IPortfolioService
     }
 
 
-    [CacheAspect]
     public async Task<IDataResult<GetPortfolioDto>> GetPortfolioAsync(int id)
     {
         Entities.Concrete.Portfolio portfolio = await Repository.GetRepository<Entities.Concrete.Portfolio>().GetAsync(e => e.Id == id);
@@ -65,7 +65,6 @@ public class PortfolioManager : BaseManager, IPortfolioService
     }
 
 
-    [CacheAspect]
     public async Task<IDataResult<UpdatePortfolioDto>> GetUpdatePortfolioAsync(int id)
     {
         Entities.Concrete.Portfolio portfolio = await Repository.GetRepository<Entities.Concrete.Portfolio>().GetAsync(e => e.Id == id);
@@ -85,7 +84,7 @@ public class PortfolioManager : BaseManager, IPortfolioService
             return new Result(ResultStatus.Error, "Sistemde böyle bir portfolyo bilgisi bulunmamaktadır.");
 
         Entities.Concrete.Portfolio portfolio = await Repository.GetRepository<Entities.Concrete.Portfolio>().GetAsync(e => e.Id == updatePortfolioDto.Id);
-        Mapper.Map<Entities.Concrete.Portfolio, UpdateEducationDto>(portfolio);
+        Mapper.Map(updatePortfolioDto, portfolio);
         await Repository.GetRepository<Entities.Concrete.Portfolio>().UpdateAsync(portfolio);
         await Repository.SaveAsync();
         return new Result(ResultStatus.Success, Messages.Updated);
