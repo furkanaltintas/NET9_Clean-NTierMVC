@@ -1,22 +1,18 @@
-Proje geliştirilmeye devam edilmektedir.
-11.03.2025
-
 # NET9_Clean-NTierMVC
 This project is an MVC application built with .NET 9 and Clean Architecture principles, following an N-Tier architecture. The project is designed to be modular and maintainable, ensuring a flexible and scalable codebase.
-
-<img src="https://github.com/user-attachments/assets/111f6084-76fb-463e-aeb6-14b64c62d3ce" alt="Açıklama" width="300" align="left">
 
 ## Technologies & Tools Used
 
 ### Backend
-- **.NET 9** - Modern, fast, and secure backend technology
-- **ASP.NET Core MVC** - Model-View-Controller architecture
-- **Entity Framework Core** - ORM (Object-Relational Mapping) tool
-- **Fluent Validation** - Advanced model validation
-- **MediatR** - For CQRS and event-driven patterns
-- **AutoMapper** - For model and DTO transformations
-- **Caching** - In-memory caching mechanism
-- **Serilog** - Logging management
+- **.NET 9** - Modern, fast, and secure backend technology  
+- **ASP.NET Core MVC** - Model-View-Controller architecture  
+- **Entity Framework Core** - ORM (Object-Relational Mapping) tool  
+- **Fluent Validation** - Advanced model validation  
+- **MediatR** - For CQRS and event-driven patterns  
+- **AutoMapper** - For model and DTO transformations  
+- **Caching** - In-memory caching mechanism  
+- **Autofac** - Dependency injection and IoC container  
+- **Serilog** - Logging management  
 
 ### Frontend & UI
 - **MVC Views** - Dynamic UI management
