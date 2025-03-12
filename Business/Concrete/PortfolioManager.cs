@@ -6,6 +6,7 @@ using Business.Helpers.Validations;
 using Core.Aspects.Autofac.Caching;
 using DataAccess.Abstract;
 using Entities.Dtos;
+using Microsoft.EntityFrameworkCore;
 using Portfolio.Core.Utilities.Results.Abstract;
 using Portfolio.Core.Utilities.Results.ComplexTypes;
 using Portfolio.Core.Utilities.Results.Concrete;
@@ -46,7 +47,7 @@ public class PortfolioManager : BaseManager, IPortfolioService
     [CacheAspect]
     public async Task<IDataResult<IList<GetAllPortfolioDto>>> GetAllAsync()
     {
-        IList<Entities.Concrete.Portfolio> portfolios = await Repository.GetRepository<Entities.Concrete.Portfolio>().GetAllAsync();
+        IList<Entities.Concrete.Portfolio> portfolios = await Repository.GetRepository<Entities.Concrete.Portfolio>().GetAllAsync(include: p => p.Include(p => p.PortfolioCategory));
 
         IList<GetAllPortfolioDto> getAllPortfolioDtos = Mapper.Map<IList<GetAllPortfolioDto>>(portfolios);
         return new DataResult<IList<GetAllPortfolioDto>>(ResultStatus.Success, getAllPortfolioDtos);

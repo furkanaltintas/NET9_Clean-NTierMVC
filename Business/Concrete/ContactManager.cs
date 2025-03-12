@@ -2,7 +2,7 @@
 using Business.Abstract;
 using Business.Concrete.Base;
 using Business.Helpers.Validations;
-using Business.ValidationRules.FluentValidation;
+using Business.ValidationRules.FluentValidation.Contacts;
 using Core.Aspects.Autofac.Validation;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -32,7 +32,7 @@ public class ContactManager : BaseManager, IContactService
     }
 
 
-    [ValidationAspect(typeof(ContactValidator), Priority = 1)]
+    [ValidationAspect(typeof(CreateContactValidator), Priority = 1)]
     public async Task<IResult> SendAsync(CreateContactDto createContactDto)
     {
         if (createContactDto != null)

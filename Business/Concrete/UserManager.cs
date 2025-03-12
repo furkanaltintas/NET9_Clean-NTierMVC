@@ -19,7 +19,7 @@ namespace Business.Concrete
 
         public async Task<IDataResult<GetUserSidebarDto>> GetUserSidebarDtoAsync()
         {
-            User user = await Repository.GetRepository<User>().GetAsync(u => u.Id == 1);
+            User user = await Repository.GetRepository<User>().GetAsync();
             var userSidebarDto = Mapper.Map<GetUserSidebarDto>(user);
             return new DataResult<GetUserSidebarDto>(ResultStatus.Success, userSidebarDto);
         }

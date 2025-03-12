@@ -29,4 +29,8 @@ public class ServiceManager : IServiceManager
     public IUserService UserService => _serviceProvider.GetService<IUserService>();
 
     public ISocialMediaService SocialMediaService => _serviceProvider.GetService<ISocialMediaService>();
+
+    public IPortfolioCategoryService PortfolioCategoryService => _serviceProvider.GetService<IPortfolioCategoryService>();
+
+    public ITypeOfEmploymentService TypeOfEmploymentService => _serviceProvider.GetService<ITypeOfEmploymentService>();
 }

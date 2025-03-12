@@ -2,11 +2,13 @@
 using Business.Abstract;
 using Business.Concrete.Base;
 using Business.Constants;
+using Business.Helpers.Images.Abstract;
 using Business.Helpers.Validations;
 using Business.Utilities;
-using Business.ValidationRules.FluentValidation;
+using Business.ValidationRules.FluentValidation.Blogs;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Validation;
+using Core.Entities.ComplexTypes;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.Dtos;
@@ -18,12 +20,15 @@ namespace Business.Concrete;
 
 public class BlogManager : BaseManager, IBlogService
 {
-    public BlogManager(IValidationHelper validationHelper, IRepository repository, IMapper mapper) : base(validationHelper, repository, mapper)
+    private readonly IImageHelper _imageHelper;
+
+    public BlogManager(IValidationHelper validationHelper, IRepository repository, IMapper mapper, IImageHelper imageHelper) : base(validationHelper, repository, mapper)
     {
+        _imageHelper = imageHelper;
     }
 
 
-    [ValidationAspect(typeof(BlogValidator), Priority = 1)]
+    [ValidationAspect(typeof(CreateBlogValidator), Priority = 1)]
     [CacheRemoveAspect("IBlogService.Get")]
     public async Task<IResult> AddAsync(CreateBlogDto createBlogDto)
     {
@@ -32,7 +37,8 @@ public class BlogManager : BaseManager, IBlogService
 
         Blog blog = Mapper.Map<Blog>(createBlogDto);
         blog.Slug = SlugHelper.GenerateSlug(blog.Title);
-        blog.Image = "default";
+        var imageUpload = await _imageHelper.Upload(createBlogDto.Title, createBlogDto.Photo, ImageType.Post);
+        blog.Image = imageUpload.FullName;
 
         await Repository.GetRepository<Blog>().AddAsync(blog);
         await Repository.SaveAsync();
@@ -103,6 +109,7 @@ public class BlogManager : BaseManager, IBlogService
     }
 
 
+    [ValidationAspect(typeof(UpdateBlogValidator), Priority = 1)]
     [CacheRemoveAspect("IBlogService.Get")]
     public async Task<IResult> UpdateAsync(UpdateBlogDto updateBlogDto)
     {
@@ -111,9 +118,18 @@ public class BlogManager : BaseManager, IBlogService
         if (blog == null)
             return new Result(ResultStatus.Error, "Böyle bir blog sistemde bulunmamaktadır.");
 
+        if(blog.Title != updateBlogDto.Title)
+            blog.Slug = SlugHelper.GenerateSlug(updateBlogDto.Title);
+
+        if (updateBlogDto.Photo != null)
+        {
+            _imageHelper.Delete(blog.Image);
+
+            var imageUpload = await _imageHelper.Upload(updateBlogDto.Title, updateBlogDto.Photo, ImageType.Post);
+            updateBlogDto.Image = imageUpload.FullName;
+        }
+
         Mapper.Map(updateBlogDto, blog); // Sadece dolu olan alanlar güncellemeye girecek
-        blog.Slug = SlugHelper.GenerateSlug(blog.Title);
-        blog.Image = "default";
         await Repository.GetRepository<Blog>().UpdateAsync(blog);
         await Repository.SaveAsync();
         return new Result(ResultStatus.Success, Messages.Deleted);

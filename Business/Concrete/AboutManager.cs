@@ -3,7 +3,7 @@ using Business.Abstract;
 using Business.Concrete.Base;
 using Business.Constants;
 using Business.Helpers.Validations;
-using Business.ValidationRules.FluentValidation;
+using Business.ValidationRules.FluentValidation.Abouts;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Performance;
 using Core.Aspects.Autofac.Validation;
@@ -24,17 +24,10 @@ public class AboutManager : BaseManager, IAboutService
     }
 
 
-    [ValidationAspect(typeof(AboutValidator), Priority = 1)]
+    [ValidationAspect(typeof(CreateAboutValidator), Priority = 1)]
     [CacheRemoveAspect("IAboutService.Get")]
     public async Task<IResult> AddAboutAsync(CreateAboutDto createAboutDto)
     {
-        Result result = BusinessRules.Run(
-            await ValidationHelper.AboutValidationHelper.CheckIfAboutExists());
-
-        if (result != null)
-            return result;
-
-
         About about = Mapper.Map<About>(createAboutDto);
         await Repository.GetRepository<About>().AddAsync(about);
         await Repository.SaveAsync();
@@ -88,9 +81,13 @@ public class AboutManager : BaseManager, IAboutService
     }
 
 
+    [ValidationAspect(typeof(UpdateAboutValidator), Priority = 1)]
     [CacheRemoveAspect("IAboutService.Get")]
     public async Task<IResult> UpdateAboutAsync(UpdateAboutDto updateAboutDto)
     {
+        if (updateAboutDto.Id == 0)
+            return await AddAboutAsync(new CreateAboutDto { Description = updateAboutDto.Description });
+
         About about = Mapper.Map<About>(updateAboutDto);
         await Repository.GetRepository<About>().UpdateAsync(about);
         await Repository.SaveAsync();

@@ -12,4 +12,6 @@ public interface IServiceManager
     IContactService ContactService { get; }
     IUserService UserService { get; }
     ISocialMediaService SocialMediaService { get; }
+    IPortfolioCategoryService PortfolioCategoryService { get; }
+    ITypeOfEmploymentService TypeOfEmploymentService { get; }
 }

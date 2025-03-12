@@ -7,6 +7,7 @@ using Core.Aspects.Autofac.Caching;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.Dtos;
+using Microsoft.EntityFrameworkCore;
 using Portfolio.Core.Utilities.Results.Abstract;
 using Portfolio.Core.Utilities.Results.ComplexTypes;
 using Portfolio.Core.Utilities.Results.Concrete;
@@ -47,7 +48,11 @@ public class ExperienceManager : BaseManager, IExperienceService
     [CacheAspect]
     public async Task<IDataResult<IList<GetAllExperienceDto>>> GetAllAsync()
     {
-        IList<Experience> experiences = await Repository.GetRepository<Experience>().GetAllAsync(orderBy: e => e.OrderByDescending(e => e.StartDate));
+        IList<Experience> experiences = await Repository
+            .GetRepository<Experience>()
+            .GetAllAsync(
+            orderBy: e => e.OrderByDescending(e => e.StartDate),
+            include: e => e.Include(e => e.TypeOfEmployment));
 
         IList<GetAllExperienceDto> getAllExperienceDtos = Mapper.Map<IList<GetAllExperienceDto>>(experiences);
         return new DataResult<IList<GetAllExperienceDto>>(ResultStatus.Success, getAllExperienceDtos);
