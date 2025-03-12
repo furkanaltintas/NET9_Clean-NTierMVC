@@ -5,7 +5,6 @@ using NToastNotify;
 using Presentation.Areas.Management.Controllers.Base;
 using Presentation.Areas.Management.ViewModels;
 using Presentation.Extensions;
-using Presentation.Helpers;
 
 namespace Presentation.Areas.Management.Controllers;
 
@@ -55,7 +54,7 @@ public class BlogController : BaseController
     public async Task<IActionResult> Update(UpdateBlogDto updateBlogDto)
     {
         var result = await _serviceManager.BlogService.UpdateAsync(updateBlogDto);
-        return this.ResponseRedirectAction(updateBlogDto, ResultHelper.IsSuccess(result), result.Message, _toastNotification);
+        return this.ResponseRedirectAction(result, _toastNotification, updateBlogDto);
     }
 
 

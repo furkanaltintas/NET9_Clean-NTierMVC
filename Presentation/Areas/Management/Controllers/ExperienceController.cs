@@ -2,6 +2,7 @@
 using Entities.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
+using Portfolio.Core.Utilities.Results.ComplexTypes;
 using Presentation.Areas.Management.Controllers.Base;
 using Presentation.Areas.Management.ViewModels;
 using Presentation.Extensions;
@@ -32,7 +33,11 @@ public class ExperienceController : BaseController
     public async Task<IActionResult> Add(CreateExperienceDto createExperienceDto)
     {
         var result = await _serviceManager.ExperienceService.AddExperienceAsync(createExperienceDto);
-        return this.ResponseRedirectAction(result, _toastNotification);
+
+        if (result.ResultStatus != ResultStatus.Success)
+            createExperienceDto.TypeOfEmploymentDtos = await GetTypeOfEmployments();
+
+        return this.ResponseRedirectAction(result, _toastNotification, createExperienceDto);
     }
 
 
@@ -48,7 +53,11 @@ public class ExperienceController : BaseController
     public async Task<IActionResult> Update(UpdateExperienceDto updateExperienceDto)
     {
         var result = await _serviceManager.ExperienceService.UpdateExperienceAsync(updateExperienceDto);
-        return this.ResponseRedirectAction(result, _toastNotification);
+
+        if (result.ResultStatus != ResultStatus.Success)
+            updateExperienceDto.TypeOfEmploymentDtos = await GetTypeOfEmployments();
+
+        return this.ResponseRedirectAction(result, _toastNotification, updateExperienceDto);
     }
 
 
