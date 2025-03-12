@@ -1,11 +1,11 @@
 ﻿using Entities.Dtos;
 using FluentValidation;
 
-namespace Business.ValidationRules.FluentValidation;
+namespace Business.ValidationRules.FluentValidation.Contacts;
 
-public class ContactValidator : AbstractValidator<CreateContactDto>
+public class CreateContactValidator : AbstractValidator<CreateContactDto>
 {
-    public ContactValidator()
+    public CreateContactValidator()
     {
         RuleFor(x => x.FullName).NotEmpty().WithMessage("Ad Soyad alanı boş geçilemez");
         RuleFor(x => x.Email).NotEmpty().WithMessage("E-Posta alanı boş geçilemez");
