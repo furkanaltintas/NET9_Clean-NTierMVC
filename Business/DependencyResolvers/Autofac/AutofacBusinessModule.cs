@@ -9,25 +9,24 @@ using DataAccess.Concrete;
 using System.Reflection;
 using Module = Autofac.Module;
 
-namespace Business.DependencyResolvers.Autofac
+namespace Business.DependencyResolvers.Autofac;
+
+public class AutofacBusinessModule : Module
 {
-    public class AutofacBusinessModule : Module
+    protected override void Load(ContainerBuilder builder)
     {
-        protected override void Load(ContainerBuilder builder)
-        {
 
-            builder.RegisterType<Repository>().As<IRepository>();
-            builder.RegisterType<ServiceManager>().As<IServiceManager>();
+        builder.RegisterType<Repository>().As<IRepository>();
+        builder.RegisterType<ServiceManager>().As<IServiceManager>();
 
-            Assembly assembly = Assembly.GetExecutingAssembly(); // Mevcut assembly'e ulaştık  (Business)
+        Assembly assembly = Assembly.GetExecutingAssembly(); // Mevcut assembly'e ulaştık  (Business)
 
 
-            builder.RegisterAssemblyTypes(assembly) // Bu assemblyde ki bütüp tipleri kayıt et
-                .AsImplementedInterfaces() // Kaydedilen tiplerin uyguladığı arayüzleri DI konteynerine kaydetmesini sağlar.
-                .EnableInterfaceInterceptors(new ProxyGenerationOptions()
-                {
-                    Selector = new AspectInterceptorSelector()
-                }).SingleInstance(); // Kaydedilen tiplerin tek bir örneğini oluşturur ve bu örneği tüm bağımlılıklar için paylaşılabilir bir hale getirir.
-        }
+        builder.RegisterAssemblyTypes(assembly) // Bu assemblyde ki bütüp tipleri kayıt et
+            .AsImplementedInterfaces() // Kaydedilen tiplerin uyguladığı arayüzleri DI konteynerine kaydetmesini sağlar.
+            .EnableInterfaceInterceptors(new ProxyGenerationOptions()
+            {
+                Selector = new AspectInterceptorSelector()
+            }).SingleInstance(); // Kaydedilen tiplerin tek bir örneğini oluşturur ve bu örneği tüm bağımlılıklar için paylaşılabilir bir hale getirir.
     }
 }
