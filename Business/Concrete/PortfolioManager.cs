@@ -2,9 +2,13 @@
 using Business.Abstract;
 using Business.Concrete.Base;
 using Business.Constants;
+using Business.Helpers.Images.Abstract;
 using Business.Helpers.Validations;
+using Business.Utilities;
 using Core.Aspects.Autofac.Caching;
+using Core.Entities.ComplexTypes;
 using DataAccess.Abstract;
+using Entities.Concrete;
 using Entities.Dtos;
 using Microsoft.EntityFrameworkCore;
 using Portfolio.Core.Utilities.Results.Abstract;
@@ -15,8 +19,11 @@ namespace Business.Concrete;
 
 public class PortfolioManager : BaseManager, IPortfolioService
 {
-    public PortfolioManager(IValidationHelper validationHelper, IRepository repository, IMapper mapper) : base(validationHelper, repository, mapper)
+    private readonly IImageHelper _imageHelper;
+
+    public PortfolioManager(IValidationHelper validationHelper, IRepository repository, IMapper mapper, IImageHelper imageHelper) : base(validationHelper, repository, mapper)
     {
+        _imageHelper = imageHelper;
     }
 
 
@@ -24,6 +31,12 @@ public class PortfolioManager : BaseManager, IPortfolioService
     public async Task<IResult> AddPortfolioAsync(CreatePortfolioDto createPortfolioDto)
     {
         Entities.Concrete.Portfolio portfolio = Mapper.Map<Entities.Concrete.Portfolio>(createPortfolioDto);
+
+        // Ek alanlar
+        portfolio.SubTitle = SlugHelper.GenerateSlug(createPortfolioDto.Title);
+        var imageUpload = await _imageHelper.Upload(createPortfolioDto.Title, createPortfolioDto.Photo, ImageType.Portfolio);
+        portfolio.Image = imageUpload.FullName;
+
         await Repository.GetRepository<Entities.Concrete.Portfolio>().AddAsync(portfolio);
         await Repository.SaveAsync();
         return new Result(ResultStatus.Success, Messages.Added);
@@ -47,7 +60,9 @@ public class PortfolioManager : BaseManager, IPortfolioService
     [CacheAspect]
     public async Task<IDataResult<IList<GetAllPortfolioDto>>> GetAllAsync()
     {
-        IList<Entities.Concrete.Portfolio> portfolios = await Repository.GetRepository<Entities.Concrete.Portfolio>().GetAllAsync(include: p => p.Include(p => p.PortfolioCategory));
+        IList<Entities.Concrete.Portfolio> portfolios = await Repository
+            .GetRepository<Entities.Concrete.Portfolio>()
+            .GetAllAsync(include: p => p.Include(p => p.PortfolioCategory));
 
         IList<GetAllPortfolioDto> getAllPortfolioDtos = Mapper.Map<IList<GetAllPortfolioDto>>(portfolios);
         return new DataResult<IList<GetAllPortfolioDto>>(ResultStatus.Success, getAllPortfolioDtos);
@@ -81,10 +96,23 @@ public class PortfolioManager : BaseManager, IPortfolioService
     [CacheRemoveAspect("IPortfolioService.Get")]
     public async Task<IResult> UpdatePortfolioAsync(UpdatePortfolioDto updatePortfolioDto)
     {
-        if (updatePortfolioDto == null)
+        Entities.Concrete.Portfolio portfolio = await Repository.GetRepository<Entities.Concrete.Portfolio>().GetAsync(p => p.Id == updatePortfolioDto.Id);
+
+        if (portfolio == null)
             return new Result(ResultStatus.Error, "Sistemde böyle bir portfolyo bilgisi bulunmamaktadır.");
 
-        Entities.Concrete.Portfolio portfolio = await Repository.GetRepository<Entities.Concrete.Portfolio>().GetAsync(e => e.Id == updatePortfolioDto.Id);
+        if (portfolio.Title != updatePortfolioDto.Title)
+            portfolio.SubTitle = SlugHelper.GenerateSlug(updatePortfolioDto.Title);
+
+        if (updatePortfolioDto.Photo != null)
+        {
+            _imageHelper.Delete(portfolio.Image);
+
+            var imageUpload = await _imageHelper.Upload(updatePortfolioDto.Title, updatePortfolioDto.Photo, ImageType.Portfolio);
+            updatePortfolioDto.Image = imageUpload.FullName;
+        }
+
+
         Mapper.Map(updatePortfolioDto, portfolio);
         await Repository.GetRepository<Entities.Concrete.Portfolio>().UpdateAsync(portfolio);
         await Repository.SaveAsync();

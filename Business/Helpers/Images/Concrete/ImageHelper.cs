@@ -24,7 +24,21 @@ public class ImageHelper : IImageHelper
 
     public async Task<ImageUploadedDto> Upload(string name, IFormFile imageFile, ImageType imageType, string? folderName = null)
     {
-        folderName ??= imageType == ImageType.User ? ImageConstants.UserImagesFolder : ImageConstants.ArticleImagesFolder;
+        switch (imageType)
+        {
+            case ImageType.User:
+                folderName = ImageConstants.UserImagesFolder;
+                break;
+            case ImageType.Post:
+                folderName = ImageConstants.BlogImagesFolder;
+                break;
+            case ImageType.Portfolio:
+                folderName = ImageConstants.PortfolioImagesFolder;
+                break;
+            default:
+                break;
+        }
+
         string newFileName = _fileNameHelper.GenerateFileName(name, imageFile.FileName);
 
         string uploadedPath = await _imageUploader.UploadImage(imageFile, folderName, newFileName);
