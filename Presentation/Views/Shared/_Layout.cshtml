@@ -7,7 +7,7 @@
 <html lang="tr">
 <head>
 	<meta charset="utf-8" />
-	<title>vCard - About</title>
+	<title>nPortfolio - @controller</title>
 
 	<!-- Meta Data -->
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -46,17 +46,6 @@
 
 </head>
 <body class="bg-triangles">
-	<!-- Preloader -->
-	<div class="preloader">
-		<div class="preloader__wrap">
-			<div class="circle-pulse">
-				<div class="circle-pulse__1"></div>
-				<div class="circle-pulse__2"></div>
-			</div>
-			<div class="preloader__progress"><span></span></div>
-		</div>
-	</div>
-
 	<main class="main">
 		<div class="container gutter-top">
 			<div class="row sticky-parent">
@@ -65,7 +54,7 @@
 
 				<!-- Content -->
 				<div class="col-12 col-md-12 col-xl-9">
-					<div class="box shadow pb-0">
+					<div class="box shadow">
 						<!-- Menu -->
 						<div class="circle-menu">
 							<div class="hamburger">
@@ -76,11 +65,11 @@
 						</div>
 						<div class="inner-menu js-menu">
 							<ul class="nav">
-								<li class="nav__item"><a class="@(controller == "home" ? "active" : string.Empty)" asp-controller="Home">Hakkımda</a></li>
-								<li class="nav__item"><a class="@(controller == "resume" ? "active" : string.Empty)" asp-controller="Resume">Özgeçmiş</a></li>
-								<li class="nav__item"><a class="@(controller == "portfolio" ? "active" : string.Empty)" asp-controller="Portfolio">Portfolyo</a></li>
+								<li class="nav__item"><a class="@(controller == "home" ? "active" : string.Empty)" asp-controller="Home">About</a></li>
+								<li class="nav__item"><a class="@(controller == "resume" ? "active" : string.Empty)" asp-controller="Resume">Resume</a></li>
+								<li class="nav__item"><a class="@(controller == "portfolio" ? "active" : string.Empty)" asp-controller="Portfolio">Portfolio</a></li>
 								<li class="nav__item"><a class="@(controller == "blog" ? "active" : string.Empty)" asp-controller="Blog">Blog</a></li>
-								<li class="nav__item"><a class="@(controller == "contact" ? "active" : string.Empty)" asp-controller="Contact">İletişim</a></li>
+								<li class="nav__item"><a class="@(controller == "contact" ? "active" : string.Empty)" asp-controller="Contact">Contact</a></li>
 							</ul>
 						</div>
 

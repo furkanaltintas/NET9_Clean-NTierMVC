@@ -14,7 +14,7 @@
             <div class="news-item__image-wrap overlay overlay--45">
                 <div class="news-item__date">@blog.PublishDate.ToString("MMM dd, yyyy")</div>
                 <a asp-action="Detail" asp-route-slug="@blog.Slug" class="news-item__link"></a>
-                <img class="cover lazyload" src="~/ui/assets/img/image_02.jpg" alt="" />
+                <img class="cover lazyload" src="~/images/@blog.Image" alt="@blog.Slug" />
             </div>
             <div class="news-item__caption">
                 <h2 class="title title--h4">@blog.Title</h2>
