@@ -27,5 +27,4 @@ public class User : BaseEntity, IEntity
     public string City { get; set; }
     public string Profession { get; set; }
     public byte[] CvLink { get; set; }
-    public string Cover { get; set; }
 }

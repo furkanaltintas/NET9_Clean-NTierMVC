@@ -17,7 +17,10 @@ public class Portfolio : BaseEntity, IEntity
         Image = image;
     }
 
+    public int PortfolioCategoryId { get; set; }
     public string Title { get; set; }
     public string SubTitle { get; set; }
     public string Image { get; set; }
+
+    public PortfolioCategory PortfolioCategory { get; set; }
 }
