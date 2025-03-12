@@ -1,4 +1,5 @@
 ﻿using Core.Entities.Abstract;
+using Entities.Concrete;
 using Entities.Dtos;
 
 namespace Presentation.Areas.Management.ViewModels;
@@ -20,7 +21,7 @@ public class ExperienceViewModel : IViewModel
     public string Title { get; set; }
     public string Company { get; set; }
     public string Location { get; set; }
-    public string TypeOfEmployment { get; set; }
+    public TypeOfEmployment TypeOfEmployment { get; set; }
     public string StartDate { get; set; }
     public string EndDate { get; set; }
 }

@@ -10,11 +10,15 @@
             </div>
             <div class="form-group">
                 <label asp-for="Content" class="form-label">Content</label>
-                <textarea asp-for="Content" class="form-control" rows="10"></textarea>
+                <textarea asp-for="Content" class="form-control" rows="20"></textarea>
             </div>
             <div class="form-group">
                 <label asp-for="PublishDate" class="form-label">Publish Date</label>
-                <input asp-for="PublishDate" class="form-control fc-datepicker hasDatepicker">
+                <input asp-for="PublishDate" type="datetime-local" class="form-control fc-datepicker hasDatepicker">
+            </div>
+            <div class="form-group">
+                <img src="~/images/@Model.Image" style="width:100%; height:100%;" />
+                <input asp-for="Image" type="hidden" />
             </div>
             <div class="form-group custom-file">
                 <label asp-for="Photo" class="custom-file-label" for="customFile">Choose file</label>

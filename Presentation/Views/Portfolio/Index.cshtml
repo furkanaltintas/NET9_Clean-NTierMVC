@@ -8,17 +8,7 @@
 <!-- Gallery -->
 <div class="pb-0">
 	<!-- Filter -->
-	<div class="select">
-		<span class="placeholder">Select category</span>
-		<ul class="filter">
-			<li class="filter__item">Category</li>
-			<li class="filter__item active" data-filter="*"><a class="filter__link active" href="#filter">All</a></li>
-			<li class="filter__item" data-filter=".category-demo"><a class="filter__link" href="#filter">Demo</a></li>
-			<li class="filter__item" data-filter=".category-code"><a class="filter__link" href="#filter">Code</a></li>
-			<li class="filter__item" data-filter=".category-life"><a class="filter__link" href="#filter">Life</a></li>
-		</ul>
-		<input type="hidden" name="changemetoo" />
-	</div>
+	@await Component.InvokeAsync("PortfolioCategoryFilter")
 
 	<!-- Content -->
 	<div class="gallery-grid js-masonry js-filter-container">
@@ -26,7 +16,7 @@
 		@foreach(var portfolio in Model)
 		{
 			<!-- Item 1 -->
-			<figure class="gallery-grid__item category-@portfolio.SubTitle">
+			<figure class="gallery-grid__item category-@portfolio.PortfolioCategory.Name.ToLower()">
 				<div class="gallery-grid__image-wrap">
 					<img class="gallery-grid__image cover lazyload" src="~/ui/assets/img/image_01.jpg" data-zoom alt="" />
 				</div>

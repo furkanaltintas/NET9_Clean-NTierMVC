@@ -1,0 +1,14 @@
+﻿@model List<GetAllPortfolioCategoryDto>
+
+<div class="select">
+	<span class="placeholder">Select Category</span>
+	<ul class="filter">
+		<li class="filter__item">Category</li>
+		<li class="filter__item active" data-filter="*"><a class="filter__link active" href="#filter">All</a></li>
+		@foreach(var portfolioCategory in Model)
+		{
+			<li class="filter__item" data-filter=".category-@portfolioCategory.Name.ToLower()"><a class="filter__link" href="#filter">@portfolioCategory.Name</a></li>
+		}
+	</ul>
+	<input type="hidden" name="changemetoo" />
+</div>

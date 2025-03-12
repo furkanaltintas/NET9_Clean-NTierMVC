@@ -17,8 +17,8 @@
                 <input asp-for="Location" class="form-control">
             </div>
             <div class="form-group">
-                <label asp-for="TypeOfEmployment" class="form-label"></label>
-                <input asp-for="TypeOfEmployment" class="form-control">
+                <label asp-for="TypeOfEmploymentDtos" class="form-label"></label>
+                <select asp-for="TypeOfEmploymentId" asp-items="@(new SelectList(Model.TypeOfEmploymentDtos, "Id", "Name"))" class="form-control"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="form-label"></label>

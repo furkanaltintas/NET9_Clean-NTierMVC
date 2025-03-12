@@ -5,6 +5,7 @@ using NToastNotify;
 using Presentation.Areas.Management.Controllers.Base;
 using Presentation.Areas.Management.ViewModels;
 using Presentation.Extensions;
+using System.Threading.Tasks;
 
 namespace Presentation.Areas.Management.Controllers;
 
@@ -21,7 +22,10 @@ public class ExperienceController : BaseController
     }
 
 
-    public IActionResult Add() => View();
+    public async Task<IActionResult> Add() => View(new CreateExperienceDto
+    {
+        TypeOfEmploymentDtos = await GetTypeOfEmployments()
+    });
 
 
     [HttpPost]
@@ -35,6 +39,7 @@ public class ExperienceController : BaseController
     public async Task<IActionResult> Update(int experienceId)
     {
         var result = await _serviceManager.ExperienceService.GetUpdateExperienceAsync(experienceId);
+        result.Data.TypeOfEmploymentDtos = await GetTypeOfEmployments();
         return this.ResponseView(result);
     }
 
@@ -51,5 +56,12 @@ public class ExperienceController : BaseController
     {
         var result = await _serviceManager.ExperienceService.DeleteExperienceAsync(experienceId);
         return this.ResponseRedirectAction(result, _toastNotification);
+    }
+
+
+    private async Task<IList<GetAllTypeOfEmploymentDto>> GetTypeOfEmployments()
+    {
+        var result = await _serviceManager.TypeOfEmploymentService.GetAllAsync();
+        return result.Data;
     }
 }
