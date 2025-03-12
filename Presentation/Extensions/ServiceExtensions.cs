@@ -3,7 +3,6 @@ using Autofac.Extensions.DependencyInjection;
 using Business.DependencyResolvers.Autofac;
 using DataAccess.Concrete.EntityFramework.Contexts;
 using Microsoft.EntityFrameworkCore;
-using NToastNotify;
 
 namespace Presentation.Extensions;
 
@@ -12,7 +11,7 @@ public static class ServiceExtensions
     public static IServiceCollection ConfigureDatabase(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<ApplicationDbContext>(options =>
-        options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Singleton, ServiceLifetime.Singleton);
+        options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Scoped);
 
         services.AddRouting(options =>
         {
@@ -30,17 +29,6 @@ public static class ServiceExtensions
         {
             builder.RegisterModule(new AutofacBusinessModule());
         }));
-
-        //host.ConfigureContainer<ContainerBuilder>(container =>
-        //{
-        //    container.RegisterType<ValidationAspect>();
-        //    container.RegisterType<CacheAspect>();
-
-        //    container.RegisterAssemblyTypes(typeof(BlogManager).Assembly)
-        //    .AsImplementedInterfaces()
-        //    .EnableInterfaceInterceptors()
-        //    .InterceptedBy(typeof(ValidationAspect));
-        //});
 
         return host;
     }

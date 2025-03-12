@@ -37,14 +37,14 @@ public static class ControllerExtensions
     /// </summary>
     public static IActionResult ResponseRedirectAction(
     this Controller controller,
-    object? data,
-    bool isSuccess,
-    string message,
+    IResult result,
     IToastNotification toastNotification,
-    string actionName = null,
+    object data,
+    string? actionName = null,
     string? controllerName = null)
     {
-        ShowNotification(toastNotification, isSuccess, message);
+        var isSuccess = ResultHelper.IsSuccess(result);
+        ShowNotification(toastNotification, isSuccess, result.Message);
 
         return isSuccess
             ? controller.RedirectToAction(actionName ?? nameof(Index), controllerName)
@@ -61,7 +61,7 @@ public static class ControllerExtensions
         this Controller controller,
         IResult result,
         IToastNotification toastNotification,
-        string actionName = null,
+        string? actionName = null,
         string? controllerName = null)
     {
         ShowNotification(toastNotification, result);
@@ -96,6 +96,8 @@ public static class ControllerExtensions
         return controller.View(viewModels);
     }
 
+
+
     /// <summary>
     /// <TDto> -> TViewModel
     /// </summary>
@@ -114,7 +116,7 @@ public static class ControllerExtensions
     /// </summary>
     private static void ShowNotification(IToastNotification toastNotification, IResult result)
     {
-        ShowNotification(toastNotification, result.ResultStatus == ResultStatus.Success, result.Message);
+        ShowNotification(toastNotification, ResultHelper.IsSuccess(result), result.Message);
     }
 
 

@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 using Presentation.Controllers.Base;
 using Presentation.Extensions;
-using Presentation.Helpers;
 
 namespace Presentation.Controllers;
 
@@ -25,6 +24,6 @@ public class ContactController : ControllerManager
     public async Task<IActionResult> Send(CreateContactDto createContactDto)
     {
         var result = await _manager.ContactService.SendAsync(createContactDto);
-        return this.ResponseRedirectAction(createContactDto, ResultHelper.IsSuccess(result), result.Message, _toastNotification);
+        return this.ResponseRedirectAction(result, _toastNotification, createContactDto);
     }
 }
