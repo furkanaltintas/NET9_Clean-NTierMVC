@@ -3,5 +3,6 @@
 public enum ImageType
 {
     User,
-    Post
+    Post,
+    Portfolio
 }
