@@ -8,6 +8,18 @@ public class ContactConfiguration : IEntityTypeConfiguration<Contact>
 {
     public void Configure(EntityTypeBuilder<Contact> builder)
     {
-        throw new NotImplementedException();
+        builder.HasKey(c => c.Id);
+
+        builder
+            .Property(c => c.FullName)
+            .HasMaxLength(100);
+
+        builder
+            .Property(c => c.Email)
+            .HasMaxLength(100);
+
+        builder
+            .Property(c => c.Message)
+            .HasMaxLength(1000);
     }
 }

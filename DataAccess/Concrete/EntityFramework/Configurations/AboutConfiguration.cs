@@ -8,6 +8,18 @@ public class AboutConfiguration : IEntityTypeConfiguration<About>
 {
     public void Configure(EntityTypeBuilder<About> builder)
     {
-        throw new NotImplementedException();
+        builder.HasKey(a => a.Id);
+
+        builder
+            .Property(a => a.Description)
+            .HasMaxLength(2000)
+            .IsRequired();
+
+        builder.HasData(
+            new About
+            {
+                Id = 1,
+                Description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+            });
     }
 }
