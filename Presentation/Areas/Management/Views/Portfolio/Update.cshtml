@@ -2,11 +2,19 @@
 
 <div class="slim-mainpanel">
     <div class="section-wrapper">
-        <form asp-action="Update" method="post">
+        <form asp-action="Update" method="post" enctype="multipart/form-data">
             <input asp-for="Id" type="hidden" />
             <div class="form-group">
                 <label asp-for="Title" class="form-label"></label>
                 <input asp-for="Title" class="form-control">
+            </div>
+            <div class="form-group">
+                <label asp-for="PortfolioCategoryDtos" class="form-label">Portfolio Categories</label>
+                <select asp-for="PortfolioCategoryId" asp-items="@(new SelectList(Model.PortfolioCategoryDtos, "Id", "Name"))" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <img src="~/images/@Model.Image" style="width:100%; height:100%;" />
+                <input asp-for="Image" type="hidden" />
             </div>
             <div class="form-group custom-file">
                 <label asp-for="Photo" class="custom-file-label" for="customFile">Choose file</label>

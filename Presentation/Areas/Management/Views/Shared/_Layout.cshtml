@@ -204,13 +204,13 @@
                 <li class="nav-item @DashboardActiveHelper.Active(controllerName, new[] {"home"})">
                     <a asp-controller="Home" class="nav-link @DashboardActiveHelper.Active(controllerName, new[] {"home"})">
                         <i class="icon ion-ios-home-outline"></i>
-                        <span>Yönetim</span>
+                        <span>Management</span>
                     </a>
                 </li>
                 <li class="nav-item with-sub @DashboardActiveHelper.Active(controllerName, new[] {"blog", "portfolio", "service"})">
-                    <a class="nav-link @DashboardActiveHelper.Active(controllerName, new[] {"blog", "portfolio", "service"})" href="#" data-toggle="dropdown">
+                    <a class="nav-link @DashboardActiveHelper.Active(controllerName, new[] {"blog", "portfolio", "service"})" data-toggle="dropdown">
                         <i class="icon ion-ios-gear-outline"></i>
-                        <span>İçerikler</span>
+                        <span>Contents</span>
                     </a>
                     <div class="sub-item">
                         <ul>
@@ -221,9 +221,9 @@
                     </div><!-- dropdown-menu -->
                 </li>
                 <li class="nav-item with-sub @DashboardActiveHelper.Active(controllerName, new[] {"about", "education", "experience", "certificate", "skill"})">
-                    <a class="nav-link @DashboardActiveHelper.Active(controllerName, new[] {"about", "education", "experience", "certificate", "skill"})" href="#" data-toggle="dropdown">
+                    <a class="nav-link @DashboardActiveHelper.Active(controllerName, new[] {"about", "education", "experience", "certificate", "skill"})" data-toggle="dropdown">
                         <i class="icon ion-ios-gear-outline"></i>
-                        <span>Özgeçmiş</span>
+                        <span>Resume</span>
                     </a>
                     <div class="sub-item">
                         <ul>
@@ -236,21 +236,26 @@
                     </div><!-- dropdown-menu -->
                 </li>
                 <li class="nav-item @DashboardActiveHelper.Active(controllerName, new[] {"socialmedia"})">
-                    <a asp-area="Management" asp-controller="SocialMedia" class="nav-link @DashboardActiveHelper.Active(controllerName, new[] {"socialmedia"})">
+                    <a asp-area="Management" asp-controller="SocialMedia" asp-action="Index" class="nav-link @DashboardActiveHelper.Active(controllerName, new[] {"socialmedia"})">
                         <i class="icon ion-ios-home-outline"></i>
-                        <span>Sosyal Medya</span>
+                        <span>Social Media</span>
                     </a>
                 </li>
-                <li class="nav-item with-sub">
-                    <a class="nav-link" href="#" data-toggle="dropdown">
+                <li class="nav-item with-sub @DashboardActiveHelper.Active(controllerName, new[] {"portfoliocategory", "typeofemployment"})">
+                    <a class="nav-link" @DashboardActiveHelper.Active(controllerName, new[] { "portfoliocategory", "typeofemployment" }) data-toggle="dropdown">
                         <i class="icon ion-ios-gear-outline"></i>
-                        <span>Araçlar</span>
+                        <span>Tools</span>
                     </a>
                     <div class="sub-item">
                         <ul>
-                            <li><a href="form-elements.html">Form Elements</a></li>
+                            <li><a asp-area="Management" asp-controller="PortfolioCategory" asp-action="Index">Portfolio Category</a></li>
                         </ul>
-                    </div><!-- dropdown-menu -->
+                    </div>
+                    <div class="sub-item">
+                        <ul>
+                            <li><a asp-area="Management" asp-controller="TypeOfEmployment" asp-action="Index">Type of Employment</a></li>
+                        </ul>
+                    </div>
                 </li>
 
                 <li class="nav-item">
@@ -291,7 +296,7 @@
     <script src="~/app/lib/popper.js/js/popper.js"></script>
     <script src="~/app/lib/bootstrap/js/bootstrap.js"></script>
     <script src="~/app/lib/jquery.cookie/js/jquery.cookie.js"></script>
-    
+
     @await RenderSectionAsync("Scripts", false)
 
     <script src="~/app/lib/datatables/js/jquery.dataTables.js"></script>
