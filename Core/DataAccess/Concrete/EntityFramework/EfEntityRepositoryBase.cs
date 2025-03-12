@@ -50,8 +50,8 @@ public class EfEntityRepositoryBase<TEntity> : IEntityRepository<TEntity>
         if (include is not null) queryable = include(queryable);
         if (predicate is not null) queryable = queryable.Where(predicate);
         if (orderBy is not null)
-            return await orderBy(queryable).ToListAsync();
-        return await queryable.ToListAsync();
+            return await orderBy(queryable).ToListAsync().ConfigureAwait(false);
+        return await queryable.ToListAsync().ConfigureAwait(false);
     }
 
     public async Task<IList<TEntity>> GetAllByPagingAsync(Expression<Func<TEntity, bool>>? predicate = null, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null, bool enableTracking = false, int currentPage = 1, int pageSize = 3)
@@ -62,8 +62,8 @@ public class EfEntityRepositoryBase<TEntity> : IEntityRepository<TEntity>
         if (include is not null) queryable = include(queryable);
         if (predicate is not null) queryable = queryable.Where(predicate);
         if (orderBy is not null)
-            return await orderBy(queryable).Skip((currentPage - 1) * pageSize).Take(pageSize).ToListAsync();
-        return await queryable.ToListAsync();
+            return await orderBy(queryable).Skip((currentPage - 1) * pageSize).Take(pageSize).ToListAsync().ConfigureAwait(false);
+        return await queryable.ToListAsync().ConfigureAwait(false);
     }
 
     public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null, bool enableTracking = false)
