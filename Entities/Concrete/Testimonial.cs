@@ -3,8 +3,9 @@ using Core.Entities.Concrete;
 
 namespace Entities.Concrete;
 
-public class Certificate : BaseEntity, IEntity
+public class Testimonial : BaseEntity, IEntity
 {
-    public string Title { get; set; }
+    public string FullName { get; set; }
+    public string Message { get; set; }
     public string Image { get; set; }
 }
