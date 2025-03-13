@@ -1,4 +1,4 @@
-﻿@model UpdatePortfolioDto
+﻿@model UpdateCertificateDto
 
 <div class="section-wrapper">
     <form asp-action="Update" method="post" enctype="multipart/form-data">
@@ -6,10 +6,6 @@
         <div class="form-group">
             <label asp-for="Title" class="form-label"></label>
             <input asp-for="Title" class="form-control">
-        </div>
-        <div class="form-group">
-            <label asp-for="PortfolioCategoryDtos" class="form-label">Portfolio Categories</label>
-            <select asp-for="PortfolioCategoryId" asp-items="@(new SelectList(Model.PortfolioCategoryDtos, "Id", "Name"))" class="form-control"></select>
         </div>
         <div class="form-group">
             <img src="~/images/@Model.Image" style="width:100%; height:100%;" />

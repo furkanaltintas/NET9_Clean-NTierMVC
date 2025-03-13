@@ -58,7 +58,7 @@ $(document).ready(function() {
         },'+=500')
         .add({
             targets: '.preloader__progress span',
-            duration: 500,
+            duration: 100,
             width: '100%',
 			easing: 'easeInOutQuart'
         },'-=500')

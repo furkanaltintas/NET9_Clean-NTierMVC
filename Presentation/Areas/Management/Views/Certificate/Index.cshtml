@@ -1,1 +1,22 @@
-﻿<p>hello</p>
+﻿@model IList<CertificateViewModel>
+
+<div class="section-wrapper">
+    <div class="row">
+        @foreach (var certificate in Model)
+        {
+            <div class="col-sm-6 col-md-3 mb-4">
+                <div class="image-container" style="width:100%; height: 250px; overflow: hidden;">
+                    <img src="~/images/@certificate.Image" class="w-100" alt="@certificate.Name" style="width:100%; height:100%; object-fit:cover;">
+                </div>
+                <a asp-action="Update" asp-route-certificateId="@certificate.Id" class="btn btn-primary btn-icon"><div><i class="fa fa-refresh"></i></div></a>
+                <a asp-action="Delete" asp-route-certificateId="@certificate.Id" class="btn btn-danger btn-icon"><div><i class="fa fa-trash"></i></div></a>
+            </div>
+        }
+    </div>
+
+    <hr />
+    <a asp-action="Add" class="btn btn-outline-success btn-icon d-flex align-items-center justify-content-center"
+       style="width: -webkit-fill-available; height: 40px;">
+        <i class="fa fa-plus"></i>
+    </a>
+</div>

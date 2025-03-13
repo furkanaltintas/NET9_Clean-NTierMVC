@@ -1,34 +1,32 @@
 ﻿@model List<SocialMediaViewModel>
 
-<div class="slim-mainpanel">
-    <div class="section-wrapper">
-        <div class="table-wrapper">
-            <table id="datatable1" class="table display responsive nowrap">
-                <thead>
+<div class="section-wrapper">
+    <div class="table-wrapper">
+        <table id="datatable1" class="table display responsive nowrap">
+            <thead>
+                <tr>
+                    <th class="wd-15p">Name</th>
+                    <th class="wd-15p">Icon</th>
+                    <th class="wd-15p">Link</th>
+                    <th class="wd-15p">Transactions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var socialMedia in Model)
+                {
                     <tr>
-                        <th class="wd-15p">Name</th>
-                        <th class="wd-15p">Icon</th>
-                        <th class="wd-15p">Link</th>
-                        <th class="wd-15p">Transactions</th>
+                        <td>@socialMedia.Name</td>
+                        <td>@socialMedia.Icon</td>
+                        <td>@socialMedia.Link</td>
+                        <td>
+                            <a asp-action="Detail" asp-route-socialMediaId="@socialMedia.Id" class="btn btn-outline-warning btn-icon"><div><i class="fa fa-info"></i></div></a>
+                            <a asp-action="Update" asp-route-socialMediaId="@socialMedia.Id" class="btn btn-outline-primary btn-icon"><div><i class="fa fa-refresh"></i></div></a>
+                            <a asp-action="Delete" asp-route-socialMediaId="@socialMedia.Id" class="btn btn-outline-danger btn-icon"><div><i class="fa fa-trash"></i></div></a>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach (var socialMedia in Model)
-                    {
-                        <tr>
-                            <td>@socialMedia.Name</td>
-                            <td>@socialMedia.Icon</td>
-                            <td>@socialMedia.Link</td>
-                            <td>
-                                <a asp-action="Detail" asp-route-socialMediaId="@socialMedia.Id" class="btn btn-outline-warning btn-icon"><div><i class="fa fa-info"></i></div></a>
-                                <a asp-action="Update" asp-route-socialMediaId="@socialMedia.Id" class="btn btn-outline-primary btn-icon"><div><i class="fa fa-refresh"></i></div></a>
-                                <a asp-action="Delete" asp-route-socialMediaId="@socialMedia.Id" class="btn btn-outline-danger btn-icon"><div><i class="fa fa-trash"></i></div></a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-            <a asp-action="Add" class="btn btn-outline-success">Social Media Add</a>
-        </div>
+                }
+            </tbody>
+        </table>
+        <a asp-action="Add" class="btn btn-outline-success">Social Media Add</a>
     </div>
 </div>

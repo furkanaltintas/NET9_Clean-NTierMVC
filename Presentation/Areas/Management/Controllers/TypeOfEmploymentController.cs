@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 using Presentation.Areas.Management.Controllers.Base;
+using Presentation.Extensions;
+using System.Threading.Tasks;
 
 namespace Presentation.Areas.Management.Controllers;
 
@@ -11,8 +13,9 @@ public class TypeOfEmploymentController : BaseController
     {
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        return View();
+        var result = await _serviceManager.TypeOfEmploymentService.GetAllAsync();
+        return this.ResponseView(result);
     }
 }

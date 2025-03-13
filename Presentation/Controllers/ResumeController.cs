@@ -2,7 +2,6 @@
 
 namespace Presentation.Controllers;
 
-[Route("ozgecmis")]
 public class ResumeController : Controller
 {
     public IActionResult Index()

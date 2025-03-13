@@ -1,38 +1,36 @@
 ﻿@model List<EducationViewModel>
 
-<div class="slim-mainpanel">
-    <div class="section-wrapper">
-        <div class="table-wrapper">
-            <table id="datatable1" class="table display responsive nowrap">
-                <thead>
+<div class="section-wrapper">
+    <div class="table-wrapper">
+        <table id="datatable1" class="table display responsive nowrap">
+            <thead>
+                <tr>
+                    <th class="wd-15p">Title</th>
+                    <th class="wd-15p">Degree</th>
+                    <th class="wd-15p">Department</th>
+                    <th class="wd-15p">Start Date</th>
+                    <th class="wd-15p">End Date (or expected)</th>
+                    <th class="wd-15p">Transactions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var education in Model)
+                {
                     <tr>
-                        <th class="wd-15p">Title</th>
-                        <th class="wd-15p">Degree</th>
-                        <th class="wd-15p">Department</th>
-                        <th class="wd-15p">Start Date</th>
-                        <th class="wd-15p">End Date (or expected)</th>
-                        <th class="wd-15p">Transactions</th>
+                        <td>@education.Title</td>
+                        <td>@education.Degree</td>
+                        <td>@education.Department</td>
+                        <td>@education.StartDate</td>
+                        <td>@education.EndDate</td>
+                        <td>
+                            <a asp-action="Detail" asp-route-educationId="@education.Id" class="btn btn-outline-warning btn-icon"><div><i class="fa fa-info"></i></div></a>
+                            <a asp-action="Update" asp-route-educationId="@education.Id" class="btn btn-outline-primary btn-icon"><div><i class="fa fa-refresh"></i></div></a>
+                            <a asp-action="Delete" asp-route-educationId="@education.Id" class="btn btn-outline-danger btn-icon"><div><i class="fa fa-trash"></i></div></a>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach (var education in Model)
-                    {
-                        <tr>
-                            <td>@education.Title</td>
-                            <td>@education.Degree</td>
-                            <td>@education.Department</td>
-                            <td>@education.StartDate</td>
-                            <td>@education.EndDate</td>
-                            <td>
-                                <a asp-action="Detail" asp-route-educationId="@education.Id" class="btn btn-outline-warning btn-icon"><div><i class="fa fa-info"></i></div></a>
-                                <a asp-action="Update" asp-route-educationId="@education.Id" class="btn btn-outline-primary btn-icon"><div><i class="fa fa-refresh"></i></div></a>
-                                <a asp-action="Delete" asp-route-educationId="@education.Id" class="btn btn-outline-danger btn-icon"><div><i class="fa fa-trash"></i></div></a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-            <a asp-action="Add" class="btn btn-outline-success">Education Add</a>
-        </div>
+                }
+            </tbody>
+        </table>
+        <a asp-action="Add" class="btn btn-outline-success">Education Add</a>
     </div>
 </div>

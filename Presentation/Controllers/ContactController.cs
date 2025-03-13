@@ -7,7 +7,6 @@ using Presentation.Extensions;
 
 namespace Presentation.Controllers;
 
-[Route("iletisim")]
 public class ContactController : ControllerManager
 {
     private readonly IToastNotification _toastNotification;

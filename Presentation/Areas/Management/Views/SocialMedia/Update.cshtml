@@ -1,22 +1,20 @@
 ﻿@model UpdateSocialMediaIconDto
 
-<div class="slim-mainpanel">
-    <div class="section-wrapper">
-        <form asp-action="Update" method="post">
-            <input asp-for="Id" type="hidden" />
-            <div class="form-group">
-                <label asp-for="Name" class="form-label"></label>
-                <input asp-for="Name" class="form-control">
-            </div>
-            <div class="form-group">
-                <label asp-for="Icon" class="form-label"></label>
-                <input asp-for="Icon" class="form-control">
-            </div>
-            <div class="form-group">
-                <label asp-for="Link" class="form-label"></label>
-                <input asp-for="Link" class="form-control">
-            </div>
-            <button type="submit" class="btn btn-outline-success">Update Social Media</button>
-        </form>
-    </div>
+<div class="section-wrapper">
+    <form asp-action="Update" method="post">
+        <input asp-for="Id" type="hidden" />
+        <div class="form-group">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" class="form-control">
+        </div>
+        <div class="form-group">
+            <label asp-for="Icon" class="form-label"></label>
+            <input asp-for="Icon" class="form-control">
+        </div>
+        <div class="form-group">
+            <label asp-for="Link" class="form-label"></label>
+            <input asp-for="Link" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-outline-success">Update Social Media</button>
+    </form>
 </div>

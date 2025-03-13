@@ -1,36 +1,34 @@
 ﻿@model List<BlogViewModel>
 
-<div class="slim-mainpanel">
-    <div class="section-wrapper">
-        <div class="table-wrapper">
-            <table id="datatable1" class="table display responsive nowrap">
-                <thead>
+<div class="section-wrapper">
+    <div class="table-wrapper">
+        <table id="datatable1" class="table display responsive nowrap">
+            <thead>
+                <tr>
+                    <th class="wd-15p">Başlık</th>
+                    <th class="wd-15p">Yayınlanma Tarihi</th>
+                    <th class="wd-15p">Aktif Mi ?</th>
+                    <th class="wd-15p">Yayından Kaldır</th>
+                    <th class="wd-15p">Transactions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var blog in Model)
+                {
                     <tr>
-                        <th class="wd-15p">Başlık</th>
-                        <th class="wd-15p">Yayınlanma Tarihi</th>
-                        <th class="wd-15p">Aktif Mi ?</th>
-                        <th class="wd-15p">Yayından Kaldır</th>
-                        <th class="wd-15p">Transactions</th>
+                        <td>@blog.Title</td>
+                        <td>@blog.PublishDate</td>
+                        <td>@blog.IsPublish</td>
+                        <td>@blog.IsTrash</td>
+                        <td>
+                            <a asp-action="Detail" asp-route-blogId="@blog.Id" class="btn btn-outline-warning btn-icon"><div><i class="fa fa-info"></i></div></a>
+                            <a asp-action="Update" asp-route-blogId="@blog.Id" class="btn btn-outline-primary btn-icon"><div><i class="fa fa-refresh"></i></div></a>
+                            <a asp-action="Delete" asp-route-blogId="@blog.Id" class="btn btn-outline-danger btn-icon"><div><i class="fa fa-trash"></i></div></a>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach (var blog in Model)
-                    {
-                        <tr>
-                            <td>@blog.Title</td>
-                            <td>@blog.PublishDate</td>
-                            <td>@blog.IsPublish</td>
-                            <td>@blog.IsTrash</td>
-                            <td>
-                                <a asp-action="Detail" asp-route-blogId="@blog.Id" class="btn btn-outline-warning btn-icon"><div><i class="fa fa-info"></i></div></a>
-                                <a asp-action="Update" asp-route-blogId="@blog.Id" class="btn btn-outline-primary btn-icon"><div><i class="fa fa-refresh"></i></div></a>
-                                <a asp-action="Delete" asp-route-blogId="@blog.Id" class="btn btn-outline-danger btn-icon"><div><i class="fa fa-trash"></i></div></a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-            <a asp-action="Add" class="btn btn-outline-success">Create Blog</a>
-        </div>
+                }
+            </tbody>
+        </table>
+        <a asp-action="Add" class="btn btn-outline-success">Create Blog</a>
     </div>
 </div>

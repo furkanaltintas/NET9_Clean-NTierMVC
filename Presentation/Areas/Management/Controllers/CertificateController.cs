@@ -1,12 +1,24 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Business.Abstract.Base;
+using Entities.Dtos;
+using Microsoft.AspNetCore.Mvc;
+using NToastNotify;
+using Presentation.Areas.Management.Controllers.Base;
+using Presentation.Areas.Management.ViewModels;
+using Presentation.Extensions;
 
 namespace Presentation.Areas.Management.Controllers;
 
-[Area("Management")]
-public class CertificateController : Controller
+public class CertificateController : BaseController
 {
-    public IActionResult Index()
+    public CertificateController(IServiceManager serviceManager, IToastNotification toastNotification) : base(serviceManager, toastNotification)
     {
-        return View();
     }
+
+    public async Task<IActionResult> Index()
+    {
+        var result = await _serviceManager.CertificateService.GetAllAsync();
+        return this.ResponseViewModel<GetAllCertificateDto, CertificateViewModel>(result);
+    }
+
+    public IActionResult Add() => View();
 }

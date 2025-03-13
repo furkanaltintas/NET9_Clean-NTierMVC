@@ -1,37 +1,35 @@
 ﻿@model CreateExperienceDto
 
-<div class="slim-mainpanel">
-    <div class="section-wrapper">
-        <form asp-action="Add" method="post">
-            <div class="form-group">
-                <label asp-for="Title" class="form-label"></label>
-                <input asp-for="Title" class="form-control">
-            </div>
-            <div class="form-group">
-                <label asp-for="Company" class="form-label"></label>
-                <input asp-for="Company" class="form-control">
-            </div>
-            <div class="form-group">
-                <label asp-for="Location" class="form-label"></label>
-                <input asp-for="Location" class="form-control">
-            </div>
-            <div class="form-group">
-                <label asp-for="TypeOfEmploymentDtos" class="form-label"></label>
-                <select asp-for="TypeOfEmploymentId" asp-items="@(new SelectList(Model.TypeOfEmploymentDtos, "Id", "Name"))" class="form-control"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="form-label"></label>
-                <textarea asp-for="Description" class="form-control" rows="10"></textarea>
-            </div>
-            <div class="form-group">
-                <label asp-for="StartDate" class="form-label">Start Date</label>
-                <input asp-for="StartDate" class="form-control fc-datepicker hasDatepicker">
-            </div>
-            <div class="form-group">
-                <label asp-for="EndDate" class="form-label">End Date</label>
-                <input asp-for="EndDate" class="form-control fc-datepicker hasDatepicker">
-            </div>
-            <button type="submit" class="btn btn-outline-success">Create Experience</button>
-        </form>
-    </div>
+<div class="section-wrapper">
+    <form asp-action="Add" method="post">
+        <div class="form-group">
+            <label asp-for="Title" class="form-label"></label>
+            <input asp-for="Title" class="form-control">
+        </div>
+        <div class="form-group">
+            <label asp-for="Company" class="form-label"></label>
+            <input asp-for="Company" class="form-control">
+        </div>
+        <div class="form-group">
+            <label asp-for="Location" class="form-label"></label>
+            <input asp-for="Location" class="form-control">
+        </div>
+        <div class="form-group">
+            <label asp-for="TypeOfEmploymentDtos" class="form-label"></label>
+            <select asp-for="TypeOfEmploymentId" asp-items="@(new SelectList(Model.TypeOfEmploymentDtos, "Id", "Name"))" class="form-control"></select>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description" class="form-label"></label>
+            <textarea asp-for="Description" class="form-control" rows="10"></textarea>
+        </div>
+        <div class="form-group">
+            <label asp-for="StartDate" class="form-label">Start Date</label>
+            <input asp-for="StartDate" class="form-control fc-datepicker hasDatepicker">
+        </div>
+        <div class="form-group">
+            <label asp-for="EndDate" class="form-label">End Date</label>
+            <input asp-for="EndDate" class="form-control fc-datepicker hasDatepicker">
+        </div>
+        <button type="submit" class="btn btn-outline-success">Create Experience</button>
+    </form>
 </div>

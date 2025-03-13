@@ -4,7 +4,6 @@ using Presentation.Controllers.Base;
 
 namespace Presentation.Controllers;
 
-[Route("portfoy")]
 public class PortfolioController : ControllerManager
 {
     public PortfolioController(IServiceManager manager) : base(manager)

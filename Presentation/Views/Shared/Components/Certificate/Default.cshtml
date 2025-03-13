@@ -1,0 +1,22 @@
+﻿@model List<GetAllCertificateDto>
+
+<!-- Certificates -->
+@if (Model.Any())
+{
+    <div class="box-inner">
+        <h2 class="title title--h3">Certificate</h2>
+
+        <div class="swiper-container js-carousel-clients">
+            <div class="swiper-wrapper">
+                @foreach (var certificate in Model)
+                {
+                    <div class="swiper-slide">
+                        <a href="#"><img src="@certificate.Image" alt="@certificate.Name" /></a>
+                    </div>
+                }
+            </div>
+
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+}

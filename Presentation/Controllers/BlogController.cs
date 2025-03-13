@@ -5,7 +5,6 @@ using Presentation.Extensions;
 
 namespace Presentation.Controllers;
 
-[Route("blog")]
 public class BlogController : ControllerManager
 {
     public BlogController(IServiceManager manager) : base(manager)

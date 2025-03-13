@@ -14,6 +14,7 @@
     <Folder Include="wwwroot\app\lib\datatables\png\" />
     <Folder Include="wwwroot\app\lib\echarts\extension\" />
     <Folder Include="wwwroot\app\lib\summernote\lang\" />
+    <Folder Include="wwwroot\images\" />
     <Folder Include="wwwroot\ui\assets\img\" />
   </ItemGroup>
 

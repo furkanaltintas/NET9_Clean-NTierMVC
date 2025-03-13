@@ -1,16 +1,19 @@
 ﻿@model List<GetAllEducationDto>
 
-<div class="col-12">
-    <h2 class="title title--h3"><img class="title-icon" src="https://art-template.ru/vcard1/assets/icons/dark/icon-education.svg" alt="education" /> Education</h2>
-    <div class="timeline">
-        <!-- Item -->
-        @foreach (var education in Model)
-        {
-            <article class="timeline__item">
-                <h5 class="title title--h5 timeline__title">@education.Title</h5>
-                <span class="timeline__period">@education.StartDate.Year — @education.EndDate.Year</span>
-                <p class="timeline__description">@education.Description</p>
-            </article>
-        }
+@if (Model.Any())
+{
+    <div class="col-12">
+        <h2 class="title title--h3"><img class="title-icon" src="https://art-template.ru/vcard1/assets/icons/dark/icon-education.svg" alt="education" /> Education</h2>
+        <div class="timeline">
+            <!-- Item -->
+            @foreach (var education in Model)
+            {
+                <article class="timeline__item">
+                    <h5 class="title title--h5 timeline__title">@education.Title</h5>
+                    <span class="timeline__period">@education.StartDate.Year — @education.EndDate.Year</span>
+                    <p class="timeline__description">@education.Description</p>
+                </article>
+            }
+        </div>
     </div>
-</div>
+}

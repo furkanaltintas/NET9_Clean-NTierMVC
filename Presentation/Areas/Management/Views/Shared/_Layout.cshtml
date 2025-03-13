@@ -242,17 +242,13 @@
                     </a>
                 </li>
                 <li class="nav-item with-sub @DashboardActiveHelper.Active(controllerName, new[] {"portfoliocategory", "typeofemployment"})">
-                    <a class="nav-link" @DashboardActiveHelper.Active(controllerName, new[] { "portfoliocategory", "typeofemployment" }) data-toggle="dropdown">
+                    <a class="nav-link @DashboardActiveHelper.Active(controllerName, new[] { "portfoliocategory", "typeofemployment" })" data-toggle="dropdown">
                         <i class="icon ion-ios-gear-outline"></i>
                         <span>Tools</span>
                     </a>
                     <div class="sub-item">
                         <ul>
                             <li><a asp-area="Management" asp-controller="PortfolioCategory" asp-action="Index">Portfolio Category</a></li>
-                        </ul>
-                    </div>
-                    <div class="sub-item">
-                        <ul>
                             <li><a asp-area="Management" asp-controller="TypeOfEmployment" asp-action="Index">Type of Employment</a></li>
                         </ul>
                     </div>
@@ -272,14 +268,13 @@
         <div class="container">
             <div class="slim-pageheader">
                 <ol class="breadcrumb slim-breadcrumb">
-                    <li class="breadcrumb-item"><a asp-area="Management" asp-controller="@controllerName">@DashboardBreadcrumbHelper.GetTranslatedActionName(actionName)</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">@DashboardBreadcrumbHelper.GetTranslatedControllerName(controllerName)</li>
+                    <li class="breadcrumb-item"><a asp-area="Management" asp-controller="@controllerName" asp-action="@actionName">@DashboardBreadcrumbHelper.CapitalizeFirstCharacter(actionName)</a></li>
+                    <li class="breadcrumb-item"><a asp-area="Management" asp-controller="@controllerName" asp-action="Index">Transactions</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Management</li>
                 </ol>
-                @if (controllerName == "home")
-                {
-                    <h6 class="slim-pagetitle">Welcome back, Katherine</h6>
-                }
-            </div><!-- slim-pageheader -->
+                <h6 class="slim-pagetitle">@DashboardBreadcrumbHelper.PageTitle(controllerName, actionName)</h6>
+            </div>
+
             @RenderBody()
 
         </div><!-- container -->
@@ -336,6 +331,9 @@
 
     <script src="~/app/js/slim.js"></script>
     <script src="~/app/js/ResizeSensor.js"></script>
+
+    @await Component.InvokeAsync("NToastNotify")
+
     <script>
         $(function(){
           'use strict'

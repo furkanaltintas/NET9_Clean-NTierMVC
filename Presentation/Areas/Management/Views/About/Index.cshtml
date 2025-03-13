@@ -1,15 +1,13 @@
 ﻿@model UpdateAboutDto
 
-<div class="slim-mainpanel">
-    <div class="section-wrapper">
-        <form asp-action="Update" method="post">
-            <input asp-for="Id" type="hidden" />
-            <div class="form-group">
-                <label asp-for="Description" class="form-label">Content</label>
-                <textarea asp-for="Description" class="form-control" rows="10"></textarea>
-            </div>
-            <button type="submit" class="btn btn-outline-success">About Update</button> &nbsp;
-            <a asp-action="Delete" class="btn btn-outline-danger">About Delete</a>
-        </form>
-    </div>
+<div class="section-wrapper">
+    <form asp-action="Update" method="post">
+        <input asp-for="Id" type="hidden" />
+        <div class="form-group">
+            <label asp-for="Description" class="form-label">Content</label>
+            <textarea asp-for="Description" class="form-control" rows="10"></textarea>
+        </div>
+        <button type="submit" class="btn btn-outline-success">About Update</button> &nbsp;
+        <a asp-action="Delete" class="btn btn-outline-danger">About Delete</a>
+    </form>
 </div>

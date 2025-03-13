@@ -5,45 +5,48 @@
     int indexOdd = 0;
 }
 
-<div class="box-inner box-inner--rounded">
-    <h2 class="title title--h3">Yetenekler</h2>
-    <div class="row">
-        <div class="col-12 col-lg-6">
-            <div class="box box__second">
-                <!-- Progress -->
-                @foreach (var skill in Model)
-                {
-                    if (indexOdd % 2 == 0)
+@if (Model.Any())
+{
+    <div class="box-inner box-inner--rounded">
+        <h2 class="title title--h3">Yetenekler</h2>
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                <div class="box box__second">
+                    <!-- Progress -->
+                    @foreach (var skill in Model)
                     {
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" aria-valuenow="@skill.Point" aria-valuemin="0" aria-valuemax="100">
-                                <div class="progress-text"><span>@skill.Name</span><span>@skill.Point%</span></div>
+                        if (indexOdd % 2 == 0)
+                        {
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="@skill.Point" aria-valuemin="0" aria-valuemax="100">
+                                    <div class="progress-text"><span>@skill.Name</span><span>@skill.Point%</span></div>
+                                </div>
+                                <div class="progress-text"><span>@skill.Name</span></div>
                             </div>
-                            <div class="progress-text"><span>@skill.Name</span></div>
-                        </div>
+                        }
+                        indexOdd++;
                     }
-                    indexOdd++;
-                }
+                </div>
             </div>
-        </div>
 
-        <div class="col-12 col-lg-6 mt-4 mt-lg-0">
-            <div class="box box__second">
-                <!-- Progress -->
-                @foreach (var skill in Model)
-                {
-                    if (indexEven % 2 != 0)
+            <div class="col-12 col-lg-6 mt-4 mt-lg-0">
+                <div class="box box__second">
+                    <!-- Progress -->
+                    @foreach (var skill in Model)
                     {
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" aria-valuenow="@skill.Point" aria-valuemin="0" aria-valuemax="100">
-                                <div class="progress-text"><span>@skill.Name</span><span>@skill.Point%</span></div>
+                        if (indexEven % 2 != 0)
+                        {
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="@skill.Point" aria-valuemin="0" aria-valuemax="100">
+                                    <div class="progress-text"><span>@skill.Name</span><span>@skill.Point%</span></div>
+                                </div>
+                                <div class="progress-text"><span>@skill.Name</span></div>
                             </div>
-                            <div class="progress-text"><span>@skill.Name</span></div>
-                        </div>
+                        }
+                        indexEven++;
                     }
-                    indexEven++;
-                }
+                </div>
             </div>
         </div>
     </div>
-</div>
+}
