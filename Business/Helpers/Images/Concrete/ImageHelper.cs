@@ -35,6 +35,12 @@ public class ImageHelper : IImageHelper
             case ImageType.Portfolio:
                 folderName = ImageConstants.PortfolioImagesFolder;
                 break;
+            case ImageType.Certificate:
+                folderName = ImageConstants.CertificateImagesFolder;
+                break;
+            case ImageType.Testimonial:
+                folderName= ImageConstants.TestimonialImagesFolder;
+                break;
             default:
                 break;
         }

@@ -14,4 +14,5 @@ public interface IServiceManager
     ISocialMediaService SocialMediaService { get; }
     IPortfolioCategoryService PortfolioCategoryService { get; }
     ITypeOfEmploymentService TypeOfEmploymentService { get; }
+    ICertificateService CertificateService { get; }
 }
