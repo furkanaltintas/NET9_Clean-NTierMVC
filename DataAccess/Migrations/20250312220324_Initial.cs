@@ -47,6 +47,20 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Certificates",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Certificates", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Contacts",
                 columns: table => new
                 {
@@ -135,6 +149,21 @@ namespace DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SocialMediaIcons", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Testimonials",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FullName = table.Column<string>(type: "nvarchar(75)", maxLength: 75, nullable: false),
+                    Message = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(125)", maxLength: 125, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Testimonials", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -265,9 +294,9 @@ namespace DataAccess.Migrations
                 columns: new[] { "Id", "Content", "Image", "IsPublish", "IsTrash", "LitterBoxTime", "PublishDate", "Slug", "Title" },
                 values: new object[,]
                 {
-                    { 1, "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.", "title", true, false, 0, new DateTime(2025, 3, 12, 0, 54, 36, 246, DateTimeKind.Local).AddTicks(6987), "title", "Title" },
-                    { 2, "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.", "title2", true, false, 0, new DateTime(2025, 3, 12, 0, 54, 36, 248, DateTimeKind.Local).AddTicks(4805), "title-2", "Title 2" },
-                    { 3, "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.", "title3", true, false, 0, new DateTime(2025, 3, 12, 0, 54, 36, 248, DateTimeKind.Local).AddTicks(4818), "title-3", "Title3" }
+                    { 1, "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.", "title", true, false, 0, new DateTime(2025, 3, 13, 1, 3, 23, 696, DateTimeKind.Local).AddTicks(6624), "title", "Title" },
+                    { 2, "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.", "title2", true, false, 0, new DateTime(2025, 3, 13, 1, 3, 23, 698, DateTimeKind.Local).AddTicks(7043), "title-2", "Title 2" },
+                    { 3, "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.", "title3", true, false, 0, new DateTime(2025, 3, 13, 1, 3, 23, 698, DateTimeKind.Local).AddTicks(7059), "title-3", "Title3" }
                 });
 
             migrationBuilder.InsertData(
@@ -275,9 +304,9 @@ namespace DataAccess.Migrations
                 columns: new[] { "Id", "Degree", "Department", "Description", "EndDate", "StartDate", "Title" },
                 values: new object[,]
                 {
-                    { 1, "Title", "Title", "Title", new DateTime(2025, 3, 12, 0, 54, 36, 249, DateTimeKind.Local).AddTicks(7888), new DateTime(2025, 3, 12, 0, 54, 36, 249, DateTimeKind.Local).AddTicks(7663), "Title" },
-                    { 2, "Title2", "Title2", "Title2", new DateTime(2025, 3, 12, 0, 54, 36, 249, DateTimeKind.Local).AddTicks(8080), new DateTime(2025, 3, 12, 0, 54, 36, 249, DateTimeKind.Local).AddTicks(8078), "Title2" },
-                    { 3, "Title3", "Title3", "Title3", new DateTime(2025, 3, 12, 0, 54, 36, 249, DateTimeKind.Local).AddTicks(8082), new DateTime(2025, 3, 12, 0, 54, 36, 249, DateTimeKind.Local).AddTicks(8081), "Title3" }
+                    { 1, "Title", "Title", "Title", new DateTime(2025, 3, 13, 1, 3, 23, 700, DateTimeKind.Local).AddTicks(5814), new DateTime(2025, 3, 13, 1, 3, 23, 700, DateTimeKind.Local).AddTicks(5580), "Title" },
+                    { 2, "Title2", "Title2", "Title2", new DateTime(2025, 3, 13, 1, 3, 23, 700, DateTimeKind.Local).AddTicks(6009), new DateTime(2025, 3, 13, 1, 3, 23, 700, DateTimeKind.Local).AddTicks(6008), "Title2" },
+                    { 3, "Title3", "Title3", "Title3", new DateTime(2025, 3, 13, 1, 3, 23, 700, DateTimeKind.Local).AddTicks(6011), new DateTime(2025, 3, 13, 1, 3, 23, 700, DateTimeKind.Local).AddTicks(6011), "Title3" }
                 });
 
             migrationBuilder.InsertData(
@@ -349,9 +378,9 @@ namespace DataAccess.Migrations
                 columns: new[] { "Id", "Company", "Description", "EndDate", "Location", "StartDate", "Title", "TypeOfEmploymentId" },
                 values: new object[,]
                 {
-                    { 1, "Title", "Title", new DateTime(2025, 3, 12, 0, 54, 36, 253, DateTimeKind.Local).AddTicks(4070), "Title", new DateTime(2025, 3, 12, 0, 54, 36, 253, DateTimeKind.Local).AddTicks(3801), "Title", 1 },
-                    { 2, "Title2", "Title2", new DateTime(2025, 3, 12, 0, 54, 36, 253, DateTimeKind.Local).AddTicks(4418), "Title2", new DateTime(2025, 3, 12, 0, 54, 36, 253, DateTimeKind.Local).AddTicks(4415), "Title2", 2 },
-                    { 3, "Title3", "Title3", new DateTime(2025, 3, 12, 0, 54, 36, 253, DateTimeKind.Local).AddTicks(4420), "Title3", new DateTime(2025, 3, 12, 0, 54, 36, 253, DateTimeKind.Local).AddTicks(4420), "Title3", 3 }
+                    { 1, "Title", "Title", new DateTime(2025, 3, 13, 1, 3, 23, 705, DateTimeKind.Local).AddTicks(5852), "Title", new DateTime(2025, 3, 13, 1, 3, 23, 705, DateTimeKind.Local).AddTicks(5624), "Title", 1 },
+                    { 2, "Title2", "Title2", new DateTime(2025, 3, 13, 1, 3, 23, 705, DateTimeKind.Local).AddTicks(6129), "Title2", new DateTime(2025, 3, 13, 1, 3, 23, 705, DateTimeKind.Local).AddTicks(6127), "Title2", 2 },
+                    { 3, "Title3", "Title3", new DateTime(2025, 3, 13, 1, 3, 23, 705, DateTimeKind.Local).AddTicks(6131), "Title3", new DateTime(2025, 3, 13, 1, 3, 23, 705, DateTimeKind.Local).AddTicks(6131), "Title3", 3 }
                 });
 
             migrationBuilder.InsertData(
@@ -385,6 +414,9 @@ namespace DataAccess.Migrations
                 name: "Blogs");
 
             migrationBuilder.DropTable(
+                name: "Certificates");
+
+            migrationBuilder.DropTable(
                 name: "Contacts");
 
             migrationBuilder.DropTable(
@@ -404,6 +436,9 @@ namespace DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "SocialMediaIcons");
+
+            migrationBuilder.DropTable(
+                name: "Testimonials");
 
             migrationBuilder.DropTable(
                 name: "Users");

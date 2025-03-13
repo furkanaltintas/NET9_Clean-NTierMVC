@@ -4,5 +4,7 @@ public enum ImageType
 {
     User,
     Post,
-    Portfolio
+    Portfolio,
+    Certificate,
+    Testimonial
 }

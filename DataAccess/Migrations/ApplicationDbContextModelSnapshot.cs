@@ -100,7 +100,7 @@ namespace DataAccess.Migrations
                             IsPublish = true,
                             IsTrash = false,
                             LitterBoxTime = 0,
-                            PublishDate = new DateTime(2025, 3, 12, 0, 54, 36, 246, DateTimeKind.Local).AddTicks(6987),
+                            PublishDate = new DateTime(2025, 3, 13, 1, 3, 23, 696, DateTimeKind.Local).AddTicks(6624),
                             Slug = "title",
                             Title = "Title"
                         },
@@ -112,7 +112,7 @@ namespace DataAccess.Migrations
                             IsPublish = true,
                             IsTrash = false,
                             LitterBoxTime = 0,
-                            PublishDate = new DateTime(2025, 3, 12, 0, 54, 36, 248, DateTimeKind.Local).AddTicks(4805),
+                            PublishDate = new DateTime(2025, 3, 13, 1, 3, 23, 698, DateTimeKind.Local).AddTicks(7043),
                             Slug = "title-2",
                             Title = "Title 2"
                         },
@@ -124,10 +124,33 @@ namespace DataAccess.Migrations
                             IsPublish = true,
                             IsTrash = false,
                             LitterBoxTime = 0,
-                            PublishDate = new DateTime(2025, 3, 12, 0, 54, 36, 248, DateTimeKind.Local).AddTicks(4818),
+                            PublishDate = new DateTime(2025, 3, 13, 1, 3, 23, 698, DateTimeKind.Local).AddTicks(7059),
                             Slug = "title-3",
                             Title = "Title3"
                         });
+                });
+
+            modelBuilder.Entity("Entities.Concrete.Certificate", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Certificates");
                 });
 
             modelBuilder.Entity("Entities.Concrete.Contact", b =>
@@ -203,8 +226,8 @@ namespace DataAccess.Migrations
                             Degree = "Title",
                             Department = "Title",
                             Description = "Title",
-                            EndDate = new DateTime(2025, 3, 12, 0, 54, 36, 249, DateTimeKind.Local).AddTicks(7888),
-                            StartDate = new DateTime(2025, 3, 12, 0, 54, 36, 249, DateTimeKind.Local).AddTicks(7663),
+                            EndDate = new DateTime(2025, 3, 13, 1, 3, 23, 700, DateTimeKind.Local).AddTicks(5814),
+                            StartDate = new DateTime(2025, 3, 13, 1, 3, 23, 700, DateTimeKind.Local).AddTicks(5580),
                             Title = "Title"
                         },
                         new
@@ -213,8 +236,8 @@ namespace DataAccess.Migrations
                             Degree = "Title2",
                             Department = "Title2",
                             Description = "Title2",
-                            EndDate = new DateTime(2025, 3, 12, 0, 54, 36, 249, DateTimeKind.Local).AddTicks(8080),
-                            StartDate = new DateTime(2025, 3, 12, 0, 54, 36, 249, DateTimeKind.Local).AddTicks(8078),
+                            EndDate = new DateTime(2025, 3, 13, 1, 3, 23, 700, DateTimeKind.Local).AddTicks(6009),
+                            StartDate = new DateTime(2025, 3, 13, 1, 3, 23, 700, DateTimeKind.Local).AddTicks(6008),
                             Title = "Title2"
                         },
                         new
@@ -223,8 +246,8 @@ namespace DataAccess.Migrations
                             Degree = "Title3",
                             Department = "Title3",
                             Description = "Title3",
-                            EndDate = new DateTime(2025, 3, 12, 0, 54, 36, 249, DateTimeKind.Local).AddTicks(8082),
-                            StartDate = new DateTime(2025, 3, 12, 0, 54, 36, 249, DateTimeKind.Local).AddTicks(8081),
+                            EndDate = new DateTime(2025, 3, 13, 1, 3, 23, 700, DateTimeKind.Local).AddTicks(6011),
+                            StartDate = new DateTime(2025, 3, 13, 1, 3, 23, 700, DateTimeKind.Local).AddTicks(6011),
                             Title = "Title3"
                         });
                 });
@@ -278,9 +301,9 @@ namespace DataAccess.Migrations
                             Id = 1,
                             Company = "Title",
                             Description = "Title",
-                            EndDate = new DateTime(2025, 3, 12, 0, 54, 36, 253, DateTimeKind.Local).AddTicks(4070),
+                            EndDate = new DateTime(2025, 3, 13, 1, 3, 23, 705, DateTimeKind.Local).AddTicks(5852),
                             Location = "Title",
-                            StartDate = new DateTime(2025, 3, 12, 0, 54, 36, 253, DateTimeKind.Local).AddTicks(3801),
+                            StartDate = new DateTime(2025, 3, 13, 1, 3, 23, 705, DateTimeKind.Local).AddTicks(5624),
                             Title = "Title",
                             TypeOfEmploymentId = 1
                         },
@@ -289,9 +312,9 @@ namespace DataAccess.Migrations
                             Id = 2,
                             Company = "Title2",
                             Description = "Title2",
-                            EndDate = new DateTime(2025, 3, 12, 0, 54, 36, 253, DateTimeKind.Local).AddTicks(4418),
+                            EndDate = new DateTime(2025, 3, 13, 1, 3, 23, 705, DateTimeKind.Local).AddTicks(6129),
                             Location = "Title2",
-                            StartDate = new DateTime(2025, 3, 12, 0, 54, 36, 253, DateTimeKind.Local).AddTicks(4415),
+                            StartDate = new DateTime(2025, 3, 13, 1, 3, 23, 705, DateTimeKind.Local).AddTicks(6127),
                             Title = "Title2",
                             TypeOfEmploymentId = 2
                         },
@@ -300,9 +323,9 @@ namespace DataAccess.Migrations
                             Id = 3,
                             Company = "Title3",
                             Description = "Title3",
-                            EndDate = new DateTime(2025, 3, 12, 0, 54, 36, 253, DateTimeKind.Local).AddTicks(4420),
+                            EndDate = new DateTime(2025, 3, 13, 1, 3, 23, 705, DateTimeKind.Local).AddTicks(6131),
                             Location = "Title3",
-                            StartDate = new DateTime(2025, 3, 12, 0, 54, 36, 253, DateTimeKind.Local).AddTicks(4420),
+                            StartDate = new DateTime(2025, 3, 13, 1, 3, 23, 705, DateTimeKind.Local).AddTicks(6131),
                             Title = "Title3",
                             TypeOfEmploymentId = 3
                         });
@@ -584,6 +607,34 @@ namespace DataAccess.Migrations
                             Link = "Link5",
                             Name = "Name5"
                         });
+                });
+
+            modelBuilder.Entity("Entities.Concrete.Testimonial", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(75)
+                        .HasColumnType("nvarchar(75)");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasMaxLength(125)
+                        .HasColumnType("nvarchar(125)");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Testimonials");
                 });
 
             modelBuilder.Entity("Entities.Concrete.TypeOfEmployment", b =>

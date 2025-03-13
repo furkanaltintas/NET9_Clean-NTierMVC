@@ -3,7 +3,7 @@ using Core.DataAccess.Concrete.EntityFramework;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework.Contexts;
 
-namespace DataAccess.Concrete;
+namespace DataAccess.Concrete.UnitOfWork;
 
 public class Repository : IRepository
 {
