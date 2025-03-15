@@ -101,9 +101,6 @@ public class PortfolioManager : BaseManager, IPortfolioService
         if (portfolio == null)
             return new Result(ResultStatus.Error, "Sistemde böyle bir portfolyo bilgisi bulunmamaktadır.");
 
-        if (portfolio.Title != updatePortfolioDto.Title)
-            portfolio.SubTitle = SlugHelper.GenerateSlug(updatePortfolioDto.Title);
-
         if (updatePortfolioDto.Photo != null)
         {
             _imageHelper.Delete(portfolio.Image);
@@ -114,6 +111,7 @@ public class PortfolioManager : BaseManager, IPortfolioService
 
 
         Mapper.Map(updatePortfolioDto, portfolio);
+        portfolio.SubTitle = SlugHelper.GenerateSlug(updatePortfolioDto.Title);
         await Repository.GetRepository<Entities.Concrete.Portfolio>().UpdateAsync(portfolio);
         await Repository.SaveAsync();
         return new Result(ResultStatus.Success, Messages.Updated);

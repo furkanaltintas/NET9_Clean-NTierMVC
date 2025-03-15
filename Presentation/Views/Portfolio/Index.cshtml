@@ -8,7 +8,10 @@
 <!-- Gallery -->
 <div class="pb-0">
 	<!-- Filter -->
-	@await Component.InvokeAsync("PortfolioCategoryFilter")
+	@if(Model.Any())
+	{
+		await Component.InvokeAsync("PortfolioCategoryFilter");
+	}
 
 	<!-- Content -->
 	<div class="gallery-grid js-masonry js-filter-container">

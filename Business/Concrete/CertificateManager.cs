@@ -29,6 +29,7 @@ public class CertificateManager : BaseManager, ICertificateService
         Certificate certificate = Mapper.Map<Certificate>(createCertificateDto);
 
         var imageUpload = await _imageHelper.Upload(createCertificateDto.Title, createCertificateDto.Photo, ImageType.Certificate);
+        certificate.Image = imageUpload.FullName;
 
         await Repository.GetRepository<Certificate>().AddAsync(certificate);
         await Repository.SaveAsync();
@@ -89,7 +90,7 @@ public class CertificateManager : BaseManager, ICertificateService
         if (certificate == null)
             return new Result(ResultStatus.Error, "Sistemde böyle bir sertifika bilgisi bulunmamaktadır.");
 
-        if (updateCertificateDto.Image != null)
+        if (updateCertificateDto.Photo != null)
         {
             _imageHelper.Delete(certificate.Image);
 
