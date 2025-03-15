@@ -2,32 +2,32 @@
 
 <!-- Portfolio -->
 <div class="pb-2">
-	<h1 class="title title--h1 first-title title__separate">Portfolio</h1>
+    <h1 class="title title--h1 first-title title__separate">Portfolio</h1>
 </div>
 
 <!-- Gallery -->
 <div class="pb-0">
-	<!-- Filter -->
-	@if(Model.Any())
-	{
-		await Component.InvokeAsync("PortfolioCategoryFilter");
-	}
+    <!-- Filter -->
+    @if(Model.Any())
+    {
+        @await Component.InvokeAsync("PortfolioCategoryFilter")
+    }
 
-	<!-- Content -->
-	<div class="gallery-grid js-masonry js-filter-container">
-		<div class="gutter-sizer"></div>
-		@foreach(var portfolio in Model)
-		{
-			<!-- Item 1 -->
-			<figure class="gallery-grid__item category-@portfolio.PortfolioCategory.Name.ToLower()">
-				<div class="gallery-grid__image-wrap">
-					<img class="gallery-grid__image cover lazyload" src="~/images/@portfolio.Image" data-zoom alt="@portfolio.SubTitle" />
-				</div>
-				<figcaption class="gallery-grid__caption">
-					<h4 class="title gallery-grid__title">@portfolio.Title</h4>
-					<span class="gallery-grid__category">@portfolio.PortfolioCategory.Name</span>
-				</figcaption>
-			</figure>
-		}
-	</div>
+    <!-- Content -->
+    <div class="gallery-grid js-masonry js-filter-container">
+        <div class="gutter-sizer"></div>
+        @foreach (var portfolio in Model)
+        {
+            <!-- Item 1 -->
+            <figure class="gallery-grid__item category-@portfolio.PortfolioCategory.Name.ToLower()">
+                <div class="gallery-grid__image-wrap">
+                    <img class="gallery-grid__image cover lazyload" src="~/images/@portfolio.Image" data-zoom alt="@portfolio.SubTitle" />
+                </div>
+                <figcaption class="gallery-grid__caption">
+                    <h4 class="title gallery-grid__title">@portfolio.Title</h4>
+                    <span class="gallery-grid__category">@portfolio.PortfolioCategory.Name</span>
+                </figcaption>
+            </figure>
+        }
+    </div>
 </div>

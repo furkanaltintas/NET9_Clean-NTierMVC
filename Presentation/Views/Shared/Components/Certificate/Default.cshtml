@@ -11,7 +11,7 @@
                 @foreach (var certificate in Model)
                 {
                     <div class="swiper-slide">
-                        <a href="#"><img src="@certificate.Image" alt="@certificate.Name" /></a>
+                        <a href="/images/@certificate.Image"><img src="~/images/@certificate.Image" alt="@certificate.Name" /></a>
                     </div>
                 }
             </div>
