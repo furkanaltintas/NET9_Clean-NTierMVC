@@ -1,11 +1,7 @@
 ﻿using Autofac;
 using Autofac.Extras.DynamicProxy;
-using Business.Abstract.Base;
-using Business.Concrete.Base;
 using Castle.DynamicProxy;
 using Core.Utilities.Interceptors;
-using DataAccess.Abstract;
-using DataAccess.Concrete.UnitOfWork;
 using System.Reflection;
 using Module = Autofac.Module;
 
@@ -15,9 +11,6 @@ public class AutofacBusinessModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {
-
-        builder.RegisterType<Repository>().As<IRepository>();
-        builder.RegisterType<ServiceManager>().As<IServiceManager>();
 
         Assembly assembly = Assembly.GetExecutingAssembly(); // Mevcut assembly'e ulaştık  (Business)
 
