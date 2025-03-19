@@ -14,8 +14,52 @@
     <PackageReference Include="Autofac" Version="8.2.0" />
     <PackageReference Include="Autofac.Extras.DynamicProxy" Version="7.1.0" />
     <PackageReference Include="AutoMapper" Version="14.0.0" />
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="FluentValidation" Version="11.11.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Modules\Abouts\Profiles\" />
+    <Folder Include="Modules\Auths\Profiles\" />
+    <Folder Include="Modules\Auths\Rules\" />
+    <Folder Include="Modules\Auths\Validations\" />
+    <Folder Include="Modules\Blogs\Profiles\" />
+    <Folder Include="Modules\Blogs\Rules\" />
+    <Folder Include="Modules\Certificates\Profiles\" />
+    <Folder Include="Modules\Certificates\Rules\" />
+    <Folder Include="Modules\Certificates\Validations\" />
+    <Folder Include="Modules\Contacts\Profiles\" />
+    <Folder Include="Modules\Contacts\Rules\" />
+    <Folder Include="Modules\Educations\Profiles\" />
+    <Folder Include="Modules\Educations\Validations\" />
+    <Folder Include="Modules\Experiences\Profiles\" />
+    <Folder Include="Modules\Experiences\Rules\" />
+    <Folder Include="Modules\Experiences\Validations\" />
+    <Folder Include="Modules\PortfolioCategories\Profiles\" />
+    <Folder Include="Modules\PortfolioCategories\Rules\" />
+    <Folder Include="Modules\PortfolioCategories\Validations\" />
+    <Folder Include="Modules\Portfolios\Profiles\" />
+    <Folder Include="Modules\Portfolios\Rules\" />
+    <Folder Include="Modules\Portfolios\Validations\" />
+    <Folder Include="Modules\Services\Profiles\" />
+    <Folder Include="Modules\Services\Rules\" />
+    <Folder Include="Modules\Services\Validations\" />
+    <Folder Include="Modules\Skills\Profiles\" />
+    <Folder Include="Modules\Skills\Validations\" />
+    <Folder Include="Modules\SocialMedias\Profiles\" />
+    <Folder Include="Modules\SocialMedias\Rules\" />
+    <Folder Include="Modules\SocialMedias\Validations\" />
+    <Folder Include="Modules\Testimonials\Profiles\" />
+    <Folder Include="Modules\Testimonials\Rules\" />
+    <Folder Include="Modules\Testimonials\Validations\" />
+    <Folder Include="Modules\TypeOfEmployments\Profiles\" />
+    <Folder Include="Modules\TypeOfEmployments\Rules\" />
+    <Folder Include="Modules\TypeOfEmployments\Validations\" />
+    <Folder Include="Modules\Users\Profiles\" />
+    <Folder Include="Modules\Users\Rules\" />
+    <Folder Include="Modules\Users\Validations\" />
   </ItemGroup>
 
 </Project>
