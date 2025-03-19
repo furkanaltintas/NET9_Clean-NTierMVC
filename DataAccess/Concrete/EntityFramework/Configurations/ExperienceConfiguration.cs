@@ -46,7 +46,7 @@ public class ExperienceConfiguration : IEntityTypeConfiguration<Experience>
                 Description = "Title",
                 Location = "Title",
                 StartDate = DateTime.Now,
-                 EndDate = DateTime.Now,
+                EndDate = DateTime.Now,
             },
             new Experience
             {

@@ -24,7 +24,7 @@ public class SkillConfiguration : IEntityTypeConfiguration<Skill>
         builder.HasData(
             new Skill
             {
-                Id  = 1,
+                Id = 1,
                 Name = "Name",
                 Point = 10
             },

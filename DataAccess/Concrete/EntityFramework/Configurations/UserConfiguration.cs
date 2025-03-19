@@ -20,13 +20,13 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
                 UserName = "FRKN",
                 FirstName = "Furkan",
                 LastName = "Altıntaş",
-                Email  = "furkanaltintas785@gmail.com",
+                Email = "furkanaltintas785@gmail.com",
                 Password = "1234",
                 City = "İstanbul",
                 Profession = "NET DEVELOPER",
                 Profile = "frkn",
                 Birthday = new DateTime(2000, 11, 3),
-                Phone = "+90 555 555 55 55"  
+                Phone = "+90 555 555 55 55"
             });
     }
 }
