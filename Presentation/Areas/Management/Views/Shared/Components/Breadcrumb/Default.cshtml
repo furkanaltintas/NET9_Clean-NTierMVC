@@ -1,0 +1,16 @@
+﻿@using Presentation.Helpers
+
+@{
+    var controllerName = ViewContext.RouteData.Values["controller"]?.ToString();
+    var actionName = ViewContext.RouteData.Values["action"]?.ToString();
+}
+
+
+<div class="slim-pageheader">
+    <ol class="breadcrumb slim-breadcrumb">
+        <li class="breadcrumb-item"><a asp-area="Management" asp-controller="@controllerName" asp-action="@actionName">@DashboardBreadcrumbHelper.CapitalizeFirstCharacter(actionName)</a></li>
+        <li class="breadcrumb-item"><a asp-area="Management" asp-controller="@controllerName" asp-action="Index">Transactions</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Management</li>
+    </ol>
+    <h6 class="slim-pagetitle">@DashboardBreadcrumbHelper.PageTitle(controllerName, actionName)</h6>
+</div>

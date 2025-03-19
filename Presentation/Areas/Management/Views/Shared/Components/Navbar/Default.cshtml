@@ -1,0 +1,72 @@
+﻿@using Presentation.Helpers
+
+@{
+    var controllerName = ViewContext.RouteData.Values["controller"]?.ToString();
+    var actionName = ViewContext.RouteData.Values["action"]?.ToString();
+}
+
+<div class="slim-navbar">
+    <div class="container">
+        <ul class="nav">
+            <li class="nav-item @DashboardActiveHelper.Active(controllerName, new[] {"home"})">
+                <a asp-controller="Home" class="nav-link @DashboardActiveHelper.Active(controllerName, new[] {"home"})">
+                    <i class="icon ion-ios-home-outline"></i>
+                    <span>Management</span>
+                </a>
+            </li>
+            <li class="nav-item with-sub @DashboardActiveHelper.Active(controllerName, new[] {"blog", "portfolio", "service"})">
+                <a class="nav-link @DashboardActiveHelper.Active(controllerName, new[] {"blog", "portfolio", "service"})" data-toggle="dropdown">
+                    <i class="icon ion-ios-library-outline"></i>
+                    <span>Contents</span>
+                </a>
+                <div class="sub-item">
+                    <ul>
+                        <li><a asp-area="Management" asp-controller="Blog" asp-action="Index">Blogs</a></li>
+                        <li><a asp-area="Management" asp-controller="Portfolio" asp-action="Index">Portfolios</a></li>
+                        <li><a asp-area="Management" asp-controller="Service" asp-action="Index">Services</a></li>
+                    </ul>
+                </div><!-- dropdown-menu -->
+            </li>
+            <li class="nav-item with-sub @DashboardActiveHelper.Active(controllerName, new[] {"about", "education", "experience", "certificate", "skill"})">
+                <a class="nav-link @DashboardActiveHelper.Active(controllerName, new[] {"about", "education", "experience", "certificate", "skill"})" data-toggle="dropdown">
+                    <i class="icon ion-ios-school-outline"></i>
+                    <span>Resume</span>
+                </a>
+                <div class="sub-item">
+                    <ul>
+                        <li><a asp-area="Management" asp-controller="About" asp-action="Index">About</a></li>
+                        <li><a asp-area="Management" asp-controller="Education" asp-action="Index">Educations</a></li>
+                        <li><a asp-area="Management" asp-controller="Experience" asp-action="Index">Experiences</a></li>
+                        <li><a asp-area="Management" asp-controller="Certificate" asp-action="Index">Certificates</a></li>
+                        <li><a asp-area="Management" asp-controller="Skill" asp-action="Index">Skills</a></li>
+                    </ul>
+                </div><!-- dropdown-menu -->
+            </li>
+            <li class="nav-item @DashboardActiveHelper.Active(controllerName, new[] {"socialmedia"})">
+                <a asp-area="Management" asp-controller="SocialMedia" asp-action="Index" class="nav-link @DashboardActiveHelper.Active(controllerName, new[] {"socialmedia"})">
+                    <i class="icon ion-ios-home-outline"></i>
+                    <span>Social Media</span>
+                </a>
+            </li>
+            <li class="nav-item with-sub @DashboardActiveHelper.Active(controllerName, new[] {"portfoliocategory", "typeofemployment"})">
+                <a class="nav-link @DashboardActiveHelper.Active(controllerName, new[] { "portfoliocategory", "typeofemployment" })" data-toggle="dropdown">
+                    <i class="icon ion-ios-gear-outline"></i>
+                    <span>Tools</span>
+                </a>
+                <div class="sub-item">
+                    <ul>
+                        <li><a asp-area="Management" asp-controller="PortfolioCategory" asp-action="Index">Portfolio Categories</a></li>
+                        <li><a asp-area="Management" asp-controller="TypeOfEmployment" asp-action="Index">Type of Employments</a></li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="widgets.html">
+                    <i class="icon ion-ios-analytics-outline"></i>
+                    <span>Seo</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
