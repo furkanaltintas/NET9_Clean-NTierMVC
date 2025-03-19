@@ -1,21 +1,22 @@
-﻿using Business.Abstract.Base;
+﻿using Business.Modules.TypeOfEmployments.Services;
 using Microsoft.AspNetCore.Mvc;
-using NToastNotify;
 using Presentation.Areas.Management.Controllers.Base;
 using Presentation.Extensions;
-using System.Threading.Tasks;
 
 namespace Presentation.Areas.Management.Controllers;
 
 public class TypeOfEmploymentController : BaseController
 {
-    public TypeOfEmploymentController(IServiceManager serviceManager, IToastNotification toastNotification) : base(serviceManager, toastNotification)
+    private readonly ITypeOfEmploymentService _typeOfEmploymentService;
+
+    public TypeOfEmploymentController(ITypeOfEmploymentService typeOfEmploymentService)
     {
+        _typeOfEmploymentService = typeOfEmploymentService;
     }
 
     public async Task<IActionResult> Index()
     {
-        var result = await _serviceManager.TypeOfEmploymentService.GetAllAsync();
+        var result = await _typeOfEmploymentService.GetAllTypeOfEmploymentsAsync();
         return this.ResponseView(result);
     }
 }

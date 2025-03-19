@@ -1,22 +1,23 @@
-﻿using Business.Abstract.Base;
+﻿using Business.Modules.Abouts.Services;
 using Entities.Dtos;
 using Microsoft.AspNetCore.Mvc;
-using NToastNotify;
 using Presentation.Areas.Management.Controllers.Base;
 using Presentation.Extensions;
-using System.Threading.Tasks;
 
 namespace Presentation.Areas.Management.Controllers;
 
 public class AboutController : BaseController
 {
-    public AboutController(IServiceManager serviceManager, IToastNotification toastNotification) : base(serviceManager, toastNotification)
+    private readonly IAboutService _aboutService;
+
+    public AboutController(IAboutService aboutService)
     {
+        _aboutService = aboutService;
     }
 
     public async Task<IActionResult> Index()
     {
-        var result = await _serviceManager.AboutService.GetUpdateAboutAsync();
+        var result = await _aboutService.GetAboutForUpdateAsync();
         return this.ResponseView(result);
     }
 
@@ -24,14 +25,14 @@ public class AboutController : BaseController
     [HttpPost]
     public async Task<IActionResult> Update(UpdateAboutDto updateAboutDto)
     {
-        var result = await _serviceManager.AboutService.UpdateAboutAsync(updateAboutDto);
-        return this.ResponseRedirectAction(result, _toastNotification);
+        var result = await _aboutService.UpdateAboutAsync(updateAboutDto);
+        return this.ResponseRedirectAction(result, ToastNotification);
     }
 
 
     public async Task<IActionResult> Delete()
     {
-        var result = await _serviceManager.AboutService.DeleteAboutAsync();
-        return this.ResponseRedirectAction(result, _toastNotification);
+        var result = await _aboutService.DeleteAboutAsync();
+        return this.ResponseRedirectAction(result, ToastNotification);
     }
 }

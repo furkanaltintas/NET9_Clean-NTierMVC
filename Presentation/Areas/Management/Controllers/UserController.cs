@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Presentation.Areas.Management.Controllers.Base;
 
 namespace Presentation.Areas.Management.Controllers;
 
-[Area("Management")]
-public class UserController : Controller
+public class UserController : BaseController
 {
-    public IActionResult Index()
-    {
-        return View();
-    }
+    public IActionResult Index() => View();
 }

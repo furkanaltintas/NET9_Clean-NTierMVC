@@ -1,8 +1,6 @@
-﻿using Business.Abstract.Base;
-using Entities.Concrete;
+﻿using Business.Modules.Skills.Services;
 using Entities.Dtos;
 using Microsoft.AspNetCore.Mvc;
-using NToastNotify;
 using Presentation.Areas.Management.Controllers.Base;
 using Presentation.Areas.Management.ViewModels;
 using Presentation.Extensions;
@@ -11,13 +9,16 @@ namespace Presentation.Areas.Management.Controllers;
 
 public class SkillController : BaseController
 {
-    public SkillController(IServiceManager serviceManager, IToastNotification toastNotification) : base(serviceManager, toastNotification)
+    private readonly ISkillService _skillService;
+
+    public SkillController(ISkillService skillService)
     {
+        _skillService = skillService;
     }
 
     public async Task<IActionResult> Index()
     {
-        var result = await _serviceManager.SkillService.GetAllAsync();
+        var result = await _skillService.GetAllSkillsAsync();
         return this.ResponseViewModel<GetAllSkillDto, SkillViewModel>(result);
     }
 
@@ -28,14 +29,14 @@ public class SkillController : BaseController
     [HttpPost]
     public async Task<IActionResult> Add(CreateSkillDto createSkillDto)
     {
-        var result = await _serviceManager.SkillService.AddSkillAsync(createSkillDto);
-        return this.ResponseRedirectAction(result, _toastNotification);
+        var result = await _skillService.CreateSkillAsync(createSkillDto);
+        return this.ResponseRedirectAction(result, ToastNotification);
     }
 
 
     public async Task<IActionResult> Update(int skillId)
     {
-        var result = await _serviceManager.SkillService.GetUpdateSkillAsync(skillId);
+        var result = await _skillService.GetSkillForUpdateByIdAsync(skillId);
         return this.ResponseView(result);
     }
 
@@ -43,14 +44,14 @@ public class SkillController : BaseController
     [HttpPost]
     public async Task<IActionResult> Update(UpdateSkillDto updateSkillDto)
     {
-        var result = await _serviceManager.SkillService.UpdateSkillAsync(updateSkillDto);
-        return this.ResponseRedirectAction(result, _toastNotification);
+        var result = await _skillService.UpdateSkillAsync(updateSkillDto);
+        return this.ResponseRedirectAction(result, ToastNotification);
     }
 
 
     public async Task<IActionResult> Delete(int skillId)
     {
-        var result = await _serviceManager.SkillService.DeleteSkillAsync(skillId);
-        return this.ResponseRedirectAction(result, _toastNotification);
+        var result = await _skillService.DeleteSkillByIdAsync(skillId);
+        return this.ResponseRedirectAction(result, ToastNotification);
     }
 }

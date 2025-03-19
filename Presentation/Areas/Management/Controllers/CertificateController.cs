@@ -1,23 +1,24 @@
-﻿using Business.Abstract.Base;
+﻿using Business.Modules.Certificates.Services;
 using Entities.Dtos;
 using Microsoft.AspNetCore.Mvc;
-using NToastNotify;
 using Presentation.Areas.Management.Controllers.Base;
 using Presentation.Areas.Management.ViewModels;
 using Presentation.Extensions;
-using System.Threading.Tasks;
 
 namespace Presentation.Areas.Management.Controllers;
 
 public class CertificateController : BaseController
 {
-    public CertificateController(IServiceManager serviceManager, IToastNotification toastNotification) : base(serviceManager, toastNotification)
+    private readonly ICertificateService _certificateService;
+
+    public CertificateController(ICertificateService certificateService)
     {
+        _certificateService = certificateService;
     }
 
     public async Task<IActionResult> Index()
     {
-        var result = await _serviceManager.CertificateService.GetAllAsync();
+        var result = await _certificateService.GetAllCertificatesAsync();
         return this.ResponseViewModel<GetAllCertificateDto, CertificateViewModel>(result);
     }
 
@@ -28,14 +29,14 @@ public class CertificateController : BaseController
     [HttpPost]
     public async Task<IActionResult> Add(CreateCertificateDto createCertificateDto)
     {
-        var result = await _serviceManager.CertificateService.AddCertificateAsync(createCertificateDto);
-        return this.ResponseRedirectAction(result, _toastNotification, createCertificateDto);
+        var result = await _certificateService.CreateCertificateAsync(createCertificateDto);
+        return this.ResponseRedirectAction(result, ToastNotification, createCertificateDto);
     }
 
 
     public async Task<IActionResult> Update(int certificateId)
     {
-        var result = await _serviceManager.CertificateService.GetUpdateCertificateAsync(certificateId);
+        var result = await _certificateService.GetCertificateForUpdateByIdAsync(certificateId);
         return this.ResponseView(result);
     }
 
@@ -43,14 +44,14 @@ public class CertificateController : BaseController
     [HttpPost]
     public async Task<IActionResult> Update(UpdateCertificateDto updateCertificateDto)
     {
-        var result = await _serviceManager.CertificateService.UpdateCertificateAsync(updateCertificateDto);
-        return this.ResponseRedirectAction(result, _toastNotification, updateCertificateDto);
+        var result = await _certificateService.UpdateCertificateAsync(updateCertificateDto);
+        return this.ResponseRedirectAction(result, ToastNotification, updateCertificateDto);
     }
 
 
     public async Task<IActionResult> Delete(int certificateId)
     {
-        var result = await _serviceManager.CertificateService.DeleteCertificateAsync(certificateId);
-        return this.ResponseRedirectAction(result, _toastNotification);
+        var result = await _certificateService.DeleteCertificateByIdAsync(certificateId);
+        return this.ResponseRedirectAction(result, ToastNotification);
     }
 }

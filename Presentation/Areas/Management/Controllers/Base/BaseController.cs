@@ -1,19 +1,16 @@
-﻿using Business.Abstract.Base;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
+using Presentation.Areas.Management.Filters;
 
 namespace Presentation.Areas.Management.Controllers.Base;
 
+[NoCache]
+[Authorize]
 [Area("Management")]
 [Route("management/[controller]/[action]")]
 public class BaseController : Controller
 {
-    protected readonly IServiceManager _serviceManager;
-    protected readonly IToastNotification _toastNotification;
-
-    public BaseController(IServiceManager serviceManager, IToastNotification toastNotification)
-    {
-        _serviceManager = serviceManager;
-        _toastNotification = toastNotification;
-    }
+    private IToastNotification? _toastNotification;
+    protected IToastNotification? ToastNotification => _toastNotification ??= HttpContext.RequestServices.GetService<IToastNotification>();
 }

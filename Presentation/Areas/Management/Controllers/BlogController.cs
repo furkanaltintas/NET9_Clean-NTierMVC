@@ -1,7 +1,6 @@
-﻿using Business.Abstract.Base;
+﻿using Business.Modules.Blogs.Services;
 using Entities.Dtos;
 using Microsoft.AspNetCore.Mvc;
-using NToastNotify;
 using Presentation.Areas.Management.Controllers.Base;
 using Presentation.Areas.Management.ViewModels;
 using Presentation.Extensions;
@@ -10,25 +9,23 @@ namespace Presentation.Areas.Management.Controllers;
 
 public class BlogController : BaseController
 {
-    public BlogController(IServiceManager serviceManager, IToastNotification toastNotification) : base(serviceManager, toastNotification) { }
+    private readonly IBlogService _blogService;
 
+    public BlogController(IBlogService blogService)
+    {
+        _blogService = blogService;
+    }
 
     public async Task<IActionResult> Index()
     {
-        var result = await _serviceManager.BlogService.GetAllAsync();
+        var result = await _blogService.GetAllBlogsAsync();
         return this.ResponseViewModel<GetAllBlogDto, BlogViewModel>(result);
-
-        #region Eski Yöntem
-        // Eski yöntem
-        //var viewModels = result.Data.Select(dto => new BlogViewModel(dto)).ToList();
-        //return View(viewModels);
-        #endregion
     }
 
 
     public async Task<IActionResult> Detail(int blogId)
     {
-        var result = await _serviceManager.BlogService.GetAsync(blogId);
+        var result = await _blogService.GetBlogByIdAsync(blogId);
         return this.ResponseView(result);
     }
 
@@ -38,14 +35,14 @@ public class BlogController : BaseController
     [HttpPost]
     public async Task<IActionResult> Add(CreateBlogDto createBlogDto)
     {
-        var result = await _serviceManager.BlogService.AddAsync(createBlogDto);
-        return this.ResponseRedirectAction(result, _toastNotification);
+        var result = await _blogService.CreateBlogAsync(createBlogDto);
+        return this.ResponseRedirectAction(result, ToastNotification);
     }
 
 
     public async Task<IActionResult> Update(int blogId)
     {
-        var result = await _serviceManager.BlogService.GetUpdateBlogAsync(blogId);
+        var result = await _blogService.GetBlogForUpdateByIdAsync(blogId);
         return this.ResponseView(result);
     }
 
@@ -53,14 +50,14 @@ public class BlogController : BaseController
     [HttpPost]
     public async Task<IActionResult> Update(UpdateBlogDto updateBlogDto)
     {
-        var result = await _serviceManager.BlogService.UpdateAsync(updateBlogDto);
-        return this.ResponseRedirectAction(result, _toastNotification, updateBlogDto);
+        var result = await _blogService.UpdateBlogAsync(updateBlogDto);
+        return this.ResponseRedirectAction(result, ToastNotification, updateBlogDto);
     }
 
 
     public async Task<IActionResult> Delete(int blogId)
     {
-        var result = await _serviceManager.BlogService.DeleteAsync(blogId);
-        return this.ResponseRedirectAction(result, _toastNotification);
+        var result = await _blogService.DeleteBlogByIdAsync(blogId);
+        return this.ResponseRedirectAction(result, ToastNotification);
     }
 }
