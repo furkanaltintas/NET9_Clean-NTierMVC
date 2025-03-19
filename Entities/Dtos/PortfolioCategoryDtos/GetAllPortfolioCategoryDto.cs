@@ -1,6 +1,4 @@
-﻿using Core.Entities.Abstract;
-
-namespace Entities.Dtos;
+﻿namespace Entities.Dtos;
 
 public class GetAllPortfolioCategoryDto : CreatePortfolioCategoryDto
 {
