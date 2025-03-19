@@ -4,13 +4,12 @@
 	<div class="sidebar box shadow pb-0 sticky-column">
 		<svg class="avatar avatar--180" viewBox="0 0 188 188">
 			<g class="avatar__box">
-				<image xlink:href="/images/portfolio-images/Title6_690.jpg" height="100%" width="100%" />
+				<image xlink:href="@Model.Profile" height="100%" width="100%" />
 			</g>
 		</svg>
 		<div class="text-center">
 			<h3 class="title title--h3 sidebar__user-name"><span class="weight--500">@Model.FirstName</span> @Model.LastName</h3>
 			<div class="badge badge--dark">@Model.Profession</div>
-
 			@await Component.InvokeAsync("SidebarSocialMedia")
 		</div>
 
@@ -26,7 +25,6 @@
 					<a href="mailto:@Model.Email"><i class="font-icon icon-envelope"></i>@Model.Email</a>
 				</li>
 			</ul>
-
 			<a class="btn" href="#"><i class="font-icon icon-download"></i> Download CV</a>
 		</div>
 	</div>

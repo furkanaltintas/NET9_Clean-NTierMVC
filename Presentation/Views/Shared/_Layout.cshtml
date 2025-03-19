@@ -44,6 +44,7 @@
     <link rel="stylesheet" type="text/css" href="~/ui/assets/styles/style-dark.css" />
     <link rel="stylesheet" type="text/css" href="~/ui/assets/demo/style-demo.css" />
 
+    @await RenderSectionAsync("Style", false)
 </head>
 <body class="bg-triangles">
 
@@ -114,5 +115,7 @@
     <script src="~/ui/assets/js/common.js"></script>
 
     <script src="~/ui/assets/demo/plugins-demo.js"></script>
+
+    @await RenderSectionAsync("Scripts", false)
 </body>
 </html>

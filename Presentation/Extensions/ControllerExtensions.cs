@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 using Portfolio.Core.Utilities.Results.Abstract;
 using Portfolio.Core.Utilities.Results.ComplexTypes;
-using Portfolio.Core.Utilities.Results.Concrete;
-using Presentation.Areas.Management.ViewModels;
 using Presentation.Helpers;
 using IResult = Portfolio.Core.Utilities.Results.Abstract.IResult;
 
@@ -81,6 +79,21 @@ public static class ControllerExtensions
     {
         return result.ResultStatus == ResultStatus.Success
             ? controller.View(result.Data)
+            : controller.RedirectToAction(actionName ?? nameof(Index));
+    }
+
+    /// <summary>
+    /// Başarı durumunda ViewModel döndürür data ile beraber, başarısız durumda belirli bir aksiyona yönlendirir.
+    /// Success -> View(data) | Error -> RedirectToAction(Index) NOT: Mesaj Dönmez
+    /// </summary>
+    public static IActionResult ResponseViewModel<T>(
+        this Controller controller,
+        IDataResult<T> result,
+        IViewModel data,
+        string? actionName = null)
+    {
+        return result.ResultStatus == ResultStatus.Success
+            ? controller.View(data)
             : controller.RedirectToAction(actionName ?? nameof(Index));
     }
 

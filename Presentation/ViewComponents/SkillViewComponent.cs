@@ -1,20 +1,20 @@
-﻿using Business.Abstract.Base;
+﻿using Business.Modules.Skills.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.ViewComponents;
 
 public class SkillViewComponent : ViewComponent
 {
-    private readonly IServiceManager _serviceManager;
+    private readonly ISkillService _skillService;
 
-    public SkillViewComponent(IServiceManager serviceManager)
+    public SkillViewComponent(ISkillService skillService)
     {
-        _serviceManager = serviceManager;
+        _skillService = skillService;
     }
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
-        var result = await _serviceManager.SkillService.GetAllAsync();
+        var result = await _skillService.GetAllSkillsAsync();
         return View(result.Data);
     }
 }

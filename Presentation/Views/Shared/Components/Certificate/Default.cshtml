@@ -11,7 +11,7 @@
                 @foreach (var certificate in Model)
                 {
                     <div class="swiper-slide">
-                        <a href="/images/@certificate.Image"><img src="~/images/@certificate.Image" alt="@certificate.Name" /></a>
+                        <a href="/images/@certificate.Image"><img src="~/images/@certificate.Image" alt="@certificate.Name" loading="lazy" /></a>
                     </div>
                 }
             </div>
@@ -19,4 +19,14 @@
             <div class="swiper-pagination"></div>
         </div>
     </div>
+}
+
+@section Style {
+    <style>
+        .swiper-slide img {
+            width: 100%;
+            height: 130px;
+            object-fit: fill;
+        }
+    </style>
 }

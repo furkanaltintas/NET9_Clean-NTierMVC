@@ -1,4 +1,4 @@
-﻿using Business.Abstract.Base;
+﻿using Business.Modules.Users.Services;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ViewModels;
 
@@ -6,16 +6,16 @@ namespace Presentation.ViewComponents;
 
 public class SidebarViewComponent : ViewComponent
 {
-    private readonly IServiceManager _serviceManager;
+    private readonly IUserService _userService;
 
-    public SidebarViewComponent(IServiceManager serviceManager)
+    public SidebarViewComponent(IUserService userService)
     {
-        _serviceManager = serviceManager;
+        _userService = userService;
     }
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
-        var result = await _serviceManager.UserService.GetUserSidebarDtoAsync();
+        var result = await _userService.GetSidebarDataAsync();
 
         var viewModel = new UserSidebarViewModel(result.Data);
         return View(viewModel);

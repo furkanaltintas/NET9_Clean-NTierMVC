@@ -1,20 +1,20 @@
-﻿using Business.Abstract.Base;
+﻿using Business.Modules.Experiences.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.ViewComponents;
 
 public class ExperienceViewComponent : ViewComponent
 {
-    private readonly IServiceManager _serviceManager;
+    private readonly IExperienceService _experienceService;
 
-    public ExperienceViewComponent(IServiceManager serviceManager)
+    public ExperienceViewComponent(IExperienceService experienceService)
     {
-        _serviceManager = serviceManager;
+        _experienceService = experienceService;
     }
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
-        var result = await _serviceManager.ExperienceService.GetAllAsync();
+        var result = await _experienceService.GetAllExperiencesAsync();
         return View(result.Data);
     }
 }

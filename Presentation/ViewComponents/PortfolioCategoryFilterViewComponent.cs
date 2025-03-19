@@ -1,21 +1,20 @@
-﻿using Business.Abstract;
+﻿using Business.Modules.PortfolioCategories.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Presentation.ViewComponents
+namespace Presentation.ViewComponents;
+
+public class PortfolioCategoryFilterViewComponent : ViewComponent
 {
-    public class PortfolioCategoryFilterViewComponent : ViewComponent
+    private readonly IPortfolioCategoryService _portfolioCategoryService;
+
+    public PortfolioCategoryFilterViewComponent(IPortfolioCategoryService portfolioCategoryService)
     {
-        private readonly IPortfolioCategoryService _portfolioCategoryService;
+        _portfolioCategoryService = portfolioCategoryService;
+    }
 
-        public PortfolioCategoryFilterViewComponent(IPortfolioCategoryService portfolioCategoryService)
-        {
-            _portfolioCategoryService = portfolioCategoryService;
-        }
-
-        public async Task<IViewComponentResult> InvokeAsync()
-        {
-            var result = await _portfolioCategoryService.GetAllAsync();
-            return View(result.Data);
-        }
+    public async Task<IViewComponentResult> InvokeAsync()
+    {
+        var result = await _portfolioCategoryService.GetAllPortfolioCategoriesAsync();
+        return View(result.Data);
     }
 }

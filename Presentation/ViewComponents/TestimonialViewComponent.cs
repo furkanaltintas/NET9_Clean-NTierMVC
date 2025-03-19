@@ -1,4 +1,4 @@
-﻿using Business.Abstract;
+﻿using Business.Modules.Testimonials.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.ViewComponents;
@@ -14,7 +14,7 @@ public class TestimonialViewComponent : ViewComponent
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
-        var result = await _testimonialService.GetAllAsync();
+        var result = await _testimonialService.GetAllTestimonialsAsync();
         return View(result.Data);
     }
 }

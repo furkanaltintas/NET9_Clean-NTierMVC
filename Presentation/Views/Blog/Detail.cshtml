@@ -1,23 +1,24 @@
-﻿@model GetBlogDto
+﻿@model GetBlogViewModel
 
 <!-- Post -->
 <div class="pb-3">
 	<header class="header-post">
-		<div class="header-post__date">@Model.PublishDate.ToString("MMMM dd, yyyy")</div>
-		<h1 class="title title--h1">@Model.Title</h1>
+		<div class="header-post__date">@Model.GetBlogDto.PublishDate.ToString("MMMM dd, yyyy")</div>
+		<h1 class="title title--h1">@Model.GetBlogDto.Title</h1>
 		<div class="caption-post">
 			<p></p>
 		</div>
 		<div class="header-post__image-wrap">
-			<img class="cover lazyload" src="~/images/@Model.Image" alt="@Model.Slug" />
+			<img class="cover lazyload" src="~/images/@Model.GetBlogDto.Image" alt="@Model.GetBlogDto.Slug" />
 		</div>
 	</header>
 	<div class="caption-post">
-		<p>@Model.Content</p>
+		<p>@Model.GetBlogDto.Content</p>
 	</div>
 	<footer class="footer-post">
-		<a class="footer-post__share" href="http://facebook.com/"><i class="font-icon icon-facebook"></i><span>Facebook</span></a>
-		<a class="footer-post__share" href="http://twitter.com/"><i class="font-icon icon-twitter"></i><span>Twitter</span></a>
-		<a class="footer-post__share" href="http://linkedin.com/"><i class="font-icon icon-linkedin2"></i><span>Linkedin</span></a>
+		@foreach(var socialMedia in Model.SocialMediaIconDtos)
+		{
+			<a class="footer-post__share" href="@socialMedia.Link"><i class="font-icon icon-@socialMedia.Icon"></i><span>@socialMedia.Name</span></a>
+		}
 	</footer>
 </div>

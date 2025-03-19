@@ -1,11 +1,4 @@
-﻿@using Presentation.Helpers
-
-@{
-    var controllerName = ViewContext.RouteData.Values["controller"]?.ToString();
-    var actionName = ViewContext.RouteData.Values["action"]?.ToString();
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="tr">
 <head>
     <!-- Required meta tags -->
@@ -180,112 +173,42 @@
                 </div><!-- dropdown -->
                 <div class="dropdown dropdown-c">
                     <a href="#" class="logged-user" data-toggle="dropdown">
-                        <img src="http://via.placeholder.com/500x500" alt="">
+                        <img src="123" alt="">
                         <span>Katherine</span>
                         <i class="fa fa-angle-down"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
                         <nav class="nav">
-                            <a href="page-profile.html" class="nav-link"><i class="icon ion-person"></i> View Profile</a>
-                            <a href="page-edit-profile.html" class="nav-link"><i class="icon ion-compose"></i> Edit Profile</a>
-                            <a href="page-activity.html" class="nav-link"><i class="icon ion-ios-bolt"></i> Activity Log</a>
-                            <a href="page-settings.html" class="nav-link"><i class="icon ion-ios-gear"></i> Account Settings</a>
-                            <a href="page-signin.html" class="nav-link"><i class="icon ion-forward"></i> Sign Out</a>
+                            <a asp-controller="User" asp-action="Profile" class="nav-link"><i class="icon ion-person"></i> View Profile</a>
+                            <a asp-controller="User" asp-action="Edit" class="nav-link"><i class="icon ion-compose"></i> Edit Profile</a>
+                            <a asp-controller="Activity" asp-action="Index" class="nav-link"><i class="icon ion-ios-bolt"></i> Activity Log</a>
+                            <a asp-controller="Account" asp-action="Setting" class="nav-link"><i class="icon ion-ios-gear"></i> Account Settings</a>
+                            <a asp-controller="Account" asp-action="SignOut" class="nav-link"><i class="icon ion-forward"></i> Sign Out</a>
                         </nav>
-                    </div><!-- dropdown-menu -->
-                </div><!-- dropdown -->
-            </div><!-- header-right -->
-        </div><!-- container -->
-    </div><!-- slim-header -->
-
-    <div class="slim-navbar">
-        <div class="container">
-            <ul class="nav">
-                <li class="nav-item @DashboardActiveHelper.Active(controllerName, new[] {"home"})">
-                    <a asp-controller="Home" class="nav-link @DashboardActiveHelper.Active(controllerName, new[] {"home"})">
-                        <i class="icon ion-ios-home-outline"></i>
-                        <span>Management</span>
-                    </a>
-                </li>
-                <li class="nav-item with-sub @DashboardActiveHelper.Active(controllerName, new[] {"blog", "portfolio", "service"})">
-                    <a class="nav-link @DashboardActiveHelper.Active(controllerName, new[] {"blog", "portfolio", "service"})" data-toggle="dropdown">
-                        <i class="icon ion-ios-gear-outline"></i>
-                        <span>Contents</span>
-                    </a>
-                    <div class="sub-item">
-                        <ul>
-                            <li><a asp-area="Management" asp-controller="Blog" asp-action="Index">Bloglar</a></li>
-                            <li><a asp-area="Management" asp-controller="Portfolio" asp-action="Index">Portfolyo</a></li>
-                            <li><a asp-area="Management" asp-controller="Service" asp-action="Index">Servisler</a></li>
-                        </ul>
-                    </div><!-- dropdown-menu -->
-                </li>
-                <li class="nav-item with-sub @DashboardActiveHelper.Active(controllerName, new[] {"about", "education", "experience", "certificate", "skill"})">
-                    <a class="nav-link @DashboardActiveHelper.Active(controllerName, new[] {"about", "education", "experience", "certificate", "skill"})" data-toggle="dropdown">
-                        <i class="icon ion-ios-gear-outline"></i>
-                        <span>Resume</span>
-                    </a>
-                    <div class="sub-item">
-                        <ul>
-                            <li><a asp-area="Management" asp-controller="About" asp-action="Index">Hakkımda</a></li>
-                            <li><a asp-area="Management" asp-controller="Education" asp-action="Index">Eğitim</a></li>
-                            <li><a asp-area="Management" asp-controller="Experience" asp-action="Index">Deneyim</a></li>
-                            <li><a asp-area="Management" asp-controller="Certificate" asp-action="Index">Lisanslar ve Sertifikalar</a></li>
-                            <li><a asp-area="Management" asp-controller="Skill" asp-action="Index">Yetenekler</a></li>
-                        </ul>
-                    </div><!-- dropdown-menu -->
-                </li>
-                <li class="nav-item @DashboardActiveHelper.Active(controllerName, new[] {"socialmedia"})">
-                    <a asp-area="Management" asp-controller="SocialMedia" asp-action="Index" class="nav-link @DashboardActiveHelper.Active(controllerName, new[] {"socialmedia"})">
-                        <i class="icon ion-ios-home-outline"></i>
-                        <span>Social Media</span>
-                    </a>
-                </li>
-                <li class="nav-item with-sub @DashboardActiveHelper.Active(controllerName, new[] {"portfoliocategory", "typeofemployment"})">
-                    <a class="nav-link @DashboardActiveHelper.Active(controllerName, new[] { "portfoliocategory", "typeofemployment" })" data-toggle="dropdown">
-                        <i class="icon ion-ios-gear-outline"></i>
-                        <span>Tools</span>
-                    </a>
-                    <div class="sub-item">
-                        <ul>
-                            <li><a asp-area="Management" asp-controller="PortfolioCategory" asp-action="Index">Portfolio Category</a></li>
-                            <li><a asp-area="Management" asp-controller="TypeOfEmployment" asp-action="Index">Type of Employment</a></li>
-                        </ul>
                     </div>
-                </li>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="widgets.html">
-                        <i class="icon ion-ios-analytics-outline"></i>
-                        <span>Seo</span>
-                    </a>
-                </li>
-            </ul>
-        </div><!-- container -->
-    </div><!-- slim-navbar -->
+    @await Component.InvokeAsync("Navbar")
 
     <div class="slim-mainpanel">
         <div class="container">
-            <div class="slim-pageheader">
-                <ol class="breadcrumb slim-breadcrumb">
-                    <li class="breadcrumb-item"><a asp-area="Management" asp-controller="@controllerName" asp-action="@actionName">@DashboardBreadcrumbHelper.CapitalizeFirstCharacter(actionName)</a></li>
-                    <li class="breadcrumb-item"><a asp-area="Management" asp-controller="@controllerName" asp-action="Index">Transactions</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Management</li>
-                </ol>
-                <h6 class="slim-pagetitle">@DashboardBreadcrumbHelper.PageTitle(controllerName, actionName)</h6>
-            </div>
+
+            @await Component.InvokeAsync("Breadcrumb")
 
             @RenderBody()
 
-        </div><!-- container -->
-    </div><!-- slim-mainpanel -->
+        </div>
+    </div>
 
     <div class="slim-footer">
         <div class="container">
             <p>Copyright @DateTime.Now.Year &copy; All Rights Reserved. NPortfolio Dashboard Template</p>
             <p>Designed by: <a href="">NPortfolio</a></p>
-        </div><!-- container -->
-    </div><!-- slim-footer -->
+        </div>
+    </div>
 
     <script src="~/app/lib/jquery/js/jquery.js"></script>
     <script src="~/app/lib/popper.js/js/popper.js"></script>

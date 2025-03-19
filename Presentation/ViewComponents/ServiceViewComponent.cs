@@ -1,20 +1,20 @@
-﻿using Business.Abstract.Base;
+﻿using Business.Modules.Services.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.ViewComponents;
 
 public class ServiceViewComponent : ViewComponent
 {
-    private readonly IServiceManager _serviceManager;
+    private readonly IServiceService _serviceService;
 
-    public ServiceViewComponent(IServiceManager serviceManager)
+    public ServiceViewComponent(IServiceService serviceService)
     {
-        _serviceManager = serviceManager;
+        _serviceService = serviceService;
     }
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
-        var result = await _serviceManager.ServiceService.GetAllAsync();
+        var result = await _serviceService.GetAllServicesAsync();
         return View(result.Data);
     }
 }

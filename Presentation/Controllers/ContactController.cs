@@ -1,4 +1,4 @@
-﻿using Business.Abstract.Base;
+﻿using Business.Modules.Contacts.Services;
 using Entities.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
@@ -10,19 +10,21 @@ namespace Presentation.Controllers;
 public class ContactController : ControllerManager
 {
     private readonly IToastNotification _toastNotification;
+    private readonly IContactService _contactService;
 
-    public ContactController(IServiceManager manager, IToastNotification toastNotification) : base(manager)
+    public ContactController(IToastNotification toastNotification, IContactService contactService)
     {
         _toastNotification = toastNotification;
+        _contactService = contactService;
     }
 
     public IActionResult Index() => View(new CreateContactDto());
 
 
-    [HttpPost("detail")]
+    [HttpPost]
     public async Task<IActionResult> Send(CreateContactDto createContactDto)
     {
-        var result = await _manager.ContactService.SendAsync(createContactDto);
+        var result = await _contactService.SendAsync(createContactDto);
         return this.ResponseRedirectAction(result, _toastNotification, createContactDto);
     }
 }

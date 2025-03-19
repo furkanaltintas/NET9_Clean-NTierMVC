@@ -1,4 +1,4 @@
-﻿using Business.Abstract;
+﻿using Business.Modules.SocialMedias.Services;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ViewModels;
 
@@ -15,10 +15,9 @@ public class SidebarSocialMediaViewComponent : ViewComponent
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
-        var result = await _socialMediaService.GetAllAsync();
+        var result = await _socialMediaService.GetAllSocialMediasAsync();
 
         var viewModel = new SocialMediaSidebarViewModel(result.Data);
-
         return View(viewModel);
     }
 }

@@ -1,26 +1,36 @@
-﻿using Business.Abstract.Base;
+﻿using Business.Modules.Blogs.Services;
+using Business.Modules.SocialMedias.Services;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Controllers.Base;
 using Presentation.Extensions;
+using Presentation.ViewModels;
 
 namespace Presentation.Controllers;
 
 public class BlogController : ControllerManager
 {
-    public BlogController(IServiceManager manager) : base(manager)
+    private readonly ISocialMediaService _socialMediaService;
+    private readonly IBlogService _blogService;
+
+    public BlogController(ISocialMediaService socialMediaService, IBlogService blogService)
     {
+        _socialMediaService = socialMediaService;
+        _blogService = blogService;
     }
 
     public async Task<IActionResult> Index()
     {
-        var result = await _manager.BlogService.GetAllAsync();
+        var result = await _blogService.GetAllBlogsAsync();
         return View(result.Data);
     }
 
-    [Route("detay")]
+    [Route("{slug}")]
     public async Task<IActionResult> Detail(string slug)
     {
-        var result = await _manager.BlogService.GetSlugAsync(slug);
-        return this.ResponseView(result);
+        var blogResult = await _blogService.GetBlogBySlugAsync(slug);
+        var socialMediaResult = await _socialMediaService.GetAllSocialMediasAsync();
+
+        GetBlogViewModel getBlogViewModel = new(blogResult.Data, socialMediaResult.Data);
+        return this.ResponseViewModel(blogResult, getBlogViewModel);
     }
 }

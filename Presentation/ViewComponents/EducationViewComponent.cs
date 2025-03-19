@@ -1,20 +1,20 @@
-﻿using Business.Abstract.Base;
+﻿using Business.Modules.Educations.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.ViewComponents;
 
 public class EducationViewComponent : ViewComponent
 {
-    private readonly IServiceManager _serviceManager;
+    private readonly IEducationService _educationService;
 
-    public EducationViewComponent(IServiceManager serviceManager)
+    public EducationViewComponent(IEducationService educationService)
     {
-        _serviceManager = serviceManager;
+        _educationService = educationService;
     }
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
-        var result = await _serviceManager.EducationService.GetAllAsync();
+        var result = await _educationService.GetAllEducationsAsync();
         return View(result.Data);
     }
 }

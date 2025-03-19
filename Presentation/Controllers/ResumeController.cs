@@ -4,8 +4,5 @@ namespace Presentation.Controllers;
 
 public class ResumeController : Controller
 {
-    public IActionResult Index()
-    {
-        return View();
-    }
+    public IActionResult Index() => View();
 }
