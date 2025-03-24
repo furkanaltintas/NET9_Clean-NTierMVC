@@ -1,6 +1,8 @@
-﻿namespace Entities.Dtos;
+﻿using Core.Entities.Abstract;
 
-public class CreateSocialMediaIconDto
+namespace Entities.Dtos;
+
+public class CreateSocialMediaIconDto : IDto
 {
     public string Name { get; set; }
     public string Icon { get; set; }
