@@ -12,7 +12,8 @@ public class SkillConfiguration : IEntityTypeConfiguration<Skill>
 
         builder
             .Property(s => s.Name)
-            .HasMaxLength(50);
+            .HasMaxLength(50)
+            .IsRequired();
 
         builder
             .Property(s => s.Point)

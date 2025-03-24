@@ -12,23 +12,27 @@ public class ExperienceConfiguration : IEntityTypeConfiguration<Experience>
 
         builder
             .Property(e => e.Title)
-            .HasMaxLength(75);
+            .HasMaxLength(75)
+            .IsRequired();
 
         builder
             .Property(e => e.Company)
-            .HasMaxLength(100);
+            .HasMaxLength(100)
+            .IsRequired();
 
         builder
             .Property(e => e.Description)
-            .HasMaxLength(1000);
+            .HasMaxLength(1000)
+            .IsRequired();
 
         builder
             .Property(e => e.Location)
-            .HasMaxLength(50);
+            .HasMaxLength(50)
+            .IsRequired();
 
         builder
             .Property(e => e.TypeOfEmploymentId)
-            .IsRequired(false);
+            .IsRequired();
 
         builder
             .HasOne(e => e.TypeOfEmployment)

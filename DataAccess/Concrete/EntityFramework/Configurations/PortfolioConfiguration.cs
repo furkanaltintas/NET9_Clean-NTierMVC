@@ -11,15 +11,18 @@ public class PortfolioConfiguration : IEntityTypeConfiguration<Entities.Concrete
 
         builder
             .Property(p => p.Title)
-            .HasMaxLength(100);
+            .HasMaxLength(100)
+            .IsRequired();
 
         builder
             .Property(p => p.SubTitle)
-            .HasMaxLength(50);
+            .HasMaxLength(50)
+            .IsRequired();
 
         builder
             .Property(p => p.Image)
-            .HasMaxLength(200);
+            .HasMaxLength(200)
+            .IsRequired();
 
         builder.HasData(
             new Entities.Concrete.Portfolio

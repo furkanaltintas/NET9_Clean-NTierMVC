@@ -12,15 +12,18 @@ public class ServiceConfiguration : IEntityTypeConfiguration<Service>
 
         builder
             .Property(s => s.Name)
-            .HasMaxLength(100);
+            .HasMaxLength(100)
+            .IsRequired();
 
         builder
             .Property(s => s.Description)
-            .HasMaxLength(500);
+            .HasMaxLength(500)
+            .IsRequired();
 
         builder
             .Property(s => s.Icon)
-            .HasMaxLength(100);
+            .HasMaxLength(100)
+            .IsRequired();
 
         builder.HasData(
             new Service

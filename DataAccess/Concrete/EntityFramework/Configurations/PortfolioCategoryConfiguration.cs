@@ -12,7 +12,8 @@ public class PortfolioCategoryConfiguration : IEntityTypeConfiguration<Portfolio
 
         builder
             .Property(p => p.Name)
-            .HasMaxLength(25);
+            .HasMaxLength(25)
+            .IsRequired();
 
         builder.HasData(
             new PortfolioCategory
