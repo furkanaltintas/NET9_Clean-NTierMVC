@@ -2,6 +2,14 @@
 
 public static class Messages
 {
+    public const string PhotoRequired = "A blog image is required.";
+    public const string InvalidImageFile = "Please upload a valid image file (jpg, png, gif, webp).";
+    public const string InvalidFileSize = "The file size must not exceed 2MB.";
+
+
+
+
+
     public static string Created(string entityName) => $"{entityName} has been successfully created.";
     public static string Updated(string entityName) => $"{entityName} has been successfully updated.";
     public static string Deleted(string entityName) => $"{entityName} has been successfully deleted.";
