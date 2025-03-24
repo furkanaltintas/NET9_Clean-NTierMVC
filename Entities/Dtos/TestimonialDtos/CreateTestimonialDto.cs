@@ -1,8 +1,11 @@
-﻿namespace Entities.Dtos;
+﻿using Core.Entities.Abstract;
+using Microsoft.AspNetCore.Http;
 
-public class CreateTestimonialDto
+namespace Entities.Dtos;
+
+public class CreateTestimonialDto : IDto
 {
     public string FullName { get; set; }
     public string Message { get; set; }
-    public string Image { get; set; }
+    public IFormFile Photo { get; set; }
 }
