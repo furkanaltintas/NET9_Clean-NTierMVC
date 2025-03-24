@@ -7,18 +7,11 @@ using Presentation.Extensions;
 
 namespace Presentation.Areas.Management.Controllers;
 
-public class EducationController : BaseController
+public class EducationController(IEducationService educationService) : BaseController
 {
-    private readonly IEducationService _educationService;
-
-    public EducationController(IEducationService educationService)
-    {
-        _educationService = educationService;
-    }
-
     public async Task<IActionResult> Index()
     {
-        var result = await _educationService.GetAllEducationsAsync();
+        var result = await educationService.GetAllEducationsAsync();
         return this.ResponseViewModel<GetAllEducationDto, EducationViewModel>(result);
     }
 
@@ -28,14 +21,14 @@ public class EducationController : BaseController
     [HttpPost]
     public async Task<IActionResult> Add(CreateEducationDto createEducationDto)
     {
-        var result = await _educationService.CreateEducationAsync(createEducationDto);
-        return this.ResponseRedirectAction(result, ToastNotification);
+        var result = await educationService.CreateEducationAsync(createEducationDto);
+        return this.ResponseRedirectAction(result, ToastNotification, createEducationDto);
     }
 
 
     public async Task<IActionResult> Update(int educationId)
     {
-        var result = await _educationService.GetEducationForUpdateByIdAsync(educationId);
+        var result = await educationService.GetEducationForUpdateByIdAsync(educationId);
         return this.ResponseView(result);
     }
 
@@ -43,14 +36,14 @@ public class EducationController : BaseController
     [HttpPost]
     public async Task<IActionResult> Update(UpdateEducationDto updateEducationDto)
     {
-        var result = await _educationService.UpdateEducationAsync(updateEducationDto);
-        return this.ResponseRedirectAction(result, ToastNotification);
+        var result = await educationService.UpdateEducationAsync(updateEducationDto);
+        return this.ResponseRedirectAction(result, ToastNotification, updateEducationDto);
     }
 
 
     public async Task<IActionResult> Delete(int educationId)
     {
-        var result = await _educationService.DeleteEducationByIdAsync(educationId);
+        var result = await educationService.DeleteEducationByIdAsync(educationId);
         return this.ResponseRedirectAction(result, ToastNotification);
     }
 }

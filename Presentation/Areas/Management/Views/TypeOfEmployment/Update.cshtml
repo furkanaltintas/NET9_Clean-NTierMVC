@@ -1,13 +1,12 @@
-﻿@model UpdatePortfolioCategoryDto
+﻿@model UpdateTypeOfEmploymentDto
 
 <div class="section-wrapper">
-    <form asp-action="Update" method="post">
-        <input asp-for="Id" type="hidden" />
+    <form asp-action="Add" method="post">
         <div class="form-group">
             <label asp-for="Name" class="form-label"></label>
             <input asp-for="Name" class="form-control">
             <span asp-validation-for="Name"></span>
         </div>
-        <button type="submit" class="btn btn-outline-success">Update Portfolio Category</button>
+        <button type="submit" class="btn btn-outline-success">Update Type of Employment</button>
     </form>
 </div>

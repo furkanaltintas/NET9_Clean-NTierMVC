@@ -6,14 +6,17 @@
         <div class="form-group">
             <label asp-for="Name" class="form-label"></label>
             <input asp-for="Name" class="form-control">
+            <span asp-validation-for="Name"></span>
         </div>
         <div class="form-group">
             <label asp-for="Description" class="form-label"></label>
             <textarea asp-for="Description" class="form-control" rows="10"></textarea>
+            <span asp-validation-for="Description"></span>
         </div>
         <div class="form-group">
             <label asp-for="Icon" class="form-label"></label>
             <input asp-for="Icon" class="form-control">
+            <span asp-validation-for="Icon"></span>
         </div>
         <button type="submit" class="btn btn-outline-success">Update Service</button>
     </form>

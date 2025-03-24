@@ -6,6 +6,7 @@
         <div class="form-group">
             <label asp-for="Description" class="form-label">Content</label>
             <textarea asp-for="Description" class="form-control" rows="10"></textarea>
+            <span asp-validation-for="Description"></span>
         </div>
         <button type="submit" class="btn btn-outline-success">About Update</button> &nbsp;
         <a asp-action="Delete" class="btn btn-outline-danger">About Delete</a>

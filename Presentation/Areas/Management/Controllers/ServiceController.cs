@@ -7,25 +7,18 @@ using Presentation.Extensions;
 
 namespace Presentation.Areas.Management.Controllers;
 
-public class ServiceController : BaseController
+public class ServiceController(IServiceService serviceService) : BaseController
 {
-    private readonly IServiceService _serviceService;
-
-    public ServiceController(IServiceService serviceService)
-    {
-        _serviceService = serviceService;
-    }
-
     public async Task<IActionResult> Index()
     {
-        var result = await _serviceService.GetAllServicesAsync();
+        var result = await serviceService.GetAllServicesAsync();
         return this.ResponseViewModel<GetAllServiceDto, ServiceViewModel>(result);
     }
 
 
     public async Task<IActionResult> Detail(int serviceId)
     {
-        var result = await _serviceService.GetServiceByIdAsync(serviceId);
+        var result = await serviceService.GetServiceByIdAsync(serviceId);
         return this.ResponseView(result);
     }
 
@@ -36,14 +29,14 @@ public class ServiceController : BaseController
     [HttpPost]
     public async Task<IActionResult> Add(CreateServiceDto createServiceDto)
     {
-        var result = await _serviceService.CreateServiceAsync(createServiceDto);
-        return this.ResponseRedirectAction(result, ToastNotification);
+        var result = await serviceService.CreateServiceAsync(createServiceDto);
+        return this.ResponseRedirectAction(result, ToastNotification, createServiceDto);
     }
 
 
     public async Task<IActionResult> Update(int serviceId)
     {
-        var result = await _serviceService.GetServiceForUpdateByIdAsync(serviceId);
+        var result = await serviceService.GetServiceForUpdateByIdAsync(serviceId);
         return this.ResponseView(result);
     }
 
@@ -51,14 +44,14 @@ public class ServiceController : BaseController
     [HttpPost]
     public async Task<IActionResult> Update(UpdateServiceDto updateServiceDto)
     {
-        var result = await _serviceService.UpdateServiceAsync(updateServiceDto);
-        return this.ResponseRedirectAction(result, ToastNotification);
+        var result = await serviceService.UpdateServiceAsync(updateServiceDto);
+        return this.ResponseRedirectAction(result, ToastNotification, updateServiceDto);
     }
 
 
     public async Task<IActionResult> Delete(int serviceId)
     {
-        var result = await _serviceService.DeleteServiceByIdAsync(serviceId);
+        var result = await serviceService.DeleteServiceByIdAsync(serviceId);
         return this.ResponseRedirectAction(result, ToastNotification);
     }
 }

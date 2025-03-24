@@ -10,29 +10,20 @@ namespace Presentation.Areas.Management.Controllers;
 [NoCache]
 [Area("Management")]
 [Route("v1/auth/[action]")]
-public class AccountController : Controller
+public class AccountController(IToastNotification toastNotification, IAuthService authService) : Controller
 {
-    private readonly IToastNotification _toastNotification;
-    private readonly IAuthService _authService;
-
-    public AccountController(IToastNotification toastNotification, IAuthService authService)
-    {
-        _toastNotification = toastNotification;
-        _authService = authService;
-    }
-
     public IActionResult SignIn() => View();
 
     [HttpPost]
     public async Task<IActionResult> SignIn(GetUserLoginDto getUserLoginDto)
     {
-        var result = await _authService.SignInAsync(getUserLoginDto);
-        return this.ResponseRedirectAction(result, _toastNotification, "Index", "Home");
+        var result = await authService.SignInAsync(getUserLoginDto);
+        return this.ResponseRedirectAction(result, toastNotification, "Index", "Home");
     }
 
     public async Task<IActionResult> SignOut()
     {
-        await _authService.SignOutAsync();
-        return RedirectToAction("Index", "Home", new { Area = "" });
+        await authService.SignOutAsync();
+        return RedirectToAction("Index", "Home", new { Area = String.Empty });
     }
 }

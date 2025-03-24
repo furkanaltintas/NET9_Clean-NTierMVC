@@ -7,18 +7,11 @@ using Presentation.Extensions;
 
 namespace Presentation.Areas.Management.Controllers;
 
-public class CertificateController : BaseController
+public class CertificateController(ICertificateService certificateService) : BaseController
 {
-    private readonly ICertificateService _certificateService;
-
-    public CertificateController(ICertificateService certificateService)
-    {
-        _certificateService = certificateService;
-    }
-
     public async Task<IActionResult> Index()
     {
-        var result = await _certificateService.GetAllCertificatesAsync();
+        var result = await certificateService.GetAllCertificatesAsync();
         return this.ResponseViewModel<GetAllCertificateDto, CertificateViewModel>(result);
     }
 
@@ -29,14 +22,14 @@ public class CertificateController : BaseController
     [HttpPost]
     public async Task<IActionResult> Add(CreateCertificateDto createCertificateDto)
     {
-        var result = await _certificateService.CreateCertificateAsync(createCertificateDto);
+        var result = await certificateService.CreateCertificateAsync(createCertificateDto);
         return this.ResponseRedirectAction(result, ToastNotification, createCertificateDto);
     }
 
 
     public async Task<IActionResult> Update(int certificateId)
     {
-        var result = await _certificateService.GetCertificateForUpdateByIdAsync(certificateId);
+        var result = await certificateService.GetCertificateForUpdateByIdAsync(certificateId);
         return this.ResponseView(result);
     }
 
@@ -44,14 +37,14 @@ public class CertificateController : BaseController
     [HttpPost]
     public async Task<IActionResult> Update(UpdateCertificateDto updateCertificateDto)
     {
-        var result = await _certificateService.UpdateCertificateAsync(updateCertificateDto);
+        var result = await certificateService.UpdateCertificateAsync(updateCertificateDto);
         return this.ResponseRedirectAction(result, ToastNotification, updateCertificateDto);
     }
 
 
     public async Task<IActionResult> Delete(int certificateId)
     {
-        var result = await _certificateService.DeleteCertificateByIdAsync(certificateId);
+        var result = await certificateService.DeleteCertificateByIdAsync(certificateId);
         return this.ResponseRedirectAction(result, ToastNotification);
     }
 }

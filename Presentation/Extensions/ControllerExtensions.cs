@@ -42,7 +42,7 @@ public static class ControllerExtensions
     string? controllerName = null)
     {
         var isSuccess = ResultHelper.IsSuccess(result);
-        ShowNotification(toastNotification, isSuccess, result.Message);
+        ShowNotification(toastNotification, result);
 
         return isSuccess
             ? controller.RedirectToAction(actionName ?? nameof(Index), controllerName)
@@ -129,19 +129,13 @@ public static class ControllerExtensions
     /// </summary>
     private static void ShowNotification(IToastNotification toastNotification, IResult result)
     {
-        ShowNotification(toastNotification, ResultHelper.IsSuccess(result), result.Message);
-    }
-
-
-
-    /// <summary>
-    /// Alternatif olarak direkt başarı durumu ve mesaj alarak bildirim gösteren metod.
-    /// </summary>
-    private static void ShowNotification(IToastNotification toastNotification, bool isSuccess, string message)
-    {
-        if (isSuccess)
-            NotificationHelper.ShowSuccess(toastNotification, message);
+        if (result.ResultStatus == ResultStatus.Validation)
+            NotificationHelper.ShowValidation(toastNotification, result.Message);
+        else if (result.ResultStatus == ResultStatus.Error)
+            NotificationHelper.ShowError(toastNotification, result.Message);
         else
-            NotificationHelper.ShowError(toastNotification, message);
+            NotificationHelper.ShowSuccess(toastNotification, result.Message);
+
+        //ShowNotification(toastNotification, ResultHelper.IsSuccess(result), result.Message);
     }
 }

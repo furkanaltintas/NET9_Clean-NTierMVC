@@ -6,33 +6,25 @@ using Presentation.Extensions;
 
 namespace Presentation.Areas.Management.Controllers;
 
-public class AboutController : BaseController
+public class AboutController(IAboutService aboutService) : BaseController
 {
-    private readonly IAboutService _aboutService;
-
-    public AboutController(IAboutService aboutService)
-    {
-        _aboutService = aboutService;
-    }
-
     public async Task<IActionResult> Index()
     {
-        var result = await _aboutService.GetAboutForUpdateAsync();
+        var result = await aboutService.GetAboutForUpdateAsync();
         return this.ResponseView(result);
     }
-
 
     [HttpPost]
     public async Task<IActionResult> Update(UpdateAboutDto updateAboutDto)
     {
-        var result = await _aboutService.UpdateAboutAsync(updateAboutDto);
-        return this.ResponseRedirectAction(result, ToastNotification);
+        var result = await aboutService.UpdateAboutAsync(updateAboutDto);
+        return this.ResponseRedirectAction(result, ToastNotification, updateAboutDto);
     }
 
 
     public async Task<IActionResult> Delete()
     {
-        var result = await _aboutService.DeleteAboutAsync();
+        var result = await aboutService.DeleteAboutAsync();
         return this.ResponseRedirectAction(result, ToastNotification);
     }
 }

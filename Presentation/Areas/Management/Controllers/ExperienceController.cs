@@ -2,29 +2,17 @@
 using Business.Modules.TypeOfEmployments.Services;
 using Entities.Dtos;
 using Microsoft.AspNetCore.Mvc;
-using Portfolio.Core.Utilities.Results.ComplexTypes;
 using Presentation.Areas.Management.Controllers.Base;
 using Presentation.Areas.Management.ViewModels;
 using Presentation.Extensions;
 
 namespace Presentation.Areas.Management.Controllers;
 
-public class ExperienceController : BaseController
+public class ExperienceController(IExperienceService experienceService, ITypeOfEmploymentService typeOfEmploymentService) : BaseController
 {
-    private readonly IExperienceService _experienceService;
-    private readonly ITypeOfEmploymentService _typeOfEmploymentService;
-
-    public ExperienceController(
-        IExperienceService experienceService,
-        ITypeOfEmploymentService typeOfEmploymentService)
-    {
-        _experienceService = experienceService;
-        _typeOfEmploymentService = typeOfEmploymentService;
-    }
-
     public async Task<IActionResult> Index()
     {
-        var result = await _experienceService.GetAllExperiencesAsync();
+        var result = await experienceService.GetAllExperiencesAsync();
         return this.ResponseViewModel<GetAllExperienceDto, ExperienceViewModel>(result);
     }
 
@@ -38,18 +26,16 @@ public class ExperienceController : BaseController
     [HttpPost]
     public async Task<IActionResult> Add(CreateExperienceDto createExperienceDto)
     {
-        var result = await _experienceService.CreateExperienceAsync(createExperienceDto);
+        var result = await experienceService.CreateExperienceAsync(createExperienceDto);
 
-        if (result.ResultStatus != ResultStatus.Success)
-            createExperienceDto.TypeOfEmploymentDtos = await GetTypeOfEmployments();
-
+        createExperienceDto.TypeOfEmploymentDtos = await GetTypeOfEmployments();
         return this.ResponseRedirectAction(result, ToastNotification, createExperienceDto);
     }
 
 
     public async Task<IActionResult> Update(int experienceId)
     {
-        var result = await _experienceService.GetExperienceForUpdateByIdAsync(experienceId);
+        var result = await experienceService.GetExperienceForUpdateByIdAsync(experienceId);
         result.Data.TypeOfEmploymentDtos = await GetTypeOfEmployments();
         return this.ResponseView(result);
     }
@@ -58,25 +44,23 @@ public class ExperienceController : BaseController
     [HttpPost]
     public async Task<IActionResult> Update(UpdateExperienceDto updateExperienceDto)
     {
-        var result = await _experienceService.UpdateExperienceAsync(updateExperienceDto);
+        var result = await experienceService.UpdateExperienceAsync(updateExperienceDto);
 
-        if (result.ResultStatus != ResultStatus.Success)
-            updateExperienceDto.TypeOfEmploymentDtos = await GetTypeOfEmployments();
-
+        updateExperienceDto.TypeOfEmploymentDtos = await GetTypeOfEmployments();
         return this.ResponseRedirectAction(result, ToastNotification, updateExperienceDto);
     }
 
 
     public async Task<IActionResult> Delete(int experienceId)
     {
-        var result = await _experienceService.DeleteExperienceByIdAsync(experienceId);
+        var result = await experienceService.DeleteExperienceByIdAsync(experienceId);
         return this.ResponseRedirectAction(result, ToastNotification);
     }
 
 
     private async Task<IList<GetAllTypeOfEmploymentDto>> GetTypeOfEmployments()
     {
-        var result = await _typeOfEmploymentService.GetAllTypeOfEmploymentsAsync();
+        var result = await typeOfEmploymentService.GetAllTypeOfEmploymentsAsync();
         return result.Data;
     }
 }

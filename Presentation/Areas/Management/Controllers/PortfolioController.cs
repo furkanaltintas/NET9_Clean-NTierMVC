@@ -9,22 +9,11 @@ using Presentation.Extensions;
 
 namespace Presentation.Areas.Management.Controllers;
 
-public class PortfolioController : BaseController
+public class PortfolioController(IPortfolioService portfolioService, IPortfolioCategoryService portfolioCategoryService) : BaseController
 {
-    private readonly IPortfolioService _portfolioService;
-    private readonly IPortfolioCategoryService _portfolioCategoryService;
-
-    public PortfolioController(
-        IPortfolioService portfolioService,
-        IPortfolioCategoryService portfolioCategoryService)
-    {
-        _portfolioService = portfolioService;
-        _portfolioCategoryService = portfolioCategoryService;
-    }
-
     public async Task<IActionResult> Index()
     {
-        var result = await _portfolioService.GetAllPortfoliosAsync();
+        var result = await portfolioService.GetAllPortfoliosAsync();
         return this.ResponseViewModel<GetAllPortfolioDto, PortfolioViewModel>(result);
     }
 
@@ -37,18 +26,16 @@ public class PortfolioController : BaseController
     [HttpPost]
     public async Task<IActionResult> Add(CreatePortfolioDto createPortfolioDto)
     {
-        var result = await _portfolioService.CreatePortfolioAsync(createPortfolioDto);
+        var result = await portfolioService.CreatePortfolioAsync(createPortfolioDto);
 
-        if (result.ResultStatus == ResultStatus.Error)
-            createPortfolioDto.PortfolioCategoryDtos = await GetPortfolioCategories();
-
+        createPortfolioDto.PortfolioCategoryDtos = await GetPortfolioCategories();
         return this.ResponseRedirectAction(result, ToastNotification, createPortfolioDto);
     }
 
 
     public async Task<IActionResult> Update(int portfolioId)
     {
-        var result = await _portfolioService.GetPortfolioForUpdateByIdAsync(portfolioId);
+        var result = await portfolioService.GetPortfolioForUpdateByIdAsync(portfolioId);
 
         if (result.ResultStatus == ResultStatus.Success)
             result.Data.PortfolioCategoryDtos = await GetPortfolioCategories();
@@ -60,25 +47,23 @@ public class PortfolioController : BaseController
     [HttpPost]
     public async Task<IActionResult> Update(UpdatePortfolioDto updatePortfolioDto)
     {
-        var result = await _portfolioService.UpdatePortfolioAsync(updatePortfolioDto);
+        var result = await portfolioService.UpdatePortfolioAsync(updatePortfolioDto);
 
-        if (result.ResultStatus == ResultStatus.Error)
-            updatePortfolioDto.PortfolioCategoryDtos = await GetPortfolioCategories();
-
+        updatePortfolioDto.PortfolioCategoryDtos = await GetPortfolioCategories();
         return this.ResponseRedirectAction(result, ToastNotification, updatePortfolioDto);
     }
 
 
     public async Task<IActionResult> Delete(int portfolioId)
     {
-        var result = await _portfolioService.DeletePortfolioByIdAsync(portfolioId);
+        var result = await portfolioService.DeletePortfolioByIdAsync(portfolioId);
         return this.ResponseRedirectAction(result, ToastNotification);
     }
 
 
     private async Task<IList<GetAllPortfolioCategoryDto>> GetPortfolioCategories()
     {
-        var result = await _portfolioCategoryService.GetAllPortfolioCategoriesAsync();
+        var result = await portfolioCategoryService.GetAllPortfolioCategoriesAsync();
         return result.Data;
     }
 }

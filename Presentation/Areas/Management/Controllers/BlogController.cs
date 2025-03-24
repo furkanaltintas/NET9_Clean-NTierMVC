@@ -7,25 +7,18 @@ using Presentation.Extensions;
 
 namespace Presentation.Areas.Management.Controllers;
 
-public class BlogController : BaseController
+public class BlogController(IBlogService blogService) : BaseController
 {
-    private readonly IBlogService _blogService;
-
-    public BlogController(IBlogService blogService)
-    {
-        _blogService = blogService;
-    }
-
     public async Task<IActionResult> Index()
     {
-        var result = await _blogService.GetAllBlogsAsync();
+        var result = await blogService.GetAllBlogsAsync();
         return this.ResponseViewModel<GetAllBlogDto, BlogViewModel>(result);
     }
 
 
     public async Task<IActionResult> Detail(int blogId)
     {
-        var result = await _blogService.GetBlogByIdAsync(blogId);
+        var result = await blogService.GetBlogByIdAsync(blogId);
         return this.ResponseView(result);
     }
 
@@ -35,14 +28,14 @@ public class BlogController : BaseController
     [HttpPost]
     public async Task<IActionResult> Add(CreateBlogDto createBlogDto)
     {
-        var result = await _blogService.CreateBlogAsync(createBlogDto);
-        return this.ResponseRedirectAction(result, ToastNotification);
+        var result = await blogService.CreateBlogAsync(createBlogDto);
+        return this.ResponseRedirectAction(result, ToastNotification, createBlogDto);
     }
 
 
     public async Task<IActionResult> Update(int blogId)
     {
-        var result = await _blogService.GetBlogForUpdateByIdAsync(blogId);
+        var result = await blogService.GetBlogForUpdateByIdAsync(blogId);
         return this.ResponseView(result);
     }
 
@@ -50,14 +43,14 @@ public class BlogController : BaseController
     [HttpPost]
     public async Task<IActionResult> Update(UpdateBlogDto updateBlogDto)
     {
-        var result = await _blogService.UpdateBlogAsync(updateBlogDto);
+        var result = await blogService.UpdateBlogAsync(updateBlogDto);
         return this.ResponseRedirectAction(result, ToastNotification, updateBlogDto);
     }
 
 
     public async Task<IActionResult> Delete(int blogId)
     {
-        var result = await _blogService.DeleteBlogByIdAsync(blogId);
+        var result = await blogService.DeleteBlogByIdAsync(blogId);
         return this.ResponseRedirectAction(result, ToastNotification);
     }
 }

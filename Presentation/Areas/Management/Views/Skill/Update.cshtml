@@ -6,10 +6,12 @@
         <div class="form-group">
             <label asp-for="Name" class="form-label"></label>
             <input asp-for="Name" class="form-control">
+            <span asp-validation-for="Name"></span>
         </div>
         <div class="form-group">
             <label asp-for="Point" class="form-label"></label>
             <input asp-for="Point" class="form-control">
+            <span asp-validation-for="Point"></span>
         </div>
         <button type="submit" class="btn btn-outline-success">Update Skill</button>
     </form>
