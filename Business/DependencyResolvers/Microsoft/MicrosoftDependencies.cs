@@ -1,9 +1,5 @@
-﻿using Business.AutoMapper.Profiles;
-using Core.Entities.Concrete;
-using Core.Helpers.Images.Abstract;
-using Core.Helpers.Images.Concrete;
-using DataAccess.Abstract;
-using DataAccess.Concrete.UnitOfWork;
+﻿using Core.Entities.Concrete;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -15,20 +11,17 @@ public static class MicrosoftDependencies
     {
         Assembly assembly = Assembly.GetExecutingAssembly();
 
-        services.AddScoped<IRepository, Repository>();
-        services.AddAssemblyServices(assembly);
+        services.AddAssemblyServices(assembly); // DI
 
         services.AddSubClassesOfType(assembly, typeof(BaseBusinessRules));
 
-        services.AddScoped<IImageHelper, ImageHelper>();
-        services.AddScoped<IFileNameHelper, FileNameHelper>();
-
-        services.AddScoped<IImageUploader, ImageUploader>();
-
-        services.AddAutoMapper(typeof(AutoMappingProfile).Assembly);
+        services.AddValidatorsFromAssembly(assembly);
+        services.AddAutoMapper(assembly);
     }
 
-    public static IServiceCollection AddSubClassesOfType
+
+    // Ek görevler
+    private static IServiceCollection AddSubClassesOfType
     (this IServiceCollection services,
     Assembly assembly,
     Type type,
