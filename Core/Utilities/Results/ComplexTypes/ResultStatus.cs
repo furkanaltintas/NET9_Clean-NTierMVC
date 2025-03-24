@@ -6,6 +6,7 @@ public enum ResultStatus
     Error = 1,
     Warning = 2,
     Info = 3,
-    Authentication = 4,
-    Authorization = 5
+    Validation = 4,
+    Authentication = 5,
+    Authorization = 6
 }
