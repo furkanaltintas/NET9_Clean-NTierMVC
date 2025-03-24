@@ -1,4 +1,7 @@
-﻿using Entities.Dtos;
+﻿using Business.Constants;
+using Business.Modules.Blogs.Constants;
+using Core.Helpers.Images.Valid;
+using Entities.Dtos;
 using FluentValidation;
 
 namespace Business.Modules.Blogs.Validations;
@@ -8,15 +11,20 @@ public class UpdateBlogValidator : AbstractValidator<UpdateBlogDto>
     public UpdateBlogValidator()
     {
         RuleFor(b => b.Title)
-            .NotEmpty().WithMessage("Başlık alanı zorunludur.")
-            .Length(3, 75).WithMessage("Başlık en az 3, en fazla 75 karakter olmalıdır.");
+            .NotEmpty().WithMessage(BlogsMessages.TitleRequired)
+            .Length(3, 100).WithMessage(BlogsMessages.TitleLength);
 
         RuleFor(b => b.Content)
-            .NotEmpty().WithMessage("İçerik alanı boş olamaz.")
-            .Length(3, 5000).WithMessage("İçerik en az 3, en fazla 5000 karakter olmalıdır.");
+            .NotEmpty().WithMessage(BlogsMessages.ContentRequired)
+            .Length(3, 2000).WithMessage(BlogsMessages.ContentLength);
 
         RuleFor(b => b.PublishDate)
             .NotEmpty().WithMessage("Yayın tarihi zorunludur.")
             .Must(date => date > DateTime.Now).WithMessage("Yayın tarihi bugünden büyük olmalıdır.");
+
+        RuleFor(b => b.Photo)
+            .NotEmpty().WithMessage(Messages.PhotoRequired)
+            .Must(IsValidImageAndFileSize.IsValidImageFile).WithMessage(Messages.InvalidImageFile)
+            .Must(IsValidImageAndFileSize.IsValidFileSize).WithMessage(Messages.InvalidFileSize);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Core.Aspects.Autofac.Caching;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.Dtos;
@@ -10,10 +11,9 @@ namespace Business.Modules.Users.Services;
 
 public class UserManager : BaseManager, IUserService
 {
-    public UserManager(IRepository repository, IMapper mapper) : base(repository, mapper)
-    {
-    }
+    public UserManager(IRepository repository, IMapper mapper) : base(repository, mapper) { }
 
+    [CacheAspect]
     public async Task<IDataResult<GetUserSidebarDto>> GetSidebarDataAsync()
     {
         User user = await Repository.GetRepository<User>().GetAsync();

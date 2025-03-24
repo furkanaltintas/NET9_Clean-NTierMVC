@@ -1,4 +1,5 @@
-﻿using Entities.Dtos;
+﻿using Business.Modules.Contacts.Constants;
+using Entities.Dtos;
 using FluentValidation;
 
 namespace Business.Modules.Contacts.Validations;
@@ -7,8 +8,16 @@ public class CreateContactValidator : AbstractValidator<CreateContactDto>
 {
     public CreateContactValidator()
     {
-        RuleFor(x => x.FullName).NotEmpty().WithMessage("Ad Soyad alanı boş geçilemez");
-        RuleFor(x => x.Email).NotEmpty().WithMessage("E-Posta alanı boş geçilemez");
-        RuleFor(x => x.Message).NotEmpty().WithMessage("Mesaj alanı boş bırakılamaz");
+        RuleFor(c => c.FullName)
+            .MaximumLength(100).WithMessage(ContactsMessages.FullNameLength);
+
+        RuleFor(c => c.Email)
+            .NotEmpty().WithMessage(ContactsMessages.EmailRequired)
+            .EmailAddress().WithMessage(ContactsMessages.EmailInvalid)
+            .MaximumLength(100).WithMessage(ContactsMessages.EmailLength);
+
+        RuleFor(c => c.Message)
+            .NotEmpty().WithMessage(ContactsMessages.MessageRequired)
+            .MaximumLength(1000).WithMessage(ContactsMessages.MessageLength);
     }
 }

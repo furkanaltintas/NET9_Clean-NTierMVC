@@ -1,14 +1,13 @@
 ﻿using AutoMapper;
 using Business.Constants;
 using Business.Modules.Abouts.Rules;
-using Business.Modules.Abouts.Validations;
 using Core.Aspects.Autofac.Caching;
-using Core.Aspects.Autofac.Secured;
-using Core.Aspects.Autofac.Validation;
+using Core.Helpers.Validators.Concrete;
 using Core.Utilities.Business;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.Dtos;
+using FluentValidation;
 using Portfolio.Core.Utilities.Results.Abstract;
 using Portfolio.Core.Utilities.Results.ComplexTypes;
 using Portfolio.Core.Utilities.Results.Concrete;
@@ -19,16 +18,24 @@ public class AboutManager : BaseManager, IAboutService
 {
     private const string About = "About";
     private readonly AboutBusinessRules _aboutBusinessRules;
-    public AboutManager(IRepository repository, IMapper mapper, AboutBusinessRules aboutBusinessRules) : base(repository, mapper)
+
+    private readonly IValidator<CreateAboutDto> _createAboutValidator;
+    private readonly IValidator<UpdateAboutDto> _updateAboutValidator;
+    public AboutManager(IRepository repository, IMapper mapper, AboutBusinessRules aboutBusinessRules, IValidator<CreateAboutDto> createAboutValidator, IValidator<UpdateAboutDto> updateAboutValidator) : base(repository, mapper)
     {
         _aboutBusinessRules = aboutBusinessRules;
+        _createAboutValidator = createAboutValidator;
+        _updateAboutValidator = updateAboutValidator;
     }
 
 
-    [ValidationAspect(typeof(CreateAboutValidator))]
+    //[ValidationAspect(typeof(CreateAboutValidator))]
     [CacheRemoveAspect("IAboutService.Get")]
     public async Task<IResult> CreateAboutAsync(CreateAboutDto createAboutDto)
     {
+        IResult result = await ValidatorResultHelper.ValidatorResult(_createAboutValidator, createAboutDto);
+        if (result.ValidationErrors.Any()) return result;
+
         About about = Mapper.Map<About>(createAboutDto);
         await Repository.GetRepository<About>().AddAsync(about);
         await Repository.SaveAsync();
@@ -66,26 +73,27 @@ public class AboutManager : BaseManager, IAboutService
     }
 
 
+    [CacheAspect]
     public async Task<IDataResult<UpdateAboutDto>> GetAboutForUpdateAsync()
     {
         DataResult<UpdateAboutDto> result = BusinessRules.Run<UpdateAboutDto>(await _aboutBusinessRules.CheckIfAboutExists());
-
-        if (result != null)
-            return new DataResult<UpdateAboutDto>(ResultStatus.Success, new());
+        if (result is not null) return result;
 
         About about = await Repository.GetRepository<About>().GetAsync();
         UpdateAboutDto updateAboutDto = Mapper.Map<UpdateAboutDto>(about);
-
         return new DataResult<UpdateAboutDto>(ResultStatus.Success, updateAboutDto);
     }
 
 
-    [ValidationAspect(typeof(UpdateAboutValidator))]
+    //[ValidationAspect(typeof(UpdateAboutValidator))]
     [CacheRemoveAspect("IAboutService.Get")]
     public async Task<IResult> UpdateAboutAsync(UpdateAboutDto updateAboutDto)
     {
         if (updateAboutDto.Id == 0)
             return await CreateAboutAsync(new CreateAboutDto { Description = updateAboutDto.Description });
+
+        IResult result = await ValidatorResultHelper.ValidatorResult(_updateAboutValidator, updateAboutDto);
+        if (result.ValidationErrors.Any()) return result;
 
         About about = Mapper.Map<About>(updateAboutDto);
         await Repository.GetRepository<About>().UpdateAsync(about);

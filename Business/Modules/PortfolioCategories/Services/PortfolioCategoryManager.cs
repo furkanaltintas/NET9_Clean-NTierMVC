@@ -1,8 +1,14 @@
 ﻿using AutoMapper;
 using Business.Constants;
+using Business.Modules.PortfolioCategories.Constants;
+using Business.Modules.PortfolioCategories.Validations;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Validation;
+using Core.Helpers.Validators.Concrete;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.Dtos;
+using FluentValidation;
 using Portfolio.Core.Utilities.Results.Abstract;
 using Portfolio.Core.Utilities.Results.ComplexTypes;
 using Portfolio.Core.Utilities.Results.Concrete;
@@ -11,27 +17,42 @@ namespace Business.Modules.PortfolioCategories.Services;
 
 public class PortfolioCategoryManager : BaseManager, IPortfolioCategoryService
 {
-    private const string PortfolioCategory = "Portfolio Category";
-    public PortfolioCategoryManager(IRepository repository, IMapper mapper) : base(repository, mapper)
+    private readonly IValidator<CreatePortfolioCategoryDto> _createPortfolioCategoryValidator;
+    private readonly IValidator<UpdatePortfolioCategoryDto> _updatePortfolioCategoryValidator;
+
+
+    public PortfolioCategoryManager(IRepository repository, IMapper mapper, IValidator<CreatePortfolioCategoryDto> createPortfolioCategoryValidator, IValidator<UpdatePortfolioCategoryDto> updatePortfolioCategoryValidator) : base(repository, mapper)
     {
+        _createPortfolioCategoryValidator = createPortfolioCategoryValidator;
+        _updatePortfolioCategoryValidator = updatePortfolioCategoryValidator;
     }
 
+
+    [ValidationAspect(typeof(CreatePortfolioCategoryValidator))]
+    [CacheRemoveAspect("IPortfolioCategoryService.Get")]
     public async Task<IResult> CreatePortfolioCategoryAsync(CreatePortfolioCategoryDto createPortfolioCategoryDto)
     {
+        IResult result = await ValidatorResultHelper.ValidatorResult(_createPortfolioCategoryValidator, createPortfolioCategoryDto);
+        if (result.ValidationErrors.Any()) return result;
+
         PortfolioCategory portfolioCategory = Mapper.Map<PortfolioCategory>(createPortfolioCategoryDto);
         await Repository.GetRepository<PortfolioCategory>().AddAsync(portfolioCategory);
         await Repository.SaveAsync();
-        return new Result(ResultStatus.Success, Messages.Created(PortfolioCategory));
+        return new Result(ResultStatus.Success, Messages.Created(PortfolioCategoriesMessages.PortfolioCategory));
     }
 
+
+    [CacheAspect]
     public async Task<IResult> DeletePortfolioCategoryByIdAsync(int id)
     {
         PortfolioCategory portfolioCategory = await Repository.GetRepository<PortfolioCategory>().GetAsync(p => p.Id == id);
         await Repository.GetRepository<PortfolioCategory>().HardDeleteAsync(portfolioCategory);
         await Repository.SaveAsync();
-        return new Result(ResultStatus.Success, Messages.Deleted(PortfolioCategory));
+        return new Result(ResultStatus.Success, Messages.Deleted(PortfolioCategoriesMessages.PortfolioCategory));
     }
 
+
+    [CacheAspect]
     public async Task<IDataResult<IList<GetAllPortfolioCategoryDto>>> GetAllPortfolioCategoriesAsync()
     {
         IList<PortfolioCategory> portfolioCategories = await Repository.GetRepository<PortfolioCategory>().GetAllAsync();
@@ -39,6 +60,8 @@ public class PortfolioCategoryManager : BaseManager, IPortfolioCategoryService
         return new DataResult<IList<GetAllPortfolioCategoryDto>>(ResultStatus.Success, getAllPortfolioCategoryDtos);
     }
 
+
+    [CacheAspect]
     public async Task<IDataResult<GetPortfolioCategoryDto>> GetPortfolioCategoryByIdAsync(int id)
     {
         PortfolioCategory portfolioCategory = await Repository.GetRepository<PortfolioCategory>().GetAsync(p => p.Id == id);
@@ -46,6 +69,8 @@ public class PortfolioCategoryManager : BaseManager, IPortfolioCategoryService
         return new DataResult<GetPortfolioCategoryDto>(ResultStatus.Success, getPortfolioCategoryDto);
     }
 
+
+    [CacheAspect]
     public async Task<IDataResult<UpdatePortfolioCategoryDto>> GetPortfolioCategoryForUpdateByIdAsync(int id)
     {
         PortfolioCategory portfolioCategory = await Repository.GetRepository<PortfolioCategory>().GetAsync(p => p.Id == id);
@@ -53,13 +78,19 @@ public class PortfolioCategoryManager : BaseManager, IPortfolioCategoryService
         return new DataResult<UpdatePortfolioCategoryDto>(ResultStatus.Success, updatePortfolioCategoryDto);
     }
 
+
+    [ValidationAspect(typeof(UpdatePortfolioCategoryValidator))]
+    [CacheRemoveAspect("IPortfolioCategoryService.Get")]
     public async Task<IResult> UpdatePortfolioCategoryAsync(UpdatePortfolioCategoryDto updatePortfolioCategoryDto)
     {
+        IResult result = await ValidatorResultHelper.ValidatorResult(_updatePortfolioCategoryValidator, updatePortfolioCategoryDto);
+        if (result.ValidationErrors.Any()) return result;
+
         PortfolioCategory portfolioCategory = await Repository.GetRepository<PortfolioCategory>().GetAsync(p => p.Id == updatePortfolioCategoryDto.Id);
 
         Mapper.Map(updatePortfolioCategoryDto, portfolioCategory);
         await Repository.GetRepository<PortfolioCategory>().UpdateAsync(portfolioCategory);
         await Repository.SaveAsync();
-        return new Result(ResultStatus.Success, Messages.Updated(PortfolioCategory));
+        return new Result(ResultStatus.Success, Messages.Updated(PortfolioCategoriesMessages.PortfolioCategory));
     }
 }

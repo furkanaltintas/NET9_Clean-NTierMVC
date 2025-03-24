@@ -1,5 +1,4 @@
-﻿using Business.Constants;
-using Business.Modules.Skills.Constants;
+﻿using Business.Modules.Skills.Constants;
 using Core.Entities.Concrete;
 using DataAccess.Abstract;
 using Entities.Concrete;

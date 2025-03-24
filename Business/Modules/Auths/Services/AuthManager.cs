@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Business.Modules.Auths.Constants;
+using Business.Modules.Auths.Validations;
+using Core.Aspects.Autofac.Validation;
 using Core.Extensions;
 using Core.Utilities.Hashing;
 using DataAccess.Abstract;
@@ -18,28 +20,22 @@ namespace Business.Modules.Auths.Services;
 public class AuthManager : BaseManager, IAuthService
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
-    public AuthManager(IRepository repository, IMapper mapper, IHttpContextAccessor httpContextAccessor) : base(repository, mapper)
-    {
-        _httpContextAccessor = httpContextAccessor;
-    }
+    public AuthManager(
+        IRepository repository,
+        IMapper mapper,
+        IHttpContextAccessor httpContextAccessor) : base(repository, mapper) { _httpContextAccessor = httpContextAccessor; }
 
     // BCrypt
+    [ValidationAspect(typeof(LoginUserValidator))]
     public async Task<IDataResult<GetUserDto>> SignInAsync(GetUserLoginDto getUserLoginDto)
     {
-        User user = await Repository.GetRepository<User>().GetAsync(
-            predicate: u => u.Email == getUserLoginDto.Email);
-
-        if (user == null)
-            return new DataResult<GetUserDto>(ResultStatus.Error, AuthsMessages.InvalidEmailOrPassword);
+        User user = await Repository.GetRepository<User>().GetAsync(predicate: u => u.Email == getUserLoginDto.Email);
+        if (user == null) return new DataResult<GetUserDto>(ResultStatus.Error, AuthsMessages.InvalidEmailOrPassword);
 
         bool isPasswordValid = BCryptPasswordService.VerifyPassword(getUserLoginDto.Password, user.Password);
-
-        if (!isPasswordValid)
-            return new DataResult<GetUserDto>(ResultStatus.Error, AuthsMessages.InvalidEmailOrPassword);
-
+        if (!isPasswordValid) return new DataResult<GetUserDto>(ResultStatus.Error, AuthsMessages.InvalidEmailOrPassword);
 
         GetUserDto getUserDto = Mapper.Map<GetUserDto>(user);
-
         await SetAuthCookie(getUserDto, getUserLoginDto.IsRememberMe);
         return new DataResult<GetUserDto>(ResultStatus.Success, getUserDto);
     }
@@ -61,10 +57,9 @@ public class AuthManager : BaseManager, IAuthService
         claims.AddEmail(getUserDto.Email);
         claims.AddName(getUserDto.UserName);
 
-        var claimsIdentity = new ClaimsIdentity(
-            claims, CookieAuthenticationDefaults.AuthenticationScheme);
+        ClaimsIdentity claimsIdentity = new(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-        var authProperties = new AuthenticationProperties
+        AuthenticationProperties authProperties = new()
         {
             ExpiresUtc = DateTimeOffset.UtcNow.AddDays(30),
             IsPersistent = rememberMe
