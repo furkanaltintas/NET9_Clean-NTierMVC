@@ -1,11 +1,9 @@
-﻿using Core.Entities.Abstract;
-
-namespace Core.Entities.Concrete;
+﻿namespace Core.Entities.Concrete;
 
 public class ImageUploaded
 {
-    public ImageUploaded() 
-    { 
+    public ImageUploaded()
+    {
         FullName = string.Empty;
     }
 

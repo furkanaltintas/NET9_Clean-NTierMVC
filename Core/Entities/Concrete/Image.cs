@@ -2,8 +2,8 @@
 
 public class Image
 {
-    public Image() 
-    { 
+    public Image()
+    {
         FileName = string.Empty;
     }
 
