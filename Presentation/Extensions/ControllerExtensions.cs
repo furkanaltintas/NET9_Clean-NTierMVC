@@ -50,6 +50,30 @@ public static class ControllerExtensions
     }
 
 
+    /// <summary>
+    /// Boolean değer kullanıp data yollamak için
+    /// Success -> RedirectToAction | Error -> View(data)
+    /// </summary>
+    public static IActionResult ResponseRedirectAction(
+    this Controller controller,
+    bool isSuccessful,
+    string message,
+    IToastNotification toastNotification,
+    object data,
+    string? actionName = null,
+    string? controllerName = null)
+    {
+        ShowNotification(toastNotification, isSuccessful, message);
+
+        if (!isSuccessful && actionName is not null)
+            return controller.RedirectToAction(actionName ?? nameof(Index), controllerName, data);
+
+        return isSuccessful
+            ? controller.RedirectToAction(actionName ?? nameof(Index), controllerName)
+            : controller.View(data);
+    }
+
+
 
     /// <summary>
     /// Başarı veya hata durumuna göre belirli bir aksiyona yönlendirir.
@@ -135,7 +159,15 @@ public static class ControllerExtensions
             NotificationHelper.ShowError(toastNotification, result.Message);
         else
             NotificationHelper.ShowSuccess(toastNotification, result.Message);
+    }
 
-        //ShowNotification(toastNotification, ResultHelper.IsSuccess(result), result.Message);
+
+
+    private static void ShowNotification(IToastNotification toastNotification, Boolean isSuccessful, string message)
+    {
+        if (isSuccessful)
+            NotificationHelper.ShowSuccess(toastNotification, message);
+        else
+            NotificationHelper.ShowError(toastNotification, message);
     }
 }
