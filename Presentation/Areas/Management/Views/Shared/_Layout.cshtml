@@ -35,10 +35,9 @@
     <link href="~/app/lib/Ionicons/css/ionicons.css" rel="stylesheet">
     <link href="~/app/lib/rickshaw/css/rickshaw.min.css" rel="stylesheet">
 
-    @await RenderSectionAsync("Style", false)
+    @await RenderSectionAsync("Styles", false)
     <link href="~/app/lib/datatables/css/jquery.dataTables.css" rel="stylesheet">
     <link href="~/app/lib/select2/css/select2.min.css" rel="stylesheet">
-
 
     <!-- Slim CSS -->
     <link rel="stylesheet" href="~/app/css/slim.css">
@@ -49,7 +48,7 @@
     <div class="slim-header">
         <div class="container">
             <div class="slim-header-left">
-                <h2 class="slim-logo"><a href="index.html">slim<span>.</span></a></h2>
+                <h2 class="slim-logo"><a asp-controller="Home" asp-action="Index">slim<span>.</span></a></h2>
 
                 <div class="search-box">
                     <input type="text" class="form-control" placeholder="Search">
@@ -191,12 +190,12 @@
         </div>
     </div>
 
-    @await Component.InvokeAsync("Navbar")
+    @await Html.PartialAsync("Partials/_NavbarPartialView")
 
     <div class="slim-mainpanel">
         <div class="container">
 
-            @await Component.InvokeAsync("Breadcrumb")
+            @await Html.PartialAsync("Partials/_BreadcrumbPartialView")
 
             @RenderBody()
 

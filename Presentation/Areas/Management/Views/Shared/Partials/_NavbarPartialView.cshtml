@@ -9,7 +9,7 @@
     <div class="container">
         <ul class="nav">
             <li class="nav-item @DashboardActiveHelper.Active(controllerName, new[] {"home"})">
-                <a asp-controller="Home" class="nav-link @DashboardActiveHelper.Active(controllerName, new[] {"home"})">
+                <a asp-area="Management" asp-controller="Home" asp-action="Index" class="nav-link @DashboardActiveHelper.Active(controllerName, new[] {"home"})">
                     <i class="icon ion-ios-home-outline"></i>
                     <span>Management</span>
                 </a>
