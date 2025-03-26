@@ -1,53 +1,51 @@
 ﻿@{
-    var controller = ViewContext.RouteData?.Values["controller"]?.ToString();
+    var cspNonce = Context.Response.Headers["X-CSP-Nonce"];
 }
-
 
 <!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="utf-8" />
-    <title>nPortfolio - @controller</title>
-
+    <title>nPortfolio - @ViewContext.RouteData.Values["controller"]?.ToString()</title>
     <!-- Meta Data -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="format-detection" content="telephone=no" />
     <meta name="format-detection" content="address=no" />
-    <meta name="author" content="ArtTemplate" />
-    <meta name="description" content="vCard" />
+    <meta name="author" content="furkan altıntaş" />
+    <meta name="description" content="Kişisel portföy sitemde, projelerimi ve yeteneklerimi sergiliyorum." />
+    <meta name="keywords" content="Kişisel Portföy, .NET Developer, Web Geliştirme, ASP.NET Core, C#, Full Stack Developer" />
 
     <!-- Twitter data -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="Portfolio">
-    <meta name="twitter:title" content="vCard">
-    <meta name="twitter:description" content="vCard">
-    <meta name="twitter:image" content="~/ui/assets/images/social.html">
+    <meta name="twitter:site" content="no">
+    <meta name="twitter:title" content="Furkan Altıntaş - .Net Developer">
+    <meta name="twitter:description" content="Kendi projelerimi ve yeteneklerimi sergilediğim portföy siteme göz atın!">
+    <meta name="twitter:image" content="no">
 
     <!-- Open Graph data -->
-    <meta property="og:title" content="ArtTemplate" />
+    <meta property="og:title" content="Furkan Altıntaş - .Net Developer" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="your url website" />
-    <meta property="og:image" content="~/ui/assets/images/social.html" />
-    <meta property="og:description" content="vCard" />
-    <meta property="og:site_name" content="vCard" />
+    <meta property="og:image" content="no" />
+    <meta property="og:description" content="Kendi projelerimi ve yeteneklerimi sergilediğim portföy siteme göz atın!" />
+    <meta property="og:site_name" content="NPortfolio" />
 
     <!-- Favicons -->
-    <link rel="apple-touch-icon" sizes="144x144" href="~/ui/assets/images/favicons/apple-touch-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="~/ui/assets/images/favicons/apple-touch-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="~/ui/assets/images/favicons/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="57x57" href="~/ui/assets/images/favicons/apple-touch-icon-57x57.png">
-    <link rel="shortcut icon" href="~/ui/assets/images/favicons/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" sizes="180x180" href="">
+    <link rel="icon" type="image/png" sizes="32x32" href="">
+    <link rel="icon" type="image/png" sizes="16x16" href="">
+    <link rel="manifest" href="">
+    <meta name="theme-color" content="#ffffff">
 
     <!-- Styles -->
     <link rel="stylesheet" type="text/css" href="~/ui/assets/styles/style.css" />
     <link rel="stylesheet" type="text/css" href="~/ui/assets/styles/style-dark.css" />
     <link rel="stylesheet" type="text/css" href="~/ui/assets/demo/style-demo.css" />
 
-    @await RenderSectionAsync("Style", false)
+    @await RenderSectionAsync("Styles", false)
 </head>
 <body class="bg-triangles">
-
     <!-- Preloader -->
     <div class="preloader">
         <div class="preloader__wrap">
@@ -58,39 +56,15 @@
             <div class="preloader__progress"><span></span></div>
         </div>
     </div>
-
     <main class="main">
         <div class="container gutter-top">
             <div class="row sticky-parent">
-                <!-- Sidebar -->
                 @await Component.InvokeAsync("Sidebar")
-
-                <!-- Content -->
                 <div class="col-12 col-md-12 col-xl-9">
                     <div class="box shadow">
-                        <!-- Menu -->
-                        <div class="circle-menu">
-                            <div class="hamburger">
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <div class="line"></div>
-                            </div>
-                        </div>
-                        <div class="inner-menu js-menu">
-                            <ul class="nav">
-                                <li class="nav__item"><a class="@(controller == "home" ? "active" : string.Empty)" asp-controller="Home">About</a></li>
-                                <li class="nav__item"><a class="@(controller == "resume" ? "active" : string.Empty)" asp-controller="Resume">Resume</a></li>
-                                <li class="nav__item"><a class="@(controller == "portfolio" ? "active" : string.Empty)" asp-controller="Portfolio">Portfolio</a></li>
-                                <li class="nav__item"><a class="@(controller == "blog" ? "active" : string.Empty)" asp-controller="Blog">Blog</a></li>
-                                <li class="nav__item"><a class="@(controller == "contact" ? "active" : string.Empty)" asp-controller="Contact">Contact</a></li>
-                            </ul>
-                        </div>
-
+                        @await Html.PartialAsync("Partials/_MenuPartialView")
                         @RenderBody()
-
                     </div>
-
-                    <!-- Footer -->
                     <footer class="footer">© @DateTime.Now.Year NPortfolio</footer>
                 </div>
             </div>
@@ -113,8 +87,19 @@
     <script src="~/ui/assets/js/jquery-3.4.1.min.js"></script>
     <script src="~/ui/assets/js/plugins.min.js"></script>
     <script src="~/ui/assets/js/common.js"></script>
-
     <script src="~/ui/assets/demo/plugins-demo.js"></script>
+
+
+    @await Component.InvokeAsync("NToastNotify")
+    <script src="~/js/security.js"></script>
+    <script>
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "timeOut": "5000"
+        };
+    </script>
 
     @await RenderSectionAsync("Scripts", false)
 </body>
