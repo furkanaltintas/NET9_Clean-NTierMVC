@@ -30,7 +30,7 @@ public class ExperienceManager : BaseManager, IExperienceService
     public async Task<IResult> CreateExperienceAsync(CreateExperienceDto createExperienceDto)
     {
         IResult result = await ValidatorResultHelper.ValidatorResult(_createExperienceValidator, createExperienceDto);
-        if (result.ValidationErrors.Any()) return result;
+        if (result.ResultStatus is ResultStatus.Validation) return result;
 
         Experience experience = Mapper.Map<Experience>(createExperienceDto);
         await Repository.GetRepository<Experience>().AddAsync(experience);
@@ -43,9 +43,7 @@ public class ExperienceManager : BaseManager, IExperienceService
     public async Task<IResult> DeleteExperienceByIdAsync(int id)
     {
         Experience experience = await Repository.GetRepository<Experience>().GetAsync(e => e.Id == id);
-
-        if (experience == null)
-            return new Result(ResultStatus.Error, Messages.InvalidValue(ExperiencesMessages.Experience));
+        if (experience is null) return new Result(ResultStatus.Error, Messages.InvalidValue(ExperiencesMessages.Experience));
 
         await Repository.GetRepository<Experience>().HardDeleteAsync(experience);
         await Repository.SaveAsync();
@@ -71,9 +69,7 @@ public class ExperienceManager : BaseManager, IExperienceService
     public async Task<IDataResult<GetExperienceDto>> GetExperienceByIdAsync(int id)
     {
         Experience experience = await Repository.GetRepository<Experience>().GetAsync(e => e.Id == id);
-
-        if (experience == null)
-            return new DataResult<GetExperienceDto>(ResultStatus.Error, Messages.InvalidValue(ExperiencesMessages.Experience));
+        if (experience is null) return new DataResult<GetExperienceDto>(ResultStatus.Error, Messages.InvalidValue(ExperiencesMessages.Experience));
 
         GetExperienceDto getExperienceDto = Mapper.Map<GetExperienceDto>(experience);
         return new DataResult<GetExperienceDto>(ResultStatus.Success, getExperienceDto);
@@ -84,9 +80,7 @@ public class ExperienceManager : BaseManager, IExperienceService
     public async Task<IDataResult<UpdateExperienceDto>> GetExperienceForUpdateByIdAsync(int id)
     {
         Experience experience = await Repository.GetRepository<Experience>().GetAsync(e => e.Id == id);
-
-        if (experience == null)
-            return new DataResult<UpdateExperienceDto>(ResultStatus.Error, Messages.InvalidValue(ExperiencesMessages.Experience));
+        if (experience is null) return new DataResult<UpdateExperienceDto>(ResultStatus.Error, Messages.InvalidValue(ExperiencesMessages.Experience));
 
         UpdateExperienceDto updateExperienceDto = Mapper.Map<UpdateExperienceDto>(experience);
         return new DataResult<UpdateExperienceDto>(ResultStatus.Success, updateExperienceDto);
@@ -98,7 +92,7 @@ public class ExperienceManager : BaseManager, IExperienceService
     public async Task<IResult> UpdateExperienceAsync(UpdateExperienceDto updateExperienceDto)
     {
         IResult result = await ValidatorResultHelper.ValidatorResult(_updateExperienceValidator, updateExperienceDto);
-        if (result.ValidationErrors.Any()) return result;
+        if (result.ResultStatus is ResultStatus.Validation) return result;
 
         Experience experience = await Repository.GetRepository<Experience>().GetAsync(e => e.Id == updateExperienceDto.Id);
         Mapper.Map(updateExperienceDto, experience);

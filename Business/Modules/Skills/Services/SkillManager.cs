@@ -34,11 +34,11 @@ public class SkillManager : BaseManager, ISkillService
     {
         // Validation
         IResult result = await ValidatorResultHelper.ValidatorResult(_createSkillValidator, createSkillDto);
-        if (result.ValidationErrors.Any()) return result;
+        if (result.ResultStatus == ResultStatus.Validation) return result;
 
         // Business rule check
-        var businessRuleResult = BusinessRules.Run(await _skillBusinessRules.SkillNameCannotBeDuplicatedWhenInserted(createSkillDto.Name));
-        if (businessRuleResult != null) return businessRuleResult;
+        Result businessRuleResult = BusinessRules.Run(await _skillBusinessRules.SkillNameCannotBeDuplicatedWhenInserted(createSkillDto.Name));
+        if (businessRuleResult is not null) return businessRuleResult;
 
         // Mapping and save to repository
         Skill skill = Mapper.Map<Skill>(createSkillDto);
@@ -53,8 +53,7 @@ public class SkillManager : BaseManager, ISkillService
     public async Task<IResult> DeleteSkillByIdAsync(int id)
     {
         Skill skill = await Repository.GetRepository<Skill>().GetAsync(e => e.Id == id);
-
-        if (skill == null) return new Result(ResultStatus.Error, Messages.InvalidValue(SkillsMessages.Skill));
+        if (skill is null) return new Result(ResultStatus.Error, Messages.InvalidValue(SkillsMessages.Skill));
 
         await Repository.GetRepository<Skill>().HardDeleteAsync(skill);
         await Repository.SaveAsync();
@@ -66,7 +65,6 @@ public class SkillManager : BaseManager, ISkillService
     public async Task<IDataResult<IList<GetAllSkillDto>>> GetAllSkillsAsync()
     {
         IList<Skill> skills = await Repository.GetRepository<Skill>().GetAllAsync();
-
         IList<GetAllSkillDto> getAllSkillDtos = Mapper.Map<IList<GetAllSkillDto>>(skills);
         return new DataResult<IList<GetAllSkillDto>>(ResultStatus.Success, getAllSkillDtos);
     }
@@ -76,8 +74,7 @@ public class SkillManager : BaseManager, ISkillService
     public async Task<IDataResult<GetSkillDto>> GetSkillByIdAsync(int id)
     {
         Skill skill = await Repository.GetRepository<Skill>().GetAsync(e => e.Id == id);
-
-        if (skill == null) return new DataResult<GetSkillDto>(ResultStatus.Error, Messages.InvalidValue(SkillsMessages.Skill));
+        if (skill is null) return new DataResult<GetSkillDto>(ResultStatus.Error, Messages.InvalidValue(SkillsMessages.Skill));
 
         GetSkillDto getSkillDto = Mapper.Map<GetSkillDto>(skill);
         return new DataResult<GetSkillDto>(ResultStatus.Success, getSkillDto);
@@ -88,9 +85,7 @@ public class SkillManager : BaseManager, ISkillService
     public async Task<IDataResult<UpdateSkillDto>> GetSkillForUpdateByIdAsync(int id)
     {
         Skill skill = await Repository.GetRepository<Skill>().GetAsync(e => e.Id == id);
-
-        if (skill == null) return new DataResult<UpdateSkillDto>(ResultStatus.Error, Messages.InvalidValue(SkillsMessages.Skill));
-
+        if (skill is null) return new DataResult<UpdateSkillDto>(ResultStatus.Error, Messages.InvalidValue(SkillsMessages.Skill));
 
         UpdateSkillDto updateSkillDto = Mapper.Map<UpdateSkillDto>(skill);
         return new DataResult<UpdateSkillDto>(ResultStatus.Success, updateSkillDto);
@@ -102,7 +97,7 @@ public class SkillManager : BaseManager, ISkillService
     public async Task<IResult> UpdateSkillAsync(UpdateSkillDto updateSkillDto)
     {
         IResult result = await ValidatorResultHelper.ValidatorResult(_updateSkillValidator, updateSkillDto);
-        if (result.ValidationErrors.Any()) return result;
+        if (result.ResultStatus is ResultStatus.Validation) return result;
 
         Skill skill = await Repository.GetRepository<Skill>().GetAsync(e => e.Id == updateSkillDto.Id);
         Mapper.Map(updateSkillDto, skill);

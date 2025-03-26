@@ -34,7 +34,7 @@ public class PortfolioManager : BaseManager, IPortfolioService
     public async Task<IResult> CreatePortfolioAsync(CreatePortfolioDto createPortfolioDto)
     {
         IResult result = await ValidatorResultHelper.ValidatorResult(_createPortfolioValidator, createPortfolioDto);
-        if (result.ValidationErrors.Any()) return result;
+        if (result.ResultStatus is ResultStatus.Validation) return result;
 
         Entities.Concrete.Portfolio portfolio = Mapper.Map<Entities.Concrete.Portfolio>(createPortfolioDto);
 
@@ -53,8 +53,7 @@ public class PortfolioManager : BaseManager, IPortfolioService
     public async Task<IResult> DeletePortfolioByIdAsync(int id)
     {
         Entities.Concrete.Portfolio portfolio = await Repository.GetRepository<Entities.Concrete.Portfolio>().GetAsync(e => e.Id == id);
-
-        if (portfolio == null) return new Result(ResultStatus.Error, Messages.InvalidValue(PortfoliosMessages.Portfolio));
+        if (portfolio is null) return new Result(ResultStatus.Error, Messages.InvalidValue(PortfoliosMessages.Portfolio));
 
         await Repository.GetRepository<Entities.Concrete.Portfolio>().HardDeleteAsync(portfolio);
         await Repository.SaveAsync();
@@ -78,8 +77,7 @@ public class PortfolioManager : BaseManager, IPortfolioService
     public async Task<IDataResult<GetPortfolioDto>> GetPortfolioByIdAsync(int id)
     {
         Entities.Concrete.Portfolio portfolio = await Repository.GetRepository<Entities.Concrete.Portfolio>().GetAsync(e => e.Id == id);
-
-        if (portfolio == null) return new DataResult<GetPortfolioDto>(ResultStatus.Error, Messages.InvalidValue(PortfoliosMessages.Portfolio));
+        if (portfolio is null) return new DataResult<GetPortfolioDto>(ResultStatus.Error, Messages.InvalidValue(PortfoliosMessages.Portfolio));
 
         GetPortfolioDto getPortfolioDto = Mapper.Map<GetPortfolioDto>(portfolio);
         return new DataResult<GetPortfolioDto>(ResultStatus.Success, getPortfolioDto);
@@ -90,8 +88,7 @@ public class PortfolioManager : BaseManager, IPortfolioService
     public async Task<IDataResult<UpdatePortfolioDto>> GetPortfolioForUpdateByIdAsync(int id)
     {
         Entities.Concrete.Portfolio portfolio = await Repository.GetRepository<Entities.Concrete.Portfolio>().GetAsync(e => e.Id == id);
-
-        if (portfolio == null) return new DataResult<UpdatePortfolioDto>(ResultStatus.Error, Messages.InvalidValue(PortfoliosMessages.Portfolio));
+        if (portfolio is null) return new DataResult<UpdatePortfolioDto>(ResultStatus.Error, Messages.InvalidValue(PortfoliosMessages.Portfolio));
 
         UpdatePortfolioDto updatePortfolioDto = Mapper.Map<UpdatePortfolioDto>(portfolio);
         return new DataResult<UpdatePortfolioDto>(ResultStatus.Success, updatePortfolioDto);
@@ -103,13 +100,13 @@ public class PortfolioManager : BaseManager, IPortfolioService
     public async Task<IResult> UpdatePortfolioAsync(UpdatePortfolioDto updatePortfolioDto)
     {
         IResult result = await ValidatorResultHelper.ValidatorResult(_updatePortfolioValidator, updatePortfolioDto);
-        if (result.ValidationErrors.Any()) return result;
+        if (result.ResultStatus is ResultStatus.Validation) return result;
 
         Entities.Concrete.Portfolio portfolio = await Repository.GetRepository<Entities.Concrete.Portfolio>().GetAsync(p => p.Id == updatePortfolioDto.Id);
 
-        if (portfolio == null) return new Result(ResultStatus.Error, Messages.InvalidValue(PortfoliosMessages.Portfolio));
+        if (portfolio is null) return new Result(ResultStatus.Error, Messages.InvalidValue(PortfoliosMessages.Portfolio));
 
-        if (updatePortfolioDto.Photo != null)
+        if (updatePortfolioDto.Photo is not null)
         {
             _imageHelper.Delete(portfolio.Image);
 

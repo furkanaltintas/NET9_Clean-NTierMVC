@@ -45,7 +45,7 @@ public class BlogManager : BaseManager, IBlogService
     public async Task<IResult> CreateBlogAsync(CreateBlogDto createBlogDto)
     {
         IResult result = await ValidatorResultHelper.ValidatorResult(_createBlogValidator, createBlogDto);
-        if (result.ValidationErrors.Any()) return result;
+        if (result.ResultStatus is ResultStatus.Validation) return result;
 
         Blog blog = Mapper.Map<Blog>(createBlogDto);
         blog.Slug = SlugHelper.GenerateSlug(blog.Title);
@@ -62,7 +62,7 @@ public class BlogManager : BaseManager, IBlogService
     public async Task<IResult> DeleteBlogByIdAsync(int id)
     {
         IResult result = await _blogBusinessRules.BlogNotExist(b => b.Id == id);
-        if (result.ResultStatus == ResultStatus.Error) return result;
+        if (result.ResultStatus is ResultStatus.Error) return result;
 
         Blog blog = await Repository.GetRepository<Blog>().GetAsync(b => b.Id == id);
 
@@ -88,7 +88,7 @@ public class BlogManager : BaseManager, IBlogService
     public async Task<IDataResult<GetBlogDto>> GetBlogBySlugAsync(string slug)
     {
         IDataResult<GetBlogDto> result = await _blogBusinessRules.BlogNotExist<GetBlogDto>(b => b.Slug == slug);
-        if (result.ResultStatus == ResultStatus.Error) return result;
+        if (result.ResultStatus is ResultStatus.Error) return result;
 
         Blog blog = await Repository.GetRepository<Blog>().GetAsync(b => b.Slug == slug);
         GetBlogDto getBlogDto = Mapper.Map<GetBlogDto>(blog);
@@ -100,9 +100,7 @@ public class BlogManager : BaseManager, IBlogService
     public async Task<IDataResult<GetBlogDto>> GetBlogByIdAsync(int id)
     {
         Blog blog = await Repository.GetRepository<Blog>().GetAsync(b => b.Id == id);
-
-        if (blog == null)
-            return new DataResult<GetBlogDto>(ResultStatus.Error, Messages.InvalidValue(BlogsMessages.Blog));
+        if (blog == null) return new DataResult<GetBlogDto>(ResultStatus.Error, Messages.InvalidValue(BlogsMessages.Blog));
 
         GetBlogDto getBlogDto = Mapper.Map<GetBlogDto>(blog);
         return new DataResult<GetBlogDto>(ResultStatus.Success, getBlogDto);
@@ -113,7 +111,7 @@ public class BlogManager : BaseManager, IBlogService
     public async Task<IDataResult<UpdateBlogDto>> GetBlogForUpdateByIdAsync(int id)
     {
         IDataResult<UpdateBlogDto> result = await _blogBusinessRules.BlogNotExist<UpdateBlogDto>(b => b.Id == id);
-        if (result.ResultStatus == ResultStatus.Error) return result;
+        if (result.ResultStatus is ResultStatus.Error) return result;
         Blog blog = await Repository.GetRepository<Blog>().GetAsync(b => b.Id == id);
 
         UpdateBlogDto updateBlogDto = Mapper.Map<UpdateBlogDto>(blog);
@@ -125,19 +123,19 @@ public class BlogManager : BaseManager, IBlogService
     [CacheRemoveAspect("IBlogService.Get")]
     public async Task<IResult> UpdateBlogAsync(UpdateBlogDto updateBlogDto)
     {
-        var result = await ValidatorResultHelper.ValidatorResult(_updateBlogValidator, updateBlogDto);
-        if (result.ValidationErrors.Any()) return result;
+        IResult result = await ValidatorResultHelper.ValidatorResult(_updateBlogValidator, updateBlogDto);
+        if (result.ResultStatus is ResultStatus.Validation) return result;
 
         Blog blog = await Repository.GetRepository<Blog>().GetAsync(b => b.Id == updateBlogDto.Id);
-        if (blog == null) return new Result(ResultStatus.Error, Messages.InvalidValue(BlogsMessages.Blog));
+        if (blog is null) return new Result(ResultStatus.Error, Messages.InvalidValue(BlogsMessages.Blog));
 
-        if (blog.Title != updateBlogDto.Title) blog.Slug = SlugHelper.GenerateSlug(updateBlogDto.Title);
+        if (!Object.Equals(blog.Title, updateBlogDto.Title)) blog.Slug = SlugHelper.GenerateSlug(updateBlogDto.Title);
 
-        if (updateBlogDto.Photo != null)
+        if (updateBlogDto.Photo is not null)
         {
             _imageHelper.Delete(blog.Image);
 
-            var imageUpload = await _imageHelper.Upload(updateBlogDto.Title, updateBlogDto.Photo, ImageType.Post);
+            ImageUploaded imageUpload = await _imageHelper.Upload(updateBlogDto.Title, updateBlogDto.Photo, ImageType.Post);
             updateBlogDto.Image = imageUpload.FullName;
         }
 

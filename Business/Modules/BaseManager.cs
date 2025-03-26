@@ -11,6 +11,6 @@ public class BaseManager
         Mapper = mapper;
     }
 
-    protected IRepository Repository { get; }
-    protected IMapper Mapper { get; }
+    protected IRepository Repository { get; set; }
+    protected IMapper Mapper { get; set; }
 }

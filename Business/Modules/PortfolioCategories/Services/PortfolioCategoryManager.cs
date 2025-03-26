@@ -33,7 +33,7 @@ public class PortfolioCategoryManager : BaseManager, IPortfolioCategoryService
     public async Task<IResult> CreatePortfolioCategoryAsync(CreatePortfolioCategoryDto createPortfolioCategoryDto)
     {
         IResult result = await ValidatorResultHelper.ValidatorResult(_createPortfolioCategoryValidator, createPortfolioCategoryDto);
-        if (result.ValidationErrors.Any()) return result;
+        if (result.ResultStatus is ResultStatus.Validation) return result;
 
         PortfolioCategory portfolioCategory = Mapper.Map<PortfolioCategory>(createPortfolioCategoryDto);
         await Repository.GetRepository<PortfolioCategory>().AddAsync(portfolioCategory);
@@ -84,7 +84,7 @@ public class PortfolioCategoryManager : BaseManager, IPortfolioCategoryService
     public async Task<IResult> UpdatePortfolioCategoryAsync(UpdatePortfolioCategoryDto updatePortfolioCategoryDto)
     {
         IResult result = await ValidatorResultHelper.ValidatorResult(_updatePortfolioCategoryValidator, updatePortfolioCategoryDto);
-        if (result.ValidationErrors.Any()) return result;
+        if (result.ResultStatus is ResultStatus.Validation) return result;
 
         PortfolioCategory portfolioCategory = await Repository.GetRepository<PortfolioCategory>().GetAsync(p => p.Id == updatePortfolioCategoryDto.Id);
 

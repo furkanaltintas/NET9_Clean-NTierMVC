@@ -35,7 +35,7 @@ public class CertificateManager : BaseManager, ICertificateService
     public async Task<IResult> CreateCertificateAsync(CreateCertificateDto createCertificateDto)
     {
         IResult result = await ValidatorResultHelper.ValidatorResult(_createCertificateValidator, createCertificateDto);
-        if (result.ValidationErrors.Any()) return result;
+        if (result.ResultStatus == ResultStatus.Validation) return result;
 
         Certificate certificate = Mapper.Map<Certificate>(createCertificateDto);
 
@@ -52,9 +52,7 @@ public class CertificateManager : BaseManager, ICertificateService
     public async Task<IResult> DeleteCertificateByIdAsync(int id)
     {
         Certificate certificate = await Repository.GetRepository<Certificate>().GetAsync(e => e.Id == id);
-
-        if (certificate == null)
-            return new Result(ResultStatus.Error, Messages.InvalidValue(CertificatesMessages.Certificate));
+        if (certificate is null) return new Result(ResultStatus.Error, Messages.InvalidValue(CertificatesMessages.Certificate));
 
         await Repository.GetRepository<Certificate>().HardDeleteAsync(certificate);
         await Repository.SaveAsync();
@@ -66,7 +64,6 @@ public class CertificateManager : BaseManager, ICertificateService
     public async Task<IDataResult<IList<GetAllCertificateDto>>> GetAllCertificatesAsync()
     {
         IList<Certificate> certificates = await Repository.GetRepository<Certificate>().GetAllAsync();
-
         IList<GetAllCertificateDto> getAllCertificateDtos = Mapper.Map<IList<GetAllCertificateDto>>(certificates);
         return new DataResult<IList<GetAllCertificateDto>>(ResultStatus.Success, getAllCertificateDtos);
     }
@@ -76,9 +73,7 @@ public class CertificateManager : BaseManager, ICertificateService
     public async Task<IDataResult<GetCertificateDto>> GetCertificateByIdAsync(int id)
     {
         Certificate certificate = await Repository.GetRepository<Certificate>().GetAsync(e => e.Id == id);
-
-        if (certificate == null)
-            return new DataResult<GetCertificateDto>(ResultStatus.Error, CertificatesMessages.Certificate);
+        if (certificate is null) return new DataResult<GetCertificateDto>(ResultStatus.Error, CertificatesMessages.Certificate);
 
         GetCertificateDto getCertificateDto = Mapper.Map<GetCertificateDto>(certificate);
         return new DataResult<GetCertificateDto>(ResultStatus.Success, getCertificateDto);
@@ -89,9 +84,7 @@ public class CertificateManager : BaseManager, ICertificateService
     public async Task<IDataResult<UpdateCertificateDto>> GetCertificateForUpdateByIdAsync(int id)
     {
         Certificate certificate = await Repository.GetRepository<Certificate>().GetAsync(e => e.Id == id);
-
-        if (certificate == null)
-            return new DataResult<UpdateCertificateDto>(ResultStatus.Error, Messages.InvalidValue(CertificatesMessages.Certificate));
+        if (certificate == null) return new DataResult<UpdateCertificateDto>(ResultStatus.Error, Messages.InvalidValue(CertificatesMessages.Certificate));
 
         UpdateCertificateDto updateCertificateDto = Mapper.Map<UpdateCertificateDto>(certificate);
         return new DataResult<UpdateCertificateDto>(ResultStatus.Success, updateCertificateDto);
@@ -103,12 +96,10 @@ public class CertificateManager : BaseManager, ICertificateService
     public async Task<IResult> UpdateCertificateAsync(UpdateCertificateDto updateCertificateDto)
     {
         IResult result = await ValidatorResultHelper.ValidatorResult(_updateCertificateValidator, updateCertificateDto);
-        if (result.ValidationErrors.Any()) return result;
+        if (result.ResultStatus == ResultStatus.Validation) return result;
 
         Certificate certificate = await Repository.GetRepository<Certificate>().GetAsync(e => e.Id == updateCertificateDto.Id);
-
-        if (certificate == null)
-            return new Result(ResultStatus.Error, Messages.InvalidValue(CertificatesMessages.Certificate));
+        if (certificate is null) return new Result(ResultStatus.Error, Messages.InvalidValue(CertificatesMessages.Certificate));
 
         if (updateCertificateDto.Photo != null)
         {

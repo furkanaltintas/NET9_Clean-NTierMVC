@@ -34,7 +34,7 @@ public class EducationManager : BaseManager, IEducationService
     public async Task<IResult> CreateEducationAsync(CreateEducationDto createEducationDto)
     {
         IResult result = await ValidatorResultHelper.ValidatorResult(_createEducationValidator, createEducationDto);
-        if (result.ValidationErrors.Any()) return result;
+        if (result.ResultStatus is ResultStatus.Validation) return result;
 
         Education education = Mapper.Map<Education>(createEducationDto);
         await Repository.GetRepository<Education>().AddAsync(education);
@@ -48,6 +48,7 @@ public class EducationManager : BaseManager, IEducationService
     {
         Result result = BusinessRules.Run(await _educationBusinessRules.CheckIfEducationExistsAsync(id));
         if (result != null) return result;
+
         Education education = await Repository.GetRepository<Education>().GetAsync(e => e.Id == id);
 
         await Repository.GetRepository<Education>().HardDeleteAsync(education);
@@ -60,7 +61,6 @@ public class EducationManager : BaseManager, IEducationService
     public async Task<IDataResult<IList<GetAllEducationDto>>> GetAllEducationsAsync()
     {
         IList<Education> educations = await Repository.GetRepository<Education>().GetAllAsync(orderBy: e => e.OrderByDescending(e => e.StartDate));
-
         IList<GetAllEducationDto> getAllEducationDtos = Mapper.Map<IList<GetAllEducationDto>>(educations);
         return new DataResult<IList<GetAllEducationDto>>(ResultStatus.Success, getAllEducationDtos);
     }
@@ -70,7 +70,7 @@ public class EducationManager : BaseManager, IEducationService
     public async Task<IDataResult<GetEducationDto>> GetEducationByIdAsync(int id)
     {
         DataResult<GetEducationDto> result = BusinessRules.Run<GetEducationDto>(await _educationBusinessRules.CheckIfEducationExistsAsync(id));
-        if (result != null) return result;
+        if (result is not null) return result;
         Education education = await Repository.GetRepository<Education>().GetAsync(e => e.Id == id);
 
         GetEducationDto getEducationDto = Mapper.Map<GetEducationDto>(education);
@@ -82,7 +82,7 @@ public class EducationManager : BaseManager, IEducationService
     public async Task<IDataResult<UpdateEducationDto>> GetEducationForUpdateByIdAsync(int id)
     {
         DataResult<UpdateEducationDto> result = BusinessRules.Run<UpdateEducationDto>(await _educationBusinessRules.CheckIfEducationExistsAsync(id));
-        if (result != null) return result;
+        if (result is not null) return result;
         Education education = await Repository.GetRepository<Education>().GetAsync(e => e.Id == id);
 
         UpdateEducationDto updateEducationDto = Mapper.Map<UpdateEducationDto>(education);
@@ -95,7 +95,7 @@ public class EducationManager : BaseManager, IEducationService
     public async Task<IResult> UpdateEducationAsync(UpdateEducationDto updateEducationDto)
     {
         IResult result = await ValidatorResultHelper.ValidatorResult(_updateEducationValidator, updateEducationDto);
-        if (result.ValidationErrors.Any()) return result;
+        if (result.ResultStatus == ResultStatus.Validation) return result;
 
         Education education = await Repository.GetRepository<Education>().GetAsync(e => e.Id == updateEducationDto.Id);
         Mapper.Map(updateEducationDto, education);

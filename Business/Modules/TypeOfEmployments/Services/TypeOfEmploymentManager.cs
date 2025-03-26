@@ -28,7 +28,7 @@ public class TypeOfEmploymentManager : BaseManager, ITypeOfEmploymentService
     public async Task<IResult> CreateTypeOfEmploymentAsync(CreateTypeOfEmploymentDto createTypeOfEmploymentDto)
     {
         IResult result = await ValidatorResultHelper.ValidatorResult(_createTypeOfEmploymentValidator, createTypeOfEmploymentDto);
-        if (result.ValidationErrors.Any()) return result;
+        if (result.ResultStatus is ResultStatus.Validation) return result;
 
         TypeOfEmployment typeOfEmployment = Mapper.Map<TypeOfEmployment>(createTypeOfEmploymentDto);
         await Repository.GetRepository<TypeOfEmployment>().AddAsync(typeOfEmployment);
@@ -40,8 +40,7 @@ public class TypeOfEmploymentManager : BaseManager, ITypeOfEmploymentService
     public async Task<IResult> DeleteTypeOfEmploymentByIdAsync(int id)
     {
         TypeOfEmployment typeOfEmployment = await Repository.GetRepository<TypeOfEmployment>().GetAsync(e => e.Id == id);
-
-        if (typeOfEmployment == null) return new Result(ResultStatus.Error, Messages.InvalidValue(TypeOfEmploymentsMessages.TypeOfEmployment));
+        if (typeOfEmployment is null) return new Result(ResultStatus.Error, Messages.InvalidValue(TypeOfEmploymentsMessages.TypeOfEmployment));
 
         await Repository.GetRepository<TypeOfEmployment>().HardDeleteAsync(typeOfEmployment);
         await Repository.SaveAsync();
@@ -60,8 +59,7 @@ public class TypeOfEmploymentManager : BaseManager, ITypeOfEmploymentService
     public async Task<IDataResult<GetTypeOfEmploymentDto>> GetTypeOfEmploymentByIdAsync(int id)
     {
         TypeOfEmployment typeOfEmployment = await Repository.GetRepository<TypeOfEmployment>().GetAsync(e => e.Id == id);
-
-        if (typeOfEmployment == null) return new DataResult<GetTypeOfEmploymentDto>(ResultStatus.Error, Messages.InvalidValue(TypeOfEmploymentsMessages.TypeOfEmployment));
+        if (typeOfEmployment is null) return new DataResult<GetTypeOfEmploymentDto>(ResultStatus.Error, Messages.InvalidValue(TypeOfEmploymentsMessages.TypeOfEmployment));
 
         GetTypeOfEmploymentDto getTypeOfEmploymentDto = Mapper.Map<GetTypeOfEmploymentDto>(typeOfEmployment);
         return new DataResult<GetTypeOfEmploymentDto>(ResultStatus.Success, getTypeOfEmploymentDto);
@@ -72,7 +70,7 @@ public class TypeOfEmploymentManager : BaseManager, ITypeOfEmploymentService
     {
         TypeOfEmployment typeOfEmployment = await Repository.GetRepository<TypeOfEmployment>().GetAsync(e => e.Id == id);
 
-        if (typeOfEmployment == null) return new DataResult<UpdateTypeOfEmploymentDto>(ResultStatus.Error, Messages.InvalidValue(TypeOfEmploymentsMessages.TypeOfEmployment));
+        if (typeOfEmployment is null) return new DataResult<UpdateTypeOfEmploymentDto>(ResultStatus.Error, Messages.InvalidValue(TypeOfEmploymentsMessages.TypeOfEmployment));
 
         UpdateTypeOfEmploymentDto updateTypeOfEmploymentDto = Mapper.Map<UpdateTypeOfEmploymentDto>(typeOfEmployment);
         return new DataResult<UpdateTypeOfEmploymentDto>(ResultStatus.Success, updateTypeOfEmploymentDto);
@@ -82,7 +80,7 @@ public class TypeOfEmploymentManager : BaseManager, ITypeOfEmploymentService
     public async Task<IResult> UpdateTypeOfEmploymentAsync(UpdateTypeOfEmploymentDto updateTypeOfEmploymentDto)
     {
         IResult result = await ValidatorResultHelper.ValidatorResult(_updateTypeOfEmploymentValidator, updateTypeOfEmploymentDto);
-        if (result.ValidationErrors.Any()) return result;
+        if (result.ResultStatus is ResultStatus.Validation) return result;
 
         TypeOfEmployment typeOfEmployment = await Repository.GetRepository<TypeOfEmployment>().GetAsync(e => e.Id == updateTypeOfEmploymentDto.Id);
         Mapper.Map(updateTypeOfEmploymentDto, typeOfEmployment);

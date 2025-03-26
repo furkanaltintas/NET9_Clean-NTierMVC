@@ -29,7 +29,7 @@ public class SocialMediaManager : BaseManager, ISocialMediaService
     public async Task<IResult> CreateSocialMediaAsync(CreateSocialMediaIconDto createSocialMediaIconDto)
     {
         IResult result = await ValidatorResultHelper.ValidatorResult(_createSocialMediaIconValidator, createSocialMediaIconDto);
-        if (result.ValidationErrors.Any()) return result;
+        if (result.ResultStatus is ResultStatus.Validation) return result;
 
         SocialMediaIcon socialMediaIcon = Mapper.Map<SocialMediaIcon>(createSocialMediaIconDto);
         await Repository.GetRepository<SocialMediaIcon>().AddAsync(socialMediaIcon);
@@ -42,8 +42,7 @@ public class SocialMediaManager : BaseManager, ISocialMediaService
     public async Task<IResult> DeleteSocialMediaByIdAsync(int id)
     {
         SocialMediaIcon socialMediaIcon = await Repository.GetRepository<SocialMediaIcon>().GetAsync(e => e.Id == id);
-
-        if (socialMediaIcon == null) return new Result(ResultStatus.Error, Messages.InvalidValue(SocialMediasMessages.SocialMedia));
+        if (socialMediaIcon is null) return new Result(ResultStatus.Error, Messages.InvalidValue(SocialMediasMessages.SocialMedia));
 
         await Repository.GetRepository<SocialMediaIcon>().HardDeleteAsync(socialMediaIcon);
         await Repository.SaveAsync();
@@ -64,8 +63,7 @@ public class SocialMediaManager : BaseManager, ISocialMediaService
     public async Task<IDataResult<GetSocialMediaIconDto>> GetSocialMediaByIdAsync(int id)
     {
         SocialMediaIcon socialMediaIcon = await Repository.GetRepository<SocialMediaIcon>().GetAsync(e => e.Id == id);
-
-        if (socialMediaIcon == null) return new DataResult<GetSocialMediaIconDto>(ResultStatus.Error, Messages.InvalidValue(SocialMediasMessages.SocialMedia));
+        if (socialMediaIcon is null) return new DataResult<GetSocialMediaIconDto>(ResultStatus.Error, Messages.InvalidValue(SocialMediasMessages.SocialMedia));
 
         GetSocialMediaIconDto getSocialMediaIconDto = Mapper.Map<GetSocialMediaIconDto>(socialMediaIcon);
         return new DataResult<GetSocialMediaIconDto>(ResultStatus.Success, getSocialMediaIconDto);
@@ -76,8 +74,7 @@ public class SocialMediaManager : BaseManager, ISocialMediaService
     public async Task<IDataResult<UpdateSocialMediaIconDto>> GetSocialMediaForUpdateByIdAsync(int id)
     {
         SocialMediaIcon socialMediaIcon = await Repository.GetRepository<SocialMediaIcon>().GetAsync(e => e.Id == id);
-
-        if (socialMediaIcon == null) return new DataResult<UpdateSocialMediaIconDto>(ResultStatus.Error, Messages.InvalidValue(SocialMediasMessages.SocialMedia));
+        if (socialMediaIcon is null) return new DataResult<UpdateSocialMediaIconDto>(ResultStatus.Error, Messages.InvalidValue(SocialMediasMessages.SocialMedia));
 
         UpdateSocialMediaIconDto updateSocialMediaIconDto = Mapper.Map<UpdateSocialMediaIconDto>(socialMediaIcon);
         return new DataResult<UpdateSocialMediaIconDto>(ResultStatus.Success, updateSocialMediaIconDto);
@@ -89,7 +86,7 @@ public class SocialMediaManager : BaseManager, ISocialMediaService
     public async Task<IResult> UpdateSocialMediaAsync(UpdateSocialMediaIconDto updateSocialMediaIconDto)
     {
         IResult result = await ValidatorResultHelper.ValidatorResult(_updateSocialMediaIconValidator, updateSocialMediaIconDto);
-        if (result.ValidationErrors.Any()) return result;
+        if (result.ResultStatus is ResultStatus.Validation) return result;
 
         SocialMediaIcon socialMediaIcon = await Repository.GetRepository<SocialMediaIcon>().GetAsync(e => e.Id == updateSocialMediaIconDto.Id);
         Mapper.Map(updateSocialMediaIconDto, socialMediaIcon); ;

@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using Business.Constants;
 using Business.Modules.Contacts.Constants;
-using Business.Modules.Contacts.Validations;
 using Core.Aspects.Autofac.Caching;
-using Core.Aspects.Autofac.Validation;
 using Core.Helpers.Validators.Concrete;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -28,8 +26,7 @@ public class ContactManager : BaseManager, IContactService
     public async Task<IResult> DeleteContactByIdAsync(int id)
     {
         Contact contact = await Repository.GetRepository<Contact>().GetAsync(c => c.Id == id);
-
-        if (contact == null) return new Result(ResultStatus.Error, Messages.InvalidValue(ContactsMessages.Contact));
+        if (contact is null) return new Result(ResultStatus.Error, Messages.InvalidValue(ContactsMessages.Contact));
 
         await Repository.GetRepository<Contact>().HardDeleteAsync(contact);
         await Repository.SaveAsync();
@@ -50,19 +47,18 @@ public class ContactManager : BaseManager, IContactService
     public async Task<IDataResult<GetContactDto>> GetContactByIdAsync(int id)
     {
         Contact contact = await Repository.GetRepository<Contact>().GetAsync(c => c.Id == id);
-
-        if (contact == null) return new DataResult<GetContactDto>(ResultStatus.Error, Messages.InvalidValue(ContactsMessages.Contact));
+        if (contact is null) return new DataResult<GetContactDto>(ResultStatus.Error, Messages.InvalidValue(ContactsMessages.Contact));
 
         return new DataResult<GetContactDto>(ResultStatus.Success);
     }
 
 
     [CacheRemoveAspect("IContactService.Get")]
-    [ValidationAspect(typeof(CreateContactValidator))]
+    //[ValidationAspect(typeof(CreateContactValidator))]
     public async Task<IResult> SendAsync(CreateContactDto createContactDto)
     {
         IResult result = await ValidatorResultHelper.ValidatorResult(_createContactValidator, createContactDto);
-        if (result.ValidationErrors.Any()) return result;
+        if (result.ResultStatus == ResultStatus.Validation) return result;
 
         Contact contact = Mapper.Map<Contact>(createContactDto);
         await Repository.GetRepository<Contact>().AddAsync(contact);

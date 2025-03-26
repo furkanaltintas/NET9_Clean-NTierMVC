@@ -30,7 +30,7 @@ public class ServiceManager : BaseManager, IServiceService
     public async Task<IResult> CreateServiceAsync(CreateServiceDto createServiceDto)
     {
         IResult result = await ValidatorResultHelper.ValidatorResult(_createServiceValidator, createServiceDto);
-        if (result.ValidationErrors.Any()) return result;
+        if (result.ResultStatus is ResultStatus.Validation) return result;
 
         Service service = Mapper.Map<Service>(createServiceDto);
         await Repository.GetRepository<Service>().AddAsync(service);
@@ -43,8 +43,7 @@ public class ServiceManager : BaseManager, IServiceService
     public async Task<IResult> DeleteServiceByIdAsync(int id)
     {
         Service service = await Repository.GetRepository<Service>().GetAsync(s => s.Id == id);
-
-        if (service == null) return new Result(ResultStatus.Error, Messages.InvalidValue(ServicesMessages.Service));
+        if (service is null) return new Result(ResultStatus.Error, Messages.InvalidValue(ServicesMessages.Service));
 
         await Repository.GetRepository<Service>().HardDeleteAsync(service);
         await Repository.SaveAsync();
@@ -66,8 +65,7 @@ public class ServiceManager : BaseManager, IServiceService
     public async Task<IDataResult<GetServiceDto>> GetServiceByIdAsync(int id)
     {
         Service service = await Repository.GetRepository<Service>().GetAsync(s => s.Id == id);
-
-        if (service == null) return new DataResult<GetServiceDto>(ResultStatus.Error, Messages.InvalidValue(ServicesMessages.Service));
+        if (service is null) return new DataResult<GetServiceDto>(ResultStatus.Error, Messages.InvalidValue(ServicesMessages.Service));
 
         GetServiceDto serviceDto = Mapper.Map<GetServiceDto>(service);
         return new DataResult<GetServiceDto>(ResultStatus.Success, serviceDto);
@@ -78,8 +76,7 @@ public class ServiceManager : BaseManager, IServiceService
     public async Task<IDataResult<UpdateServiceDto>> GetServiceForUpdateByIdAsync(int id)
     {
         Service service = await Repository.GetRepository<Service>().GetAsync(s => s.Id == id);
-
-        if (service == null) return new DataResult<UpdateServiceDto>(ResultStatus.Error, Messages.InvalidValue(ServicesMessages.Service));
+        if (service is null) return new DataResult<UpdateServiceDto>(ResultStatus.Error, Messages.InvalidValue(ServicesMessages.Service));
 
         UpdateServiceDto serviceDto = Mapper.Map<UpdateServiceDto>(service);
         return new DataResult<UpdateServiceDto>(ResultStatus.Success, serviceDto);
@@ -91,10 +88,10 @@ public class ServiceManager : BaseManager, IServiceService
     public async Task<IResult> UpdateServiceAsync(UpdateServiceDto updateServiceDto)
     {
         IResult result = await ValidatorResultHelper.ValidatorResult(_updateServiceValidator, updateServiceDto);
-        if (result.ValidationErrors.Any()) return result;
+        if (result.ResultStatus is ResultStatus.Validation) return result;
 
         var service = await Repository.GetRepository<Service>().GetAsync(s => s.Id == updateServiceDto.Id);
-        if (service == null) return new DataResult<GetServiceDto>(ResultStatus.Error, Messages.InvalidValue(ServicesMessages.Service));
+        if (service is null) return new DataResult<GetServiceDto>(ResultStatus.Error, Messages.InvalidValue(ServicesMessages.Service));
 
         Mapper.Map(updateServiceDto, service);
         await Repository.GetRepository<Service>().UpdateAsync(service);

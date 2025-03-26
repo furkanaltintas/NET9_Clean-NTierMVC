@@ -30,7 +30,7 @@ public class AuthManager : BaseManager, IAuthService
     public async Task<IDataResult<GetUserDto>> SignInAsync(GetUserLoginDto getUserLoginDto)
     {
         User user = await Repository.GetRepository<User>().GetAsync(predicate: u => u.Email == getUserLoginDto.Email);
-        if (user == null) return new DataResult<GetUserDto>(ResultStatus.Error, AuthsMessages.InvalidEmailOrPassword);
+        if (user is null) return new DataResult<GetUserDto>(ResultStatus.Error, AuthsMessages.InvalidEmailOrPassword);
 
         bool isPasswordValid = BCryptPasswordService.VerifyPassword(getUserLoginDto.Password, user.Password);
         if (!isPasswordValid) return new DataResult<GetUserDto>(ResultStatus.Error, AuthsMessages.InvalidEmailOrPassword);

@@ -9,6 +9,7 @@ public class CreateContactValidator : AbstractValidator<CreateContactDto>
     public CreateContactValidator()
     {
         RuleFor(c => c.FullName)
+            .NotEmpty().WithMessage(ContactsMessages.FullNameRequired)
             .MaximumLength(100).WithMessage(ContactsMessages.FullNameLength);
 
         RuleFor(c => c.Email)
@@ -19,5 +20,8 @@ public class CreateContactValidator : AbstractValidator<CreateContactDto>
         RuleFor(c => c.Message)
             .NotEmpty().WithMessage(ContactsMessages.MessageRequired)
             .MaximumLength(1000).WithMessage(ContactsMessages.MessageLength);
+
+        RuleFor(c => c.CaptchaCode)
+            .NotEmpty().WithMessage(ContactsMessages.CaptchaCodeRequired);
     }
 }

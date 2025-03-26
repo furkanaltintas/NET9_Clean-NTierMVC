@@ -30,7 +30,7 @@ public class TestimonialManager : BaseManager, ITestimonialService
     public async Task<IResult> CreateTestimonialAsync(CreateTestimonialDto createTestimonialDto)
     {
         IResult result = await ValidatorResultHelper.ValidatorResult(_createTestimonialValidator, createTestimonialDto);
-        if (result.ValidationErrors.Any()) return result;
+        if (result.ResultStatus == ResultStatus.Validation) return result;
 
         Testimonial testimonial = Mapper.Map<Testimonial>(createTestimonialDto);
         await Repository.GetRepository<Testimonial>().AddAsync(testimonial);
@@ -43,8 +43,7 @@ public class TestimonialManager : BaseManager, ITestimonialService
     public async Task<IResult> DeleteTestimonialByIdAsync(int id)
     {
         Testimonial testimonial = await Repository.GetRepository<Testimonial>().GetAsync(e => e.Id == id);
-
-        if (testimonial == null) return new Result(ResultStatus.Error, Messages.InvalidValue(TestimonialsMessages.Testimonial));
+        if (testimonial is null) return new Result(ResultStatus.Error, Messages.InvalidValue(TestimonialsMessages.Testimonial));
 
         await Repository.GetRepository<Testimonial>().HardDeleteAsync(testimonial);
         await Repository.SaveAsync();
@@ -65,8 +64,7 @@ public class TestimonialManager : BaseManager, ITestimonialService
     public async Task<IDataResult<GetTestimonialDto>> GetTestimonialByIdAsync(int id)
     {
         Testimonial testimonial = await Repository.GetRepository<Testimonial>().GetAsync(e => e.Id == id);
-
-        if (testimonial == null) return new DataResult<GetTestimonialDto>(ResultStatus.Error, Messages.InvalidValue(TestimonialsMessages.Testimonial));
+        if (testimonial is null) return new DataResult<GetTestimonialDto>(ResultStatus.Error, Messages.InvalidValue(TestimonialsMessages.Testimonial));
 
         GetTestimonialDto getTestimonialDto = Mapper.Map<GetTestimonialDto>(testimonial);
         return new DataResult<GetTestimonialDto>(ResultStatus.Success, getTestimonialDto);
@@ -77,8 +75,7 @@ public class TestimonialManager : BaseManager, ITestimonialService
     public async Task<IDataResult<UpdateTestimonialDto>> GetTestimonialForUpdateByIdAsync(int id)
     {
         Testimonial testimonial = await Repository.GetRepository<Testimonial>().GetAsync(e => e.Id == id);
-
-        if (testimonial == null) return new DataResult<UpdateTestimonialDto>(ResultStatus.Error, Messages.InvalidValue(TestimonialsMessages.Testimonial));
+        if (testimonial is null) return new DataResult<UpdateTestimonialDto>(ResultStatus.Error, Messages.InvalidValue(TestimonialsMessages.Testimonial));
 
         UpdateTestimonialDto updateTestimonialDto = Mapper.Map<UpdateTestimonialDto>(testimonial);
         return new DataResult<UpdateTestimonialDto>(ResultStatus.Success, updateTestimonialDto);
@@ -90,7 +87,7 @@ public class TestimonialManager : BaseManager, ITestimonialService
     public async Task<IResult> UpdateTestimonialAsync(UpdateTestimonialDto updateTestimonialDto)
     {
         IResult result = await ValidatorResultHelper.ValidatorResult(_updateTestimonialValidator, updateTestimonialDto);
-        if (result.ValidationErrors.Any()) return result;
+        if (result.ResultStatus is ResultStatus.Validation) return result;
 
         Testimonial testimonial = await Repository.GetRepository<Testimonial>().GetAsync(e => e.Id == updateTestimonialDto.Id);
         Mapper.Map(updateTestimonialDto, testimonial);
