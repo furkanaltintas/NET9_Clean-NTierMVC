@@ -1,14 +1,42 @@
-﻿@model UpdateAboutDto
+﻿@using Core.Helpers
+@model GetAboutDto
+
 
 <div class="section-wrapper">
-    <form asp-action="Update" method="post">
-        <input asp-for="Id" type="hidden" />
-        <div class="form-group">
-            <label asp-for="Description" class="form-label">Content</label>
-            <textarea asp-for="Description" class="form-control" rows="10"></textarea>
-            <span asp-validation-for="Description"></span>
-        </div>
-        <button type="submit" class="btn btn-outline-success">About Update</button> &nbsp;
-        <a asp-action="Delete" class="btn btn-outline-danger">About Delete</a>
-    </form>
+    <div class="form-group">
+        <p class="form-label">Content</p>
+        <textarea asp-for="Description" class="form-control" id="updateabout-description" rows="10"></textarea>
+        <span asp-validation-for="Description"></span>
+    </div>
+
+    @if (Model is null)
+    {
+        <a asp-action="Add" class="btn btn-primary">Create About</a>
+    }
+    else
+    {
+        <a asp-action="Update" class="btn btn-warning">Update About</a>
+        <a asp-action="Delete" class="btn btn-danger">Delete About</a>
+    }
 </div>
+
+@section Scripts {
+    <script>
+        const updateAboutDisabled = document.getElementById("updateabout-description");
+
+        // Disable input'u başlat
+        updateAboutDisabled.disabled = true;
+
+        // MutationObserver kullanarak input durumunu izleyin
+        const observer = new MutationObserver(function(mutationsList, observer) {
+            mutationsList.forEach(function(mutation) {
+                if (!updateAboutDisabled.disabled) {
+                    updateAboutDisabled.disabled = true;
+                }
+            });
+        });
+
+        observer.observe(updateAboutDisabled, { attributes: true });
+    </script>
+
+}
