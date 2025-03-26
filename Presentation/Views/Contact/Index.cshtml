@@ -1,38 +1,56 @@
 ﻿@model CreateContactDto
 
 <!-- Contact -->
-<div class="pb-2">
-	<h1 class="title title--h1 first-title title__separate">İletişim</h1>
-</div>
+@await Html.PartialAsync("Partials/_TitleSeparatePartialView")
 
 <h2 class="title title--h3">İletişim Formu</h2>
 
-<form asp-action="Send" method="post" class="contact-form">
-	<div class="row">
-		<div class="form-group col-12 col-md-6">
-			<i class="font-icon icon-user"></i>
-			<input asp-for="FullName" type="text" class="input input__icon form-control" placeholder="Adınız ve Soyadınız" autocomplete="on" onkeyup="setCustomValidity('')">
-			<span asp-validation-for="FullName"></span>
-			<div class="help-block with-errors"></div>
-		</div>
-		<div class="form-group col-12 col-md-6">
-			<i class="font-icon icon-envelope"></i>
-			<input asp-for="Email" type="email" class="input input__icon form-control" placeholder="Mail Adresiniz" autocomplete="on" onkeyup="setCustomValidity('')">
-			<span asp-validation-for="Email"></span>
-			<div class="help-block with-errors"></div>
-		</div>
-		<div class="form-group col-12 col-md-12">
-			<textarea asp-for="Message" class="textarea form-control" placeholder="Mesajınız" rows="4" onkeyup="setCustomValidity('')"></textarea>
-			<span asp-validation-for="Message"></span>
-			<div class="help-block with-errors"></div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-12 col-md-6 order-2 order-md-1 text-center text-md-left">
-			<div class="hidden"></div>
-		</div>
-		<div class="col-12 col-md-6 order-1 order-md-2 text-right">
-			<button type="submit" class="btn"><i class="font-icon icon-send"></i> Mesajı Gönder</button>
-		</div>
-	</div>
+<form asp-action="" method="post" class="contact-form">
+    <div class="row">
+        <div class="form-group col-12 col-md-6">
+            <i class="font-icon icon-user"></i>
+            <input asp-for="FullName" type="text" class="input input__icon form-control" placeholder="FullName" autocomplete="on">
+            <span asp-validation-for="FullName"></span>
+            <div class="help-block with-errors"></div>
+        </div>
+        <div class="form-group col-12 col-md-6">
+            <i class="font-icon icon-envelope"></i>
+            <input asp-for="Email" type="email" class="input input__icon form-control" placeholder="Email" autocomplete="on">
+            <span asp-validation-for="Email"></span>
+            <div class="help-block with-errors"></div>
+        </div>
+        <div class="form-group col-12 col-md-12">
+            <textarea asp-for="Message" class="textarea form-control" placeholder="Message" rows="4"></textarea>
+            <span asp-validation-for="Message"></span>
+            <div class="help-block with-errors"></div>
+        </div>
+        <div class="form-group col-12 col-md-12 captcha">
+            <i id="refresh" aria-hidden="true">
+                <img src="~/get-captcha-image" id="img-captcha" />
+            </i>
+            <input asp-for="CaptchaCode" class="textarea form-control mt-2" placeholder="Captcha Code" autocomplete="on" />
+            <span asp-validation-for="CaptchaCode" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-6 order-2 order-md-1 text-center text-md-left">
+            <div class="hidden"></div>
+        </div>
+        <div class="col-12 col-md-6 order-1 order-md-2 text-right">
+            <button type="submit" class="btn"><i class="font-icon icon-send"></i> Send Message</button>
+        </div>
+    </div>
 </form>
+
+@section Scripts {
+    <script>
+            $("#refresh").click(function () {
+            resetCaptchaImage();
+        });
+
+        function resetCaptchaImage() {
+            d = new Date();
+            $("#img-captcha").attr("src", "/get-captcha-image?" + d.getTime());
+        }
+    </script>
+}
