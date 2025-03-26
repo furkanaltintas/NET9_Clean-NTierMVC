@@ -18,6 +18,7 @@ public class BlogController : ControllerManager
         _blogService = blogService;
     }
 
+    [Route("blog")]
     public async Task<IActionResult> Index()
     {
         var result = await _blogService.GetAllBlogsAsync();

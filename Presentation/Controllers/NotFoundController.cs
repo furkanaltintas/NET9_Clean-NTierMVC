@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Presentation.Controllers.Base;
 
 namespace Presentation.Controllers;
 
-public class ResumeController : ControllerManager
+[Route("not-found")]
+public class NotFoundController : Controller
 {
-    [Route("resume")]
     public IActionResult Index() => View();
 }

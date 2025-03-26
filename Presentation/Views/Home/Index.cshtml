@@ -1,15 +1,15 @@
 ﻿@model GetAboutDto
 
-<!-- About -->
+@await Html.PartialAsync("Partials/_TitleSeparatePartialView")
+
 <div class="pb-0 pb-sm-2">
-	<h1 class="title title--h1 first-title title__separate">About Me</h1>
-</div>
-<div class="pb-0 pb-sm-2">
-	<p>@Model.Description</p>
+    <p>@Model.Description</p>
 </div>
 
 @await Component.InvokeAsync("Service")
 
 @await Component.InvokeAsync("Testimonial")
+
+@await Html.PartialAsync("Partials/_GithubStatsPartialView")
 
 @await Component.InvokeAsync("Certificate")

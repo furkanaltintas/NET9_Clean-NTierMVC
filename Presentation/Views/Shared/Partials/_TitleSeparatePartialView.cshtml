@@ -1,0 +1,8 @@
+﻿@{
+    var content = (ViewContext.RouteData.Values["controller"]?.ToString() ?? "??Burası da neresi?!*");
+    content = char.ToUpper(content[0]) + content.Substring(1);
+}
+
+<div class="pb-3">
+    <h1 class="title title--h1 first-title title__separate">@content</h1>
+</div>

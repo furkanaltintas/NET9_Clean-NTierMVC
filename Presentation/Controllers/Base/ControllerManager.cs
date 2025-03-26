@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Presentation.Controllers.Base
+namespace Presentation.Controllers.Base;
+
+public class ControllerManager : Controller
 {
-    public class ControllerManager : Controller
-    {
-        // GÜNCELLEME ALACAK
-    }
+    // GÜNCELLEME ALACAK
 }
