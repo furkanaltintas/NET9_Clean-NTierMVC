@@ -1,0 +1,17 @@
+﻿@model GetExperienceDto
+
+<div class="section-wrapper">
+    <label class="section-title">
+        Title: @Model.Title<br /> 
+        Company: @Model.Company<br />
+        Location: @Model.Location<br />
+    </label>
+    <p class="mg-b-20 mg-sm-b-40">Date: @Model.StartDate.ToShortDateString() | @Model.EndDate.ToShortDateString()</p>
+
+    <div class="media media-demo">
+        <div class="media-body mg-t-20 mg-sm-t-0">
+            <h5 class="tx-gray-300 mg-b-20">@Model.Title | @Model.TypeOfEmployment</h5>
+            <p>@Model.Description</p>
+        </div>
+    </div>
+</div>

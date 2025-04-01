@@ -15,6 +15,14 @@ public class EducationController(IEducationService educationService) : BaseContr
         return this.ResponseViewModel<GetAllEducationDto, EducationViewModel>(result);
     }
 
+
+    public async Task<IActionResult> Detail(int educationId)
+    {
+        var result = await educationService.GetEducationByIdAsync(educationId);
+        return this.ResponseView(result);
+    }
+
+
     public IActionResult Add() => View();
 
 

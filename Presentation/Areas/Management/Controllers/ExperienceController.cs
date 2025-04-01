@@ -1,4 +1,5 @@
-﻿using Business.Modules.Experiences.Services;
+﻿using Business.Modules.Educations.Services;
+using Business.Modules.Experiences.Services;
 using Business.Modules.TypeOfEmployments.Services;
 using Entities.Dtos;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +15,13 @@ public class ExperienceController(IExperienceService experienceService, ITypeOfE
     {
         var result = await experienceService.GetAllExperiencesAsync();
         return this.ResponseViewModel<GetAllExperienceDto, ExperienceViewModel>(result);
+    }
+
+
+    public async Task<IActionResult> Detail(int experienceId)
+    {
+        var result = await experienceService.GetExperienceByIdAsync(experienceId);
+        return this.ResponseView(result);
     }
 
 

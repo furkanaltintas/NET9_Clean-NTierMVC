@@ -1,0 +1,27 @@
+﻿@model IList<PortfolioByCategoryDto>
+
+<div class="section-wrapper">
+    <div class="row">
+        @foreach (var portfolio in Model)
+        {
+            @foreach (var p in portfolio.Portfolios)
+            {
+                <div class="col-sm-6 col-md-3 mb-4">
+                    <div class="image-container" style="width:100%; height: 250px; overflow: hidden;">
+                        <img src="~/images/@p.Image" class="w-100" alt="@p.SubTitle" style="width:100%; height:100%; object-fit:cover;">
+                    </div>
+                    <p>@p.Title | @p.PortfolioCategory.Name</p>
+                    <a asp-controller="Portfolio" asp-action="Update" asp-route-portfolioId="@p.Id" class="btn btn-primary btn-icon"><div><i class="fa fa-refresh"></i></div></a>
+                    <a asp-controller="Portfolio" asp-action="Delete" asp-route-portfolioId="@p.Id" class="btn btn-danger btn-icon"><div><i class="fa fa-trash"></i></div></a>
+                </div>
+            }
+        }
+    </div>
+
+    <hr />
+    <a asp-controller="Portfolio" asp-action="Add" class="btn btn-outline-success btn-icon d-flex align-items-center justify-content-center"
+       style="width: -webkit-fill-available; height: 40px;">
+        Portfolio Add
+    </a>
+
+</div>

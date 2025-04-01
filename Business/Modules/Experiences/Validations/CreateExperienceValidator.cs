@@ -25,7 +25,7 @@ public class CreateExperienceValidator : AbstractValidator<CreateExperienceDto>
             .MaximumLength(50).WithMessage(ExperiencesMessages.LocationLength);
 
         RuleFor(e => e.TypeOfEmploymentId)
-            .Must(id => id == null || id == 0)
+            .Must(id => id is not 0)
             .WithMessage(ExperiencesMessages.TypeOfEmploymentInvalid);
     }
 }

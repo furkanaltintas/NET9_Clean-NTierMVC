@@ -32,9 +32,7 @@
     <Folder Include="Modules\Contacts\Profiles\" />
     <Folder Include="Modules\Contacts\Rules\" />
     <Folder Include="Modules\Educations\Profiles\" />
-    <Folder Include="Modules\Experiences\Profiles\" />
     <Folder Include="Modules\Experiences\Rules\" />
-    <Folder Include="Modules\PortfolioCategories\Profiles\" />
     <Folder Include="Modules\PortfolioCategories\Rules\" />
     <Folder Include="Modules\Portfolios\Profiles\" />
     <Folder Include="Modules\Portfolios\Rules\" />
@@ -45,7 +43,6 @@
     <Folder Include="Modules\SocialMedias\Rules\" />
     <Folder Include="Modules\Testimonials\Profiles\" />
     <Folder Include="Modules\Testimonials\Rules\" />
-    <Folder Include="Modules\TypeOfEmployments\Profiles\" />
     <Folder Include="Modules\TypeOfEmployments\Rules\" />
     <Folder Include="Modules\Users\Profiles\" />
     <Folder Include="Modules\Users\Rules\" />
