@@ -7,10 +7,7 @@ namespace DataAccess.Concrete.EntityFramework.Contexts;
 
 public class ApplicationDbContext : DbContext
 {
-    public ApplicationDbContext() { }
-
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
-
 
     #region DbSet
     public DbSet<About> Abouts { get; set; }
@@ -30,9 +27,6 @@ public class ApplicationDbContext : DbContext
     public DbSet<WebSiteInfo> WebSiteInfos { get; set; }
     public DbSet<WebSiteTemplate> WebSiteTemplates { get; set; }
     #endregion
-
-
-
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

@@ -49,8 +49,7 @@ public class EfEntityRepositoryBase<TEntity> : IEntityRepository<TEntity>
         if (!enableTracking) queryable = queryable.AsNoTracking();
         if (include is not null) queryable = include(queryable);
         if (predicate is not null) queryable = queryable.Where(predicate);
-        if (orderBy is not null)
-            return await orderBy(queryable).ToListAsync().ConfigureAwait(false);
+        if (orderBy is not null) queryable = orderBy(queryable);
         return await queryable.ToListAsync().ConfigureAwait(false);
     }
 
@@ -61,8 +60,7 @@ public class EfEntityRepositoryBase<TEntity> : IEntityRepository<TEntity>
         if (!enableTracking) queryable = queryable.AsNoTracking();
         if (include is not null) queryable = include(queryable);
         if (predicate is not null) queryable = queryable.Where(predicate);
-        if (orderBy is not null)
-            return await orderBy(queryable).Skip((currentPage - 1) * pageSize).Take(pageSize).ToListAsync().ConfigureAwait(false);
+        if (orderBy is not null) return await orderBy(queryable).Skip((currentPage - 1) * pageSize).Take(pageSize).ToListAsync().ConfigureAwait(false);
         return await queryable.ToListAsync().ConfigureAwait(false);
     }
 
@@ -89,8 +87,7 @@ public class EfEntityRepositoryBase<TEntity> : IEntityRepository<TEntity>
     public async Task HardDeleteAsync(TEntity entity)
     {
         var local = Table.Local.FirstOrDefault(t => t.Id == entity.Id);
-        if (local != null)
-            Table.Entry(local).State = EntityState.Detached; // Önce eski entity takibini bırak
+        if (local != null) Table.Entry(local).State = EntityState.Detached; // Önce eski entity takibini bırak
 
         Table.Remove(entity);
 
@@ -102,8 +99,7 @@ public class EfEntityRepositoryBase<TEntity> : IEntityRepository<TEntity>
     public async Task<TEntity> UpdateAsync(TEntity entity)
     {
         var local = Table.Local.FirstOrDefault(t => t.Id == entity.Id);
-        if (local != null)
-            Table.Entry(local).State = EntityState.Detached; // Önce eski entity takibini bırak
+        if (local != null) Table.Entry(local).State = EntityState.Detached; // Önce eski entity takibini bırak
 
         Table.Attach(entity);
         Table.Entry(entity).State = EntityState.Modified;
