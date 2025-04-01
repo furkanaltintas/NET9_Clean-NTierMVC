@@ -6,6 +6,7 @@ namespace Business.Modules.PortfolioCategories.Services;
 public interface IPortfolioCategoryService
 {
     Task<IDataResult<IList<GetAllPortfolioCategoryDto>>> GetAllPortfolioCategoriesAsync();
+    Task<IDataResult<IList<PortfolioByCategoryDto>>> GetPortfoliosByPortfolioCategory(int id);
 
     Task<IDataResult<GetPortfolioCategoryDto>> GetPortfolioCategoryByIdAsync(int id);
     Task<IDataResult<UpdatePortfolioCategoryDto>> GetPortfolioCategoryForUpdateByIdAsync(int id);

@@ -9,6 +9,7 @@ using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.Dtos;
 using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 using Portfolio.Core.Utilities.Results.Abstract;
 using Portfolio.Core.Utilities.Results.ComplexTypes;
 using Portfolio.Core.Utilities.Results.Concrete;
@@ -42,7 +43,7 @@ public class PortfolioCategoryManager : BaseManager, IPortfolioCategoryService
     }
 
 
-    [CacheAspect]
+    [CacheRemoveAspect("IPortfolioCategoryService.Get")]
     public async Task<IResult> DeletePortfolioCategoryByIdAsync(int id)
     {
         PortfolioCategory portfolioCategory = await Repository.GetRepository<PortfolioCategory>().GetAsync(p => p.Id == id);
@@ -76,6 +77,15 @@ public class PortfolioCategoryManager : BaseManager, IPortfolioCategoryService
         PortfolioCategory portfolioCategory = await Repository.GetRepository<PortfolioCategory>().GetAsync(p => p.Id == id);
         UpdatePortfolioCategoryDto updatePortfolioCategoryDto = Mapper.Map<UpdatePortfolioCategoryDto>(portfolioCategory);
         return new DataResult<UpdatePortfolioCategoryDto>(ResultStatus.Success, updatePortfolioCategoryDto);
+    }
+
+
+    [CacheAspect]
+    public async Task<IDataResult<IList<PortfolioByCategoryDto>>> GetPortfoliosByPortfolioCategory(int id)
+    {
+        IList<PortfolioCategory> portfolioCategories = await Repository.GetRepository<PortfolioCategory>().GetAllAsync(p => p.Id == id, p => p.Include(p => p.Portfolios));
+        IList<PortfolioByCategoryDto> productByCategoryDtos = Mapper.Map<IList<PortfolioByCategoryDto>>(portfolioCategories);
+        return new DataResult<IList<PortfolioByCategoryDto>>(ResultStatus.Success, productByCategoryDtos);
     }
 
 

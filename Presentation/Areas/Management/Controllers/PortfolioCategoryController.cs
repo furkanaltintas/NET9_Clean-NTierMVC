@@ -15,6 +15,14 @@ public class PortfolioCategoryController(IPortfolioCategoryService portfolioCate
         return this.ResponseViewModel<GetAllPortfolioCategoryDto, PortfolioCategoryViewModel>(result);
     }
 
+
+    public async Task<IActionResult> Detail(int portfolioCategoryId)
+    {
+        var result = await portfolioCategoryService.GetPortfoliosByPortfolioCategory(portfolioCategoryId);
+        return this.ResponseView(result);
+    }
+
+
     public IActionResult Add() => View();
 
 
