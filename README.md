@@ -8,11 +8,9 @@ This project is an MVC application built with .NET 9 and Clean Architecture prin
 - **ASP.NET Core MVC** - Model-View-Controller architecture  
 - **Entity Framework Core** - ORM (Object-Relational Mapping) tool  
 - **Fluent Validation** - Advanced model validation  
-- **MediatR** - For CQRS and event-driven patterns  
 - **AutoMapper** - For model and DTO transformations  
 - **Caching** - In-memory caching mechanism  
 - **Autofac** - Dependency injection and IoC container  
-- **Serilog** - Logging management  
 
 ### Frontend & UI
 - **MVC Views** - Dynamic UI management
