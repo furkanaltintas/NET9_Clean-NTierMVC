@@ -55,10 +55,3 @@ This project is an MVC application built with .NET 9 and Clean Architecture prin
 
 ## Contributing
 To contribute, please create an issue before submitting a pull request. Any contribution is highly appreciated!
-
-## License
-This project is licensed under the MIT License. For more details, check the `LICENSE` file.
-
-
-
-
